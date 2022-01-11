@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App1.DemoPage"
+             BackgroundColor="SlateGray"
+             Title="Erklärung">
+    <ContentPage.Content>
+        
+        <StackLayout >
+            
+            <Label 
+                Text="Hinweis zur Nutzung der App"
+                TextColor="White"
+                HorizontalOptions="CenterAndExpand"
+                Padding="20"
+                FontSize="20"/>
+            <Label Text="Im Rahmen des Trainings ist Ihre Aufgabe, die angezeigten Bilder möglichst schnell nach oben oder unten zu 'schieben\wischen'"
+                   VerticalOptions="CenterAndExpand" 
+                   HorizontalOptions="CenterAndExpand"
+                   Padding="10">
+            </Label>
+            
+
+            <Button 
+                Text="Training Starten"
+                Clicked="Handle_Clicked"
+                TextColor="White"
+                BackgroundColor="Blue"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Margin="0,0,0,20"/>
+
+        </StackLayout>
+        
+    </ContentPage.Content>
+    
+</ContentPage>

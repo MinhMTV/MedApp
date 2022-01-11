@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage NavigationPage.HasNavigationBar="false"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:App1"
+             x:Class="App1.MainPage"
+             BackgroundColor= "SlateGray">
+
+    <!-- Why 2 stack layouts? -->
+
+    <StackLayout >
+
+        <StackLayout
+         Padding="0,120,0,0"
+         Spacing="20">
+
+            <StackLayout
+             Spacing="0">
+
+                <Label Text="Herzlich Willkomen"
+                TextColor="White"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                       FontSize="Large"/>
+
+                <Label Text="zur Cognitive Bias Trainings App!"
+                TextColor="White"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                       FontSize="Large"/>
+
+            </StackLayout>
+            
+            <Button Text="Start"
+             Clicked="Start_Clicked"
+             TextColor="White"
+             BackgroundColor="Blue"
+             HorizontalOptions="Center"
+             VerticalOptions="Center"
+                    FontSize="Large"/>       
+            
+        </StackLayout>
+       
+    </StackLayout>
+
+</ContentPage>

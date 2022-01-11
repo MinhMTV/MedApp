@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+             x:Class="App1.ResultsPage"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="SlateGray"
+             Padding="20">
+
+    <ContentPage.Content>
+        <ScrollView> 
+            <StackLayout Orientation="Vertical"
+                         Padding="0,10,0,0">
+                <Label Text="{Binding Name, StringFormat='Danke {0} für deine Teilnahme!'}"
+                       TextColor="Black" FontSize="Large"
+                       HorizontalOptions="Center"/>
+                
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Zeit"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="StartAndExpand"
+                           FontSize="Large"
+                       TextColor="Black"/>
+                    <Label Text="{Binding ElapsedTime}"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="EndAndExpand"
+                           FontSize="Large"
+                       TextColor="Black"/>
+                </StackLayout>
+
+
+                <Label Text="{Binding AverageReactionTime, StringFormat='Reaktionszeit pro Bilder: {0}s'}"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="StartAndExpand"
+                           FontSize="Large"
+                       TextColor="Black"/>
+
+                <Label Text="{Binding TotalPictures, StringFormat=' Du hast heute {0:N0} Bilder geschafft!'}"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="Center"
+                           FontSize="Large"
+                       TextColor="Black"/>
+
+                <Label Text="{Binding PicturesRight, StringFormat='Richtige Bilder: {0:N0}'}"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="Center"
+                           FontSize="Large"
+                       TextColor="Black"/>
+
+                <Label Text="{Binding PicturesWrong, StringFormat='Falsche Bilder: {0:N0}'}"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="Center"
+                           FontSize="Large"
+                       TextColor="Black"/>
+
+
+                <forms:ChartView
+                    x:Name="PictureChart"
+                    HeightRequest="200"/>
+
+
+                <Grid Margin="0,0,0,20"
+                    ColumnSpacing="20"
+                    HorizontalOptions="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Switch Grid.Column="0"
+                        IsToggled="True"
+                        x:Name="Switch_DataAutoSend"
+                        OnColor="Blue"
+                        ThumbColor="Blue"/>
+                    <Label Grid.Column="1"
+                       Text="Auto-Sync On"
+                       FontSize="24"/>
+                    <Button Grid.Column="2"
+                        Text="Senden"
+                        FontSize="Micro"
+                        TextColor="White"
+                        HeightRequest="1"
+                        BackgroundColor="Gray"
+                        Clicked="Start_Clicked" />
+                </Grid>
+
+                <Label
+                    Text="Hier zum kompleten übersicht"
+                    FontSize="20"
+                    Padding="0,20,0,0"
+                    HorizontalOptions="CenterAndExpand">
+                </Label>
+
+                <Button 
+                    Text="Trainingsübersicht"
+                    TextColor="White"
+                    HorizontalOptions="CenterAndExpand"
+                    BackgroundColor="Blue"
+                    Clicked="TrainingOverview_Clicked" />
+
+                <Label
+                    Text="Hier geht es zu einem neuen Training"
+                    FontSize="20"
+                    Padding="0,20,0,0"
+                    HorizontalOptions="CenterAndExpand">
+                </Label>
+                <Button 
+                    Text="Neu Starten"
+                    TextColor="White"
+                    HorizontalOptions="CenterAndExpand"
+                    BackgroundColor="Blue"
+                    Clicked="Start_Clicked" />
+                
+                <Label
+                    Text="Hier geht es zur Wochenübersicht"
+                    FontSize="20"
+                    Padding="0,20,0,0"
+                    HorizontalOptions="CenterAndExpand">
+                </Label>
+                <Button 
+                    Text="Wochenübersicht"
+                    TextColor="White"
+                    HorizontalOptions="CenterAndExpand"
+                    BackgroundColor="Blue"
+                    Clicked="WeeklyOverview_Clicked" />
+             
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
