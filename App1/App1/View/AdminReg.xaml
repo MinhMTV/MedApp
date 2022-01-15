@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App1.AdminReg"
+             BackgroundColor="SlateGray"
+             NavigationPage.HasNavigationBar="false">
+    <ContentPage.Content>
+        <ScrollView HeightRequest="3000">
+            <StackLayout  >
+                <Label
+                    Text="Admin Registrierung"
+                    HorizontalOptions="CenterAndExpand"
+                    FontSize="Large"
+                    FontAttributes="Bold"/>
+
+                <Label 
+                    Text="Unternehmen"
+                    TextColor="White"
+                    x:Name="Lbl_Unternehmen"
+                    FontSize="Large"/>
+                
+                <Entry 
+                    Placeholder="Unternehmen " 
+                    x:Name="Entry_Unternehmen"
+                    FontSize="Large"/>
+
+                <Label 
+                    Text="Benutzername"
+                    TextColor="White"
+                    x:Name="Lbl_Username"
+                    FontSize="Large"/>
+                <Entry 
+                    Placeholder="Benutzername " 
+                    x:Name="Entry_Username"
+                    FontSize="Large"/>
+
+                <Label 
+                    Text="Vorname"
+                    TextColor="White"
+                    x:Name="Lbl_Firstname"
+                        FontSize="Large"/>
+                <Entry 
+                    Placeholder="Vorname" 
+                    x:Name="Entry_Firstname"
+                        FontSize="Large"/>
+                <Label 
+                    Text="Name"
+                    TextColor="White"
+                    x:Name="Lbl_Lastname"
+                        FontSize="Large"/>
+                <Entry 
+                    Placeholder="Nachname" 
+                    x:Name="Entry_Lastname"
+                        FontSize="Large"/>
+                <Label 
+                    Text="Email"
+                    TextColor="White"
+                    x:Name="Lbl_Email"
+                        FontSize="Large"/>
+                <Entry 
+                    Placeholder="Email" 
+                    x:Name="Entry_Email"
+                        FontSize="Large"/>
+                <Label 
+                    Text="Passwort"
+                    TextColor="White"
+                    x:Name="Lbl_Password"
+                    FontSize="Large"/>
+                <Entry 
+                    Placeholder="Merken Sie sich das Passwort!" 
+                    x:Name="Entry_Password"
+                    FontSize="Medium"
+                    IsPassword="True"/>
+                <Label 
+                    Text="Passwort wiederholen"
+                    TextColor="White"
+                    x:Name="Lbl_Repeatedpassword"
+                        FontSize="Large"/>
+                <Entry 
+                    Placeholder="Tragen Sie das Passwort nochmal ein!" 
+                    x:Name="Entry_Repeatedpassword"
+                    FontSize="Medium"
+                    IsPassword="True"/>
+
+                <Button 
+                    Text="Weiter" 
+                    TextColor="White"
+                    BackgroundColor="Blue"
+                    Margin="0,15,0,0"
+                    HorizontalOptions="CenterAndExpand"
+                    Clicked="CompleteRegistration_Clicked" />
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

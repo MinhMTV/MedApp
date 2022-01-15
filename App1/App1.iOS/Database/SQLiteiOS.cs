@@ -12,7 +12,7 @@ namespace App1.iOS.Database
     {
         public SQLiteConnection GetConnection()
         {
-            string sqliteFilename = "patient.sqlite";
+            string sqliteFilename = "database.sqlite";
             string documentPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             string libraryPath = Path.Combine(documentPath, "..", "Library", "Databases");
             var dbPathName = Path.Combine(libraryPath, sqliteFilename);

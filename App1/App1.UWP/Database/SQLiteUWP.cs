@@ -12,7 +12,7 @@ namespace App1.UWP.Database
     {
         public SQLiteConnection GetConnection()
         {
-            var dbName = "patient.sqlite";
+            var dbName = "database.sqlite";
             var path = Path.Combine(ApplicationData.
               Current.LocalFolder.Path, dbName);
             return new SQLiteConnection(path);

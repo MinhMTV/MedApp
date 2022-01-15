@@ -5,12 +5,12 @@ using System.Collections.Generic;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using Entry = Microcharts.Entry;
+using Entry = Microcharts.ChartEntry;
 
 namespace App1.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ResultOverviewPage : MasterDetailPage
+    public partial class ResultOverviewPage : FlyoutPage
     {
         TrainingSessionDBHelper trainingSessionDBHelper = new TrainingSessionDBHelper();
         TrainingSession trainingSession = new TrainingSession();

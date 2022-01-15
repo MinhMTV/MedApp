@@ -11,7 +11,7 @@ namespace App1.Droid.Database
     {
         public SQLiteConnection GetConnection()
         {
-            string sqliteFilename = "patient.sqlite";
+            string sqliteFilename = "database.sqlite";
             string directoryPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             string dbPathName = Path.Combine(directoryPath, sqliteFilename);
             SQLiteConnection conn = new SQLiteConnection(dbPathName);

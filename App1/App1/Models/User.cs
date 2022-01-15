@@ -30,16 +30,5 @@ namespace App1.Models
             this.Password = Password;
         }
 
-        public bool CheckInformation()
-        {
-            if (!this.Username.Equals("") && !this.Password.Equals(""))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
     }
 }

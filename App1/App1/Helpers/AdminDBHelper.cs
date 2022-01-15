@@ -8,31 +8,33 @@ using Xamarin.Forms;
 
 namespace App1.Helpers
 {
-    public class UserDBHelper
+    public class AdminDBHelper
     {
         private SQLiteConnection newConnection;
 
-        public UserDBHelper()
+        public AdminDBHelper()
         {
             newConnection = DependencyService.Get<ISQLite>().GetConnection();
-            newConnection.CreateTable<User>(); // Create table if not exists
+            newConnection.CreateTable<Admin>();   //create table if not exists
+            Console.WriteLine("Reading data");
+
+
         }
-        public bool AddUser(User user, string username)
+        public bool AddAdmin(Admin admin, string username)
         {
             if (CheckUserexist(username))
             {
-                    return false;
+                return false;
             }
             else
             {
-                newConnection.Insert(user);
+                newConnection.Insert(admin);
                 return true;
             }
         }
-
         public bool CheckUserexist(string username)
         {
-            var data = newConnection.Table<User>();
+            var data = newConnection.Table<Admin>();
             var d1 = data.Where(x => x.Username == username).FirstOrDefault();
             if (d1 != null)
             {
@@ -40,31 +42,27 @@ namespace App1.Helpers
             }
             else
                 return false;
+
         }
-
-
         /* Check if user exist
-         Check, if the a User Table already has entries in the database if not, no User is registered 
+         Check, if there is a User Table already the database if not, no User is registered 
         */
         public bool IsRegisteredUserExists()
         {
-            if (newConnection.Table<User>().Count() > 0)
+            if (newConnection.Table<Admin>().Count() > 0)
             {
                 return true;
             }
-            return false;     
+            return false;
         }
         public bool IsLoggedInUserExists()
         {
-            if(GetUser() != null) {
-                User user = GetUser();
-                return user.IsUserLoggedIn;
-            }
-            return false;
+            Admin user = GetUser();
+            return user.IsUserLoggedIn;
         }
         public bool ValidateLogin(string username, string password)
         {
-            var data = newConnection.Table<User>();
+            var data = newConnection.Table<Admin>();
             var d1 = data.Where(x => x.Username == username && x.Password == password).FirstOrDefault();
             if (d1 != null)
             {
@@ -75,7 +73,7 @@ namespace App1.Helpers
         }
         public bool LogInUser(string username)
         {
-            var data = newConnection.Table<User>();
+            var data = newConnection.Table<Admin>();
 
             // Find nr of current logged in users
             var nrOfLoggedInUser = (from values in data
@@ -100,7 +98,7 @@ namespace App1.Helpers
         }
         public async void LogOutUser()
         {
-            var data = newConnection.Table<User>();
+            var data = newConnection.Table<Admin>();
             string userName;
 
             //Make sure any logged in user exists
@@ -131,21 +129,23 @@ namespace App1.Helpers
                 await App.Current.MainPage.DisplayAlert("Achtung", "Es gibt keine eingeloggten Benutzer", "OK");
             }
         }
-        public User GetAnyUser()
+        public Admin GetAnyUser()
         {
-            return newConnection.Table<User>().First();
+            return newConnection.Table<Admin>().First();
         }
-        public User GetUser()
+        public Admin GetUser()
         {
             try
             {
-                foreach(User item in newConnection.Table<User>())
+                foreach (Admin item in newConnection.Table<Admin>())
                 {
-                    if(item.IsUserLoggedIn == true)
+                    Console.WriteLine(item.Username);
+                    Console.WriteLine(item.IsUserLoggedIn);   
+                    if (item.IsUserLoggedIn == true)
                     {
                         return item;
-                    } 
-                } 
+                    }
+                }
                 return null;
 
             }
@@ -155,9 +155,9 @@ namespace App1.Helpers
                 throw;
             }
         }
-        public User GetUserByName(string username)
+        public Admin GetUserByName(string username)
         {
-            var data = newConnection.Table<User>();
+            var data = newConnection.Table<Admin>();
             try
             {
                 var user = (from values in data
@@ -176,7 +176,7 @@ namespace App1.Helpers
         {
             if (IsRegisteredUserExists())
             {
-                var data = newConnection.Table<User>();
+                var data = newConnection.Table<Admin>();
                 try
                 {
                     var updatableUser = (from values in data
@@ -199,7 +199,7 @@ namespace App1.Helpers
         {
             if (IsRegisteredUserExists())
             {
-                var data = newConnection.Table<User>();
+                var data = newConnection.Table<Admin>();
                 try
                 {
                     var returnedUser = (from values in data
@@ -225,7 +225,7 @@ namespace App1.Helpers
         {
             if (IsRegisteredUserExists())
             {
-                var data = newConnection.Table<User>();
+                var data = newConnection.Table<Admin>();
                 var updatableUser = (from values in data
                                      where values.IsUserLoggedIn == true
                                      select values).Single();
@@ -241,20 +241,20 @@ namespace App1.Helpers
         // Get the loggedin user name
         public int GetUserID()
         {
-            var data = newConnection.Table<User>();
+            var data = newConnection.Table<Admin>();
             var updatableUser = (from values in data
                                  where values.IsUserLoggedIn == true
                                  select values).Single();
             if (updatableUser != null)
             {
-                return updatableUser.UserID;
+                return updatableUser.AdminID;
             }
             return 0;
         }
 
         public string GetUserPassword()
         {
-            var data = newConnection.Table<User>();
+            var data = newConnection.Table<Admin>();
             var returnedUser = (from values in data
                                 where values.IsUserLoggedIn == true
                                 select values).Single();
@@ -267,7 +267,7 @@ namespace App1.Helpers
 
         public bool SetUserPassword(string password)
         {
-            var data = newConnection.Table<User>();
+            var data = newConnection.Table<Admin>();
             var updateableUser = (from values in data
                                   where values.IsUserLoggedIn == true
                                   select values).Single();
@@ -282,100 +282,10 @@ namespace App1.Helpers
 
         public int DeleteAllUser()
         {
-            return newConnection.DeleteAll<User>();
+            return newConnection.DeleteAll<Admin>();
         }
-        public bool UpdateUserID(int uID)
-        {
-            var data = newConnection.Table<User>();
-            var updatableUser = (from values in data
-                                 where values.UserID == 0
-                                 select values).Single();
-            try
-            {
-                if (uID > 1)
-                {
-                    updatableUser.UserID = uID;
-                    updatableUser.IsUserIdUpdated = true;
-                    newConnection.Update(updatableUser);
-                    return true;
-                }
-            }
-            catch (Exception exp)
-            {
-                Debug.WriteLine(exp);
-            }
 
-            return false;
-        }
-        public bool UpdateDataPrptectionInformation(bool isAccepted)
-        {
-            var data = newConnection.Table<User>();
-            var updatableUser = (from values in data
-                                 where values.IsUserLoggedIn == true
-                                 select values).Single();
-            if (updatableUser != null)
-            {
-                updatableUser.IsDataProtectionAccepted = isAccepted;
-                updatableUser.IsUserAskedForDataProtection = true;
-                if (newConnection.Update(updatableUser) == 1)
-                {
-                    return true;
-                }
-                else return false;
-            }
-            else return false;
-        }
-        public bool IsUserAskedForDataProtection(string username)
-        {
-            var data = newConnection.Table<User>();
-            var user = (from values in data
-                        where values.Username == username
-                        select values).Single();
-            return user.IsUserAskedForDataProtection;
-        }
-        public bool IsUserIdUpdated()
-        {
-            try
-            {
-                var data = newConnection.Table<User>();
-                var user = (from values in data
-                            select values).Single();
-                return user.IsUserIdUpdated;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.StackTrace);
-            }
-            return false;
-        }
-        public bool IsDataProtectionAccepted(string username)
-        {
-            var data = newConnection.Table<User>();
-            var user = (from values in data
-                        where values.Username == username
-                        select values).Single();
-            return user.IsDataProtectionAccepted;
-        }
-        public void UpdateDataAutoSend(bool decison)
-        {
-            var data = newConnection.Table<User>();
-            var updatableUser = (from values in data
-                                 where values.IsUserLoggedIn == true
-                                 select values).Single();
-            try
-            {
-                if (updatableUser != null)
-                {
-                    updatableUser.IsToDataAutoSend = decison;
-                    newConnection.Update(updatableUser);
-                }
-            }
-            catch (Exception exp)
-            {
-                Debug.WriteLine(exp);
-            }
-        }
-        public void PrintUser(User user)
+        public void PrintUser(Admin user)
         {
             Console.WriteLine(user.Email);
         }

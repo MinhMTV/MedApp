@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+<FlyoutPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -8,7 +8,7 @@
              x:Class="App1.View.ResultOverviewPage"
              NavigationPage.HasNavigationBar="false">
     
-    <MasterDetailPage.Master>
+    <FlyoutPage.Flyout>
         <ContentPage Title="MasterResult">
             <ContentPage.Content>
                 <StackLayout Margin="5,30,5,5">
@@ -16,9 +16,9 @@
                 </StackLayout>
             </ContentPage.Content>
         </ContentPage>
-    </MasterDetailPage.Master>
-    
-    <MasterDetailPage.Detail>
+    </FlyoutPage.Flyout>
+
+    <FlyoutPage.Detail>
         <ContentPage>
             <ContentPage.Content>
                 <ScrollView>
@@ -32,6 +32,6 @@
                 </ScrollView>
             </ContentPage.Content>
         </ContentPage>
-    </MasterDetailPage.Detail>
+    </FlyoutPage.Detail>
     
-</MasterDetailPage>
+</FlyoutPage>

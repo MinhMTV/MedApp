@@ -9,17 +9,16 @@ using Xamarin.Forms.Xaml;
 namespace App1.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MenuPage : FlyoutPage
+    public partial class AdminMenu : FlyoutPage
     {
 
-        public MenuPage()
-        {
+        public AdminMenu()
+        { 
             InitializeComponent();
             Detail = new NavigationPage(new DemoPage());
             IsPresented = false;
             SendTrainingSessions();
         }
-
 
         protected override void OnAppearing()
         {

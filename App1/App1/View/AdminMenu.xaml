@@ -4,7 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="App1.View.MenuPage"
+             x:Class="App1.View.AdminMenu"
              NavigationPage.HasNavigationBar="false">
 
         
@@ -12,7 +12,7 @@
         <ContentPage Padding="10" Title="Master">
             <ContentPage.Content>
                 <StackLayout Margin="5,30,5,5">
-                    <Label Text="UserPanel" TextColor="Black" FontSize="20" HorizontalOptions="CenterAndExpand"/>
+                    <Label Text="Admin" TextColor="Black" FontSize="20" HorizontalOptions="CenterAndExpand"/>
                     <Button Text="Erklärung" Clicked="Demo_Clicked" TextColor="White" BackgroundColor="Blue"></Button>
                     <Button Text="Wochenübersicht" Clicked="WeeklyOverviewClicked" TextColor="White" BackgroundColor="Blue"></Button>
                     <Button Text="Passwort ändern"  Clicked="EditUserInformationClicked" TextColor="White"  BackgroundColor="Blue"></Button>

@@ -13,6 +13,7 @@ namespace App1
     public partial class LoginPage : ContentPage
     {
         private UserDBHelper userDBHelper;
+        private AdminDBHelper adminDBHelper;
         private APIUserHelper apiUserHelper;
 
         public LoginPage()
@@ -20,22 +21,48 @@ namespace App1
             InitializeComponent();
             userDBHelper = new UserDBHelper();
             apiUserHelper = new APIUserHelper();
+            adminDBHelper = new AdminDBHelper();
+            GlobalVariables.isAdmin = false;
         }
+
+        // This prevents a user from being able to hit the back button and leave the login page.
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+        }
+
 
         async void LogIn(object sender, EventArgs e)
         {
-
+            
             //Check for the username and password are not empty
             if (Entry_Username.Text != null && Entry_Password.Text != null)
             {
-                //This is redundant
-                //If there is no registered user, force user to register.
-                if (!userDBHelper.IsRegisteredUserExists())
+                
+                if(!adminDBHelper.CheckUserexist(Entry_Username.Text))
                 {
-                    await DisplayAlert("Login", "Der Benutzer ist nicht registriert!", "Okay");
-                    await Navigation.PushAsync(new Registraion());
+                    //If there is no registered user, force user to register.
+                    if (!userDBHelper.CheckUserexist(Entry_Username.Text))
+                    {
+                        await DisplayAlert("Login", "Der Benutzer ist nicht registriert! Bitte Passwort und Benutzername überprüfen!", "Okay");
+                    }
                 }
 
+                //check if admin login
+                if(adminDBHelper.ValidateLogin(Entry_Username.Text, Entry_Password.Text))
+                {
+                    if (adminDBHelper.LogInUser(Entry_Username.Text))
+                    {
+                        await DisplayAlert("Login", "Admin Login erfolgreich", "Okay");
+                    }
+                    // Get current logged in username, if login was successfull and enable Admin View
+                    string userName = adminDBHelper.GetLoggedInUserName();
+                    GlobalVariables.isAdmin = true;
+                    GlobalVariables.CurrentLoggedInUser = userName;
+                    await Navigation.PushAsync(new AdminMenu());
+                }
+
+                //else check if user login
                 // If there is any registered user, check for the validation of username and password
                 else if (userDBHelper.ValidateLogin(Entry_Username.Text, Entry_Password.Text))
                 {
@@ -177,7 +204,7 @@ namespace App1
         }
         async void StartRegistraion(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new Registraion());
+            await Navigation.PushAsync(new Registration());
         }
     }
 }

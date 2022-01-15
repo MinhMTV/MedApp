@@ -10,15 +10,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microcharts" Version="0.7.1" />
-    <PackageReference Include="Microcharts.Forms" Version="0.7.1" />
-    <PackageReference Include="MLToolkit.Forms.SwipeCardView" Version="2.1.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="sqlite-net-pcl" Version="1.6.292" />
+    <PackageReference Include="Microcharts" Version="0.9.5.9" />
+    <PackageReference Include="Microcharts.Forms" Version="0.9.5.9" />
+    <PackageReference Include="MLToolkit.Forms.SwipeCardView" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
     <PackageReference Include="Xam.Plugin.Connectivity" Version="3.2.0" />
     <PackageReference Include="Xam.Plugins.Notifier" Version="3.0.1" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
-    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991640" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2291" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +37,15 @@
     <Compile Update="View\DemoPage.xaml.cs">
       <DependentUpon>DemoPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="View\AdminReg.xaml.cs">
+      <DependentUpon>AdminReg.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="View\AdminMenu.xaml.cs">
+      <DependentUpon>AdminMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="View\WelcomePage.xaml.cs">
+      <DependentUpon>WelcomePage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="View\WeeklyOverviewPage.xaml.cs">
       <DependentUpon>WeeklyOverviewPage.xaml</DependentUpon>
     </Compile>
@@ -46,8 +55,8 @@
     <Compile Update="View\ResultsPage.xaml.cs">
       <DependentUpon>ResultsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="View\Registraion.xaml.cs">
-      <DependentUpon>Registraion.xaml</DependentUpon>
+    <Compile Update="View\Registration.xaml.cs">
+      <DependentUpon>Registration.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -88,7 +97,7 @@
     <EmbeddedResource Update="View\ResultsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="View\Registraion.xaml">
+    <EmbeddedResource Update="View\Registration.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

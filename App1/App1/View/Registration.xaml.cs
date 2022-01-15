@@ -8,14 +8,15 @@ using Xamarin.Forms.Xaml;
 namespace App1
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class Registraion : ContentPage
+    public partial class Registration : ContentPage
     {
         private int age;
 
         private UserDBHelper userDBHelper = new UserDBHelper();
+        private AdminDBHelper adminDBHelper = new AdminDBHelper();
         public User user;
 
-        public Registraion()
+        public Registration()
         {
             InitializeComponent();
             Entry_Username.ReturnCommand = new Command(() => Entry_Firstname.Focus());
@@ -33,14 +34,45 @@ namespace App1
 
         async private void CompleteRegistration_Clicked(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(Entry_Username.Text) || string.IsNullOrWhiteSpace(Entry_Username.Text) ||
-                string.IsNullOrEmpty(Entry_Firstname.Text) ||
-                string.IsNullOrEmpty(Entry_Lastname.Text) ||
-                string.IsNullOrEmpty(Entry_Email.Text) || string.IsNullOrWhiteSpace(Entry_Email.Text) ||
-                string.IsNullOrEmpty(Entry_Password.Text) || string.IsNullOrWhiteSpace(Entry_Password.Text) ||
+            var missUsern = false;
+            var missEntity = false;
+            var missName = false;
+            var missNameorEnt = false;
+            var missMail = false;
+            var missPw = false;
+
+            if (string.IsNullOrEmpty(Entry_Username.Text) || string.IsNullOrWhiteSpace(Entry_Username.Text))
+            {
+                missUsern = true;
+            }
+            if (string.IsNullOrEmpty(Entry_Firstname.Text) || string.IsNullOrEmpty(Entry_Lastname.Text))
+            {
+                missName = true;
+            }
+
+            if (missName && missEntity == true)
+            {
+                missNameorEnt = true;
+            }
+
+            if (string.IsNullOrEmpty(Entry_Email.Text) || string.IsNullOrWhiteSpace(Entry_Email.Text))
+            {
+                missMail = true;
+            }
+
+            if (string.IsNullOrEmpty(Entry_Password.Text) || string.IsNullOrWhiteSpace(Entry_Password.Text) ||
                 string.IsNullOrEmpty(Entry_Repeatedpassword.Text) || string.IsNullOrWhiteSpace(Entry_Repeatedpassword.Text))
             {
-                await DisplayAlert("Achtung!", "Bitte füllen Sie alle Felder aus", "OK");
+                missPw = true;
+            }
+
+            if (missMail || missPw || missNameorEnt == true)
+            {
+                await DisplayAlert("Achtung!", "Bitte Füllen Sie alle erforderlichen Felder aus", "OK");
+                if (missUsern) { Entry_Username.PlaceholderColor = Color.Red; Entry_Username.Placeholder = "Bitte Username angeben!"; }
+                if (missNameorEnt) { Entry_Lastname.PlaceholderColor = Color.Red; Entry_Lastname.Placeholder = "Bitte Name angeben!";  }
+                if (missMail) { Entry_Email.PlaceholderColor = Color.Red; Entry_Email.Placeholder = "Bitte E-Mail angeben!"; }
+                if (missPw) { Entry_Password.PlaceholderColor = Color.Red; Entry_Password.Placeholder = "Bitte Passwort angeben!"; }
 
             }
             else if (!string.Equals(Entry_Password.Text, Entry_Repeatedpassword.Text))
@@ -49,7 +81,11 @@ namespace App1
                 Entry_Password.Text = string.Empty;
                 Entry_Repeatedpassword.Text = string.Empty;
             }
-            else
+            else if (adminDBHelper.CheckUserexist(Entry_Username.Text) || userDBHelper.CheckUserexist(Entry_Username.Text))
+            {
+                await DisplayAlert("Achtung!", "Benutzer ist schon registriert!", "OK");
+            }
+            else 
             {
                 //My code
                 user = new User();
@@ -69,7 +105,7 @@ namespace App1
                 user.SessionLastUpdated = DateTime.Now;
                 try
                 {
-                    var userAddingStatus = userDBHelper.AddUser(user);
+                    var userAddingStatus = userDBHelper.AddUser(user, Entry_Username.Text);
                     userDBHelper.PrintUser(user);
 
                     if (userAddingStatus)

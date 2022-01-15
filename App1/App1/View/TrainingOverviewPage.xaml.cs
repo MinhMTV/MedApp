@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using Entry = Microcharts.Entry;
+using Entry = Microcharts.ChartEntry;
 
 namespace App1.View
 {
@@ -20,6 +20,8 @@ namespace App1.View
             InitializeComponent();
             DateTime dateTime = DateTime.Today.Date;
             List<TrainingSession> listTS = trainingSessionDBHelper.GetLastTwoTrainingSessions();
+
+            Console.WriteLine("Hello");
 
             int totalPicuresCurrent = listTS.ElementAt(0).NrOfGoodCorrectImages + listTS.ElementAt(0).NrOfGoodWrongImages +
                                         listTS.ElementAt(0).NrOfBadCorrectImages + listTS.ElementAt(0).NrOfBadWrongImages;

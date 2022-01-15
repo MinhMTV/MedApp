@@ -8,6 +8,8 @@ namespace App1.Models
         public static string CurrentLoggedInUser { get; set; }
         public static int CurrentLoggedInUserID { get; set; }
 
+        public static bool isAdmin { get; set; }
+
         public static Stopwatch Stopwatch = new Stopwatch();
         public static TimeSpan TimeSpend { get; set; }
         public static int totalPics { get; set; }
