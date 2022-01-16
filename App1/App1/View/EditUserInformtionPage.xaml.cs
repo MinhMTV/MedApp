@@ -1,6 +1,7 @@
 ﻿using App1.Helpers;
+using App1.Models;
 using System;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -20,25 +21,33 @@ namespace App1.View
             if (Entry_NewPassword.Text.Equals(Entry_ConfirmPassword.Text))
             {
                 //If right old password entered
-                if (userDBHelper.GetUserPassword().Equals(Entry_OldPassword.Text))
+                if (userDBHelper.getLoggedinUserProperty("password").Equals(Entry_OldPassword.Text))
                 {
-                    if (userDBHelper.SetUserPassword(Entry_NewPassword.Text))
+                    if(Entry_NewPassword.Text.Equals(Entry_OldPassword.Text))
+                    {
+                        await DisplayAlert("Achtung", "Bitte gib ein neues Passwort ein", "Okay");
+                    }
+                    else if (userDBHelper.SetUserPassword(Preferences.Get(constants.loginUser,"false"),Entry_NewPassword.Text))
                     {
                         await DisplayAlert("Erfolg", "Passwort wurde geändert!", "Okay");
                         Entry_OldPassword.Text = string.Empty;
                         Entry_NewPassword.Text = string.Empty;
                         Entry_ConfirmPassword.Text = string.Empty;
                     }
+                    else
+                    {
+                        throw new Exception("something went wrong...");
+                    }
                 }
                 //worng old password
                 else
                 {
-                    await DisplayAlert("Fehler", "Bitte tragen Sie das richtige alte Passwort", "Okay");
+                    await DisplayAlert("Fehler", "Bitte tragen Sie das richtige alte Passwort ein", "Okay");
                 }
             }
             else
             {
-                await DisplayAlert("Fehler", "Ihr neue Passwörter stimmen nicht überein", "Okay");
+                await DisplayAlert("Fehler", "Ihr neuen Passwörter stimmen nicht überein", "Okay");
             }
         }
     }

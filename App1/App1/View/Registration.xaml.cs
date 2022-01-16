@@ -1,4 +1,5 @@
 ﻿using App1.Helpers;
+using App1.Methods;
 using App1.Models;
 using System;
 using System.Diagnostics;
@@ -14,7 +15,9 @@ namespace App1
 
         private UserDBHelper userDBHelper = new UserDBHelper();
         private AdminDBHelper adminDBHelper = new AdminDBHelper();
+        private Stringmethods stringmethods = new Stringmethods();
         public User user;
+        
 
         public Registration()
         {
@@ -41,12 +44,14 @@ namespace App1
             var missMail = false;
             var missPw = false;
 
-            if (string.IsNullOrEmpty(Entry_Username.Text) || string.IsNullOrWhiteSpace(Entry_Username.Text))
+            if (stringmethods.isEmpty(Entry_Username.Text))
             {
                 missUsern = true;
             }
-            if (string.IsNullOrEmpty(Entry_Firstname.Text) || string.IsNullOrEmpty(Entry_Lastname.Text))
+            
             {
+                //cant use isempty method cause names have whitespace sometimes
+                if (string.IsNullOrEmpty(Entry_Firstname.Text) || string.IsNullOrEmpty(Entry_Lastname.Text)) 
                 missName = true;
             }
 
@@ -55,13 +60,12 @@ namespace App1
                 missNameorEnt = true;
             }
 
-            if (string.IsNullOrEmpty(Entry_Email.Text) || string.IsNullOrWhiteSpace(Entry_Email.Text))
+            if (stringmethods.isEmpty(Entry_Email.Text))
             {
                 missMail = true;
             }
 
-            if (string.IsNullOrEmpty(Entry_Password.Text) || string.IsNullOrWhiteSpace(Entry_Password.Text) ||
-                string.IsNullOrEmpty(Entry_Repeatedpassword.Text) || string.IsNullOrWhiteSpace(Entry_Repeatedpassword.Text))
+            if (stringmethods.isEmpty(Entry_Password.Text) || stringmethods.isEmpty(Entry_Repeatedpassword.Text))
             {
                 missPw = true;
             }

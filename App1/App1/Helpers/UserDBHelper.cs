@@ -1,9 +1,11 @@
 ﻿using App1.Database;
 using App1.Models;
+using App1.Methods;
 using SQLite;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace App1.Helpers
@@ -11,12 +13,15 @@ namespace App1.Helpers
     public class UserDBHelper
     {
         private SQLiteConnection newConnection;
+        public Stringmethods stringmethods;
 
         public UserDBHelper()
         {
             newConnection = DependencyService.Get<ISQLite>().GetConnection();
             newConnection.CreateTable<User>(); // Create table if not exists
         }
+
+        //Add User if user already exist by username return false
         public bool AddUser(User user, string username)
         {
             if (CheckUserexist(username))
@@ -30,6 +35,7 @@ namespace App1.Helpers
             }
         }
 
+        //check if user already exist in table by name
         public bool CheckUserexist(string username)
         {
             var data = newConnection.Table<User>();
@@ -43,8 +49,8 @@ namespace App1.Helpers
         }
 
 
-        /* Check if user exist
-         Check, if the a User Table already has entries in the database if not, no User is registered 
+        /* 
+         Check, if the a User Table already has entries in the database if not, no User are registered 
         */
         public bool IsRegisteredUserExists()
         {
@@ -54,14 +60,13 @@ namespace App1.Helpers
             }
             return false;     
         }
-        public bool IsLoggedInUserExists()
-        {
-            if(GetUser() != null) {
-                User user = GetUser();
-                return user.IsUserLoggedIn;
-            }
-            return false;
-        }
+
+        /// <summary>
+        /// check username and password
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns>bool true if correct else false</returns>
         public bool ValidateLogin(string username, string password)
         {
             var data = newConnection.Table<User>();
@@ -73,56 +78,47 @@ namespace App1.Helpers
             else
                 return false;
         }
+
+        /// <summary>
+        /// Log user by username
+        /// check first if exist then set preferences to username
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns>true if login was succesful else false</returns>
         public bool LogInUser(string username)
         {
+
             var data = newConnection.Table<User>();
-
-            // Find nr of current logged in users
-            var nrOfLoggedInUser = (from values in data
-                                    where values.IsUserLoggedIn == true
-                                    select values).Count();
-
-            // Current logged in user should be zero
-            if (nrOfLoggedInUser == 0)
+            if(CheckUserexist(username))
             {
-                var userToLogIn = (from values in data
-                                   where values.Username == username
-                                   select values).Single();
-                userToLogIn.IsUserLoggedIn = true;
-
-                var updateStatus = newConnection.Update(userToLogIn);
-                if (updateStatus == 0)
-                {
-                    return true;
-                }
-            }
-            return false;
+                Preferences.Set(constants.loginUser, username);
+                return true;
+            } else
+            {
+                return false;
+            }   
         }
+
+        /// <summary>
+        /// log out user by pref login user
+        /// </summary>
         public async void LogOutUser()
         {
             var data = newConnection.Table<User>();
             string userName;
 
             //Make sure any logged in user exists
-            if (IsLoggedInUserExists())
+            if (!Preferences.Get(constants.loginUser,"false").Equals("false"))
             {
-
-                // Get logged in user name
-                userName = GetLoggedInUserName();
-                var userToLogOut = (from values in data
-                                    where values.Username == userName
-                                    select values).Single();
-                userToLogOut.IsUserLoggedIn = false;
-
-                var updateStatus = newConnection.Update(userToLogOut);
-
-                if (updateStatus != 0)
+                userName = Preferences.Get(constants.loginUser, "false");
+                try
                 {
-                    await App.Current.MainPage.DisplayAlert("Erfolg", "Sie werden ausgeloggt", "OK");
+                    await App.Current.MainPage.DisplayAlert("Erfolg", "Sie wurden ausgeloggt", "OK");
                 }
-                else
+                catch (Exception ex)
                 {
-                    await App.Current.MainPage.DisplayAlert("Fehler", "Ausloggen nicht möglich", "OK");
+                    await App.Current.MainPage.DisplayAlert("Fehler", ex.ToString(), "OK");
+
                 }
 
             }
@@ -131,17 +127,21 @@ namespace App1.Helpers
                 await App.Current.MainPage.DisplayAlert("Achtung", "Es gibt keine eingeloggten Benutzer", "OK");
             }
         }
+
+        //get first user on user table
         public User GetAnyUser()
         {
             return newConnection.Table<User>().First();
         }
-        public User GetUser()
+
+        //get Userobj of current logged User
+        public User GetLoggedUser()
         {
             try
             {
                 foreach(User item in newConnection.Table<User>())
                 {
-                    if(item.IsUserLoggedIn == true)
+                    if(item.Username == Preferences.Get(constants.loginUser,"false"))
                     {
                         return item;
                     } 
@@ -149,12 +149,18 @@ namespace App1.Helpers
                 return null;
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
+                Console.WriteLine(e);
                 throw;
             }
         }
+
+        /// <summary>
+        /// get userobj by username 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns>userobj</returns>
         public User GetUserByName(string username)
         {
             var data = newConnection.Table<User>();
@@ -171,105 +177,61 @@ namespace App1.Helpers
                 throw;
             }
         }
-        // Get the loggedin user name
-        public string GetLoggedInUserName()
-        {
-            if (IsRegisteredUserExists())
-            {
-                var data = newConnection.Table<User>();
-                try
-                {
-                    var updatableUser = (from values in data
-                                         where values.IsUserLoggedIn == true
-                                         select values).Single();
 
-                    if (updatableUser != null)
-                    {
-                        return updatableUser.Username;
-                    }
-
-                }
-                catch (Exception)
-                {
-                }
-            }
-            return string.Empty;
-        }
-        public string GetLoggedInUserFirstName()
+        // Get the loggedin user property
+        public string getLoggedinUserProperty(string property)
         {
-            if (IsRegisteredUserExists())
+            if (!Preferences.Get(constants.loginUser, "false").Equals("false"))
             {
+                Console.WriteLine(Preferences.Get(constants.loginUser, "false"));
+
+                var username = Preferences.Get(constants.loginUser, "false");
                 var data = newConnection.Table<User>();
                 try
                 {
                     var returnedUser = (from values in data
-                                        where values.IsUserLoggedIn == true
+                                        where values.Username == username
                                         select values).Single();
 
                     if (returnedUser != null)
                     {
-                        return returnedUser.FirstName;
+                        switch (property.Trim().ToLower())
+                        {
+                            case "username":
+                                return returnedUser.Username;
+                                 
+                            case "firstname":
+                                return returnedUser.FirstName;
+                            case "lastname":
+                                return returnedUser.LastName;
+                            case "password":
+                                return returnedUser.Password;
+                            case "email":
+                                return returnedUser.Email;
+                            case "userid":
+                                return returnedUser.UserID.ToString();
+                        }
                     }
 
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    Console.WriteLine(e);
                 }
             }
             return string.Empty;
         }
-        // Get the loggedin user name
 
-
-        public string GetLoggedInUserEmail()
-        {
-            if (IsRegisteredUserExists())
-            {
-                var data = newConnection.Table<User>();
-                var updatableUser = (from values in data
-                                     where values.IsUserLoggedIn == true
-                                     select values).Single();
-
-                if (updatableUser != null)
-                {
-                    return updatableUser.Email;
-                }
-            }
-
-            return string.Empty;
-        }
-        // Get the loggedin user name
-        public int GetUserID()
-        {
-            var data = newConnection.Table<User>();
-            var updatableUser = (from values in data
-                                 where values.IsUserLoggedIn == true
-                                 select values).Single();
-            if (updatableUser != null)
-            {
-                return updatableUser.UserID;
-            }
-            return 0;
-        }
-
-        public string GetUserPassword()
-        {
-            var data = newConnection.Table<User>();
-            var returnedUser = (from values in data
-                                where values.IsUserLoggedIn == true
-                                select values).Single();
-            if (returnedUser != null)
-            {
-                return returnedUser.Password;
-            }
-            return String.Empty;
-        }
-
-        public bool SetUserPassword(string password)
+        /// <summary>
+        /// change password of user by username
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public bool SetUserPassword(string username, string password)
         {
             var data = newConnection.Table<User>();
             var updateableUser = (from values in data
-                                  where values.IsUserLoggedIn == true
+                                  where values.Username == username
                                   select values).Single();
             if (updateableUser != null)
             {
@@ -280,10 +242,16 @@ namespace App1.Helpers
             return false;
         }
 
+        /// <summary>
+        /// delete all User in User Table
+        /// </summary>
+        /// <returns></returns>
         public int DeleteAllUser()
         {
             return newConnection.DeleteAll<User>();
         }
+
+
         public bool UpdateUserID(int uID)
         {
             var data = newConnection.Table<User>();

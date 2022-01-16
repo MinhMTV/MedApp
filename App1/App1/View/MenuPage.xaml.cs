@@ -1,6 +1,7 @@
 ﻿using App1.Helpers;
 using App1.Models;
 using Plugin.Connectivity;
+using System;
 using System.Collections.Generic;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -17,7 +18,10 @@ namespace App1.View
             InitializeComponent();
             Detail = new NavigationPage(new DemoPage());
             IsPresented = false;
+            var loguser = Preferences.Get(constants.loginUser, "false");
+            name.Text = "Hello " + loguser;
             SendTrainingSessions();
+            Console.WriteLine(Preferences.Get(constants.loginUser, "false"));
         }
 
 
@@ -63,6 +67,7 @@ namespace App1.View
             {
                 UserDBHelper userDBHelper = new UserDBHelper();
                 userDBHelper.LogOutUser();
+                Preferences.Set(constants.loginUser, "false");
                 await Navigation.PushAsync(new LoginPage());
             }
             IsPresented = false;

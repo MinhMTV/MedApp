@@ -1,6 +1,7 @@
 ﻿using App1.Helpers;
 using App1.Models;
 using Plugin.Connectivity;
+using System;
 using System.Collections.Generic;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -11,13 +12,15 @@ namespace App1.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AdminMenu : FlyoutPage
     {
-
         public AdminMenu()
         { 
             InitializeComponent();
             Detail = new NavigationPage(new DemoPage());
             IsPresented = false;
+            var loguser = Preferences.Get(constants.loginUser, "false");
+            name.Text = "Hello Admin " + loguser;
             SendTrainingSessions();
+            Console.WriteLine(Preferences.Get(constants.loginUser, "false"));
         }
 
         protected override void OnAppearing()
@@ -60,8 +63,8 @@ namespace App1.View
             var decision = await DisplayAlert("Achtung", "Möchten Sie sich wirklich ausloggen?", "Ja", "Nein");
             if (decision)
             {
-                UserDBHelper userDBHelper = new UserDBHelper();
-                userDBHelper.LogOutUser();
+                AdminDBHelper adminDBHelper = new AdminDBHelper();
+                adminDBHelper.LogOutUser();
                 await Navigation.PushAsync(new LoginPage());
             }
             IsPresented = false;

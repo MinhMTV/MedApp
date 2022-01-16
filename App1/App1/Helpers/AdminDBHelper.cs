@@ -4,6 +4,7 @@ using SQLite;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace App1.Helpers
@@ -73,28 +74,39 @@ namespace App1.Helpers
         }
         public bool LogInUser(string username)
         {
+
             var data = newConnection.Table<Admin>();
-
-            // Find nr of current logged in users
-            var nrOfLoggedInUser = (from values in data
-                                    where values.IsUserLoggedIn == true
-                                    select values).Count();
-
-            // Current logged in user should be zero
-            if (nrOfLoggedInUser == 0)
+            if (CheckUserexist(username))
             {
-                var userToLogIn = (from values in data
-                                   where values.Username == username
-                                   select values).Single();
-                userToLogIn.IsUserLoggedIn = true;
-
-                var updateStatus = newConnection.Update(userToLogIn);
-                if (updateStatus == 0)
-                {
-                    return true;
-                }
+                Preferences.Set(constants.loginUser, username);
+                return true;
             }
-            return false;
+            else
+            {
+                return false;
+            }
+
+            /*
+                        // Find nr of current logged in users
+                        var nrOfLoggedInUser = (from values in data
+                                                where values.IsUserLoggedIn == true
+                                                select values).Count();
+
+                        // Current logged in user should be zero
+                        if (nrOfLoggedInUser == 0)
+                        {
+                            var userToLogIn = (from values in data
+                                               where values.Username == username
+                                               select values).Single();
+                            userToLogIn.IsUserLoggedIn = true;
+
+                            var updateStatus = newConnection.Update(userToLogIn);
+                            if (updateStatus == 0)
+                            {
+                                return true;
+                            }
+                        }
+              */
         }
         public async void LogOutUser()
         {
@@ -102,11 +114,12 @@ namespace App1.Helpers
             string userName;
 
             //Make sure any logged in user exists
-            if (IsLoggedInUserExists())
+            if (!Preferences.Get(constants.loginUser, "false").Equals("false"))
             {
 
                 // Get logged in user name
-                userName = GetLoggedInUserName();
+                //              userName = GetLoggedInUserName();
+                userName = Preferences.Get(constants.loginUser, "false");
                 var userToLogOut = (from values in data
                                     where values.Username == userName
                                     select values).Single();
@@ -116,7 +129,7 @@ namespace App1.Helpers
 
                 if (updateStatus != 0)
                 {
-                    await App.Current.MainPage.DisplayAlert("Erfolg", "Sie werden ausgeloggt", "OK");
+                    await App.Current.MainPage.DisplayAlert("Erfolg", "Sie wurden ausgeloggt", "OK");
                 }
                 else
                 {

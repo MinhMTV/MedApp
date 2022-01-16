@@ -4,6 +4,8 @@ using App1.Models;
 using App1.View;
 using System;
 using Xamarin.Forms;
+using Xamarin.Essentials;
+using Xamarin.CommunityToolkit.Extensions;
 
 namespace App1
 {
@@ -11,16 +13,13 @@ namespace App1
     {
         AdminDBHelper adminDBHelper;
         UserDBHelper userDBHelper;
+
         //TrainingSessionDBHelper trainingSessionDBHelper;
         public WelcomePage()
         {
             InitializeComponent();
             userDBHelper = new UserDBHelper();
             adminDBHelper = new AdminDBHelper();
-
-            //trainingSessionDBHelper = new TrainingSessionDBHelper();
-            //userDBHelper.DeleteAllUser();
-            //trainingSessionDBHelper.DeleteAllTSession();
         }
 
         /* if app was closed and open again, check if a User is already logged in
@@ -29,20 +28,31 @@ namespace App1
          */
         async void Start_Clicked(object sender, System.EventArgs e)
         {
+            Console.WriteLine(Preferences.Get(constants.loginUser, "false"));
             if (adminDBHelper.IsRegisteredUserExists())  //check if there is a admin already
             {
-                if (adminDBHelper.IsLoggedInUserExists()) //check if admin was logged in last session
+                if (Preferences.Get(constants.loginUser, "false").Equals("false")) //check if somebody is loggin
                 {
-                    Admin admin = adminDBHelper.GetUser();
-                    admin.IsUserLoggedIn = false;
                     await Navigation.PushAsync(new LoginPage());
                 }
-                else if (userDBHelper.IsLoggedInUserExists()) //check if a user was logged in last session (dont check if there is a user in db, because atleast a admin should be there
+                else
                 {
-                    string userName = userDBHelper.GetLoggedInUserName();
-                    GlobalVariables.CurrentLoggedInUser = userName;
-                    GlobalVariables.CurrentLoggedInUserID = userDBHelper.GetUserID();
-                    await Navigation.PushAsync(new MenuPage());
+                    var logginUser = Preferences.Get(constants.loginUser, "false"); //get name of log in User
+
+                    if (adminDBHelper.CheckUserexist(logginUser))
+                    {
+                        Preferences.Set(constants.loginUser, "false");
+                        await Navigation.PushAsync(new LoginPage()); //if admin was loggin pls repeat login as admin shouldnt be login all the time
+                    }
+                    else if (userDBHelper.CheckUserexist(logginUser)) // check if user was login
+                    {
+                        userDBHelper.LogInUser(logginUser);           //login user automatically
+                        await Navigation.PushAsync(new MenuPage());
+                    }
+                    else
+                    {
+                        throw new Exception("something went wrong..");
+                    }
                 }
             }
             else //if no admin is there, go to adminreg

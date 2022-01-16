@@ -16,12 +16,12 @@
                 <Label 
                     Text="Unternehmen"
                     TextColor="White"
-                    x:Name="Lbl_Unternehmen"
+                    x:Name="Lbl_Entity"
                     FontSize="Large"/>
                 
                 <Entry 
                     Placeholder="Unternehmen " 
-                    x:Name="Entry_Unternehmen"
+                    x:Name="Entry_Entity"
                     FontSize="Large"/>
 
                 <Label 

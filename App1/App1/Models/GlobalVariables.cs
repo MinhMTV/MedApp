@@ -5,6 +5,7 @@ namespace App1.Models
 {
     public class GlobalVariables
     {
+
         public static string CurrentLoggedInUser { get; set; }
         public static int CurrentLoggedInUserID { get; set; }
 

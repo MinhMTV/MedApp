@@ -49,16 +49,18 @@ namespace App1
                 }
 
                 //check if admin login
-                if(adminDBHelper.ValidateLogin(Entry_Username.Text, Entry_Password.Text))
+                if (adminDBHelper.ValidateLogin(Entry_Username.Text, Entry_Password.Text))
                 {
                     if (adminDBHelper.LogInUser(Entry_Username.Text))
                     {
                         await DisplayAlert("Login", "Admin Login erfolgreich", "Okay");
                     }
                     // Get current logged in username, if login was successfull and enable Admin View
-                    string userName = adminDBHelper.GetLoggedInUserName();
-                    GlobalVariables.isAdmin = true;
-                    GlobalVariables.CurrentLoggedInUser = userName;
+                    //                  string userName = adminDBHelper.GetLoggedInUserName(); redundant, da der username ja schon richtig eingetippt wurde
+                    Preferences.Set(constants.loginUser, Entry_Username.Text);  // set login User to Username of admin
+
+                    //GlobalVariables.isAdmin = true;
+                    //GlobalVariables.CurrentLoggedInUser = userName;
                     await Navigation.PushAsync(new AdminMenu());
                 }
 
@@ -90,26 +92,12 @@ namespace App1
                     if (userDBHelper.LogInUser(Entry_Username.Text))
                     {
                         await DisplayAlert("Login", "Login erfolgreich", "Okay");
-                    }
+                        Preferences.Set(constants.loginUser, Entry_Username.Text);  // set login User to Username of user
 
-
-                    // Get current logged in username, if login was successfull
-                    string userName = userDBHelper.GetLoggedInUserName();
-
-                    // If there is no logged in user, force user to login once again
-                    if (string.IsNullOrEmpty(userName))
-                    {
-                        await Navigation.PushAsync(new LoginPage());
-                    }
-                    // Else store the username and user id in the global varriables for later use
-                    else
-                    {
-                        GlobalVariables.CurrentLoggedInUser = userName;
-                        GlobalVariables.CurrentLoggedInUserID = userDBHelper.GetUserID();
                     }
 
                     // Check whether IsDataProtection accepted
-                    if (userDBHelper.IsUserAskedForDataProtection(userDBHelper.GetLoggedInUserName()))
+                    if (userDBHelper.IsUserAskedForDataProtection(Preferences.Get(constants.loginUser,"false")))
                     {
                         await Navigation.PushAsync(new MenuPage());
                     }
@@ -145,7 +133,7 @@ namespace App1
             int returnedId;
             try
             {
-                User user = userDBHelper.GetUser();
+                User user = userDBHelper.GetLoggedUser();
                 IsBusy = true;
                 returnedId = await apiUserHelper.SendUser(user);
                 IsBusy = false;

@@ -8,7 +8,7 @@ namespace App1
     public partial class DemoPage : ContentPage
     {
 
-
+        
         public DemoPage()
         {
             InitializeComponent();
@@ -27,6 +27,7 @@ namespace App1
         {
             await Navigation.PushAsync(new TrainingPage());
             //GlobalVariables.Stopwatch.Start();
+
         }
 
 

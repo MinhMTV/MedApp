@@ -51,7 +51,7 @@ namespace App1
                                                 TotalPictures),
                                                 2);
 
-            trainingSession.PatientId = userDBHelper.GetUserID();
+            trainingSession.PatientId = Convert.ToInt32(userDBHelper.getLoggedinUserProperty("userid"));
 
             // Image infromations are already added
             trainingSession.ElapsedTime = ElapsedTime;
@@ -78,7 +78,7 @@ namespace App1
             //}
 
             //Name = Application.Current.Properties["Name"].ToString();
-            Name = userDBHelper.GetLoggedInUserFirstName();
+            Name = userDBHelper.getLoggedinUserProperty("firstname");
             BindingContext = this;
 
             List<Entry> entries = new List<Entry>

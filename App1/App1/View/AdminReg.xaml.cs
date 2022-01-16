@@ -1,5 +1,6 @@
 ﻿using App1.Helpers;
 using App1.Models;
+using App1.Methods;
 using System;
 using System.Diagnostics;
 using Xamarin.Forms;
@@ -11,12 +12,13 @@ namespace App1
     public partial class AdminReg : ContentPage
     {
         private AdminDBHelper adminDBHelper = new AdminDBHelper();
+        private Stringmethods stringmethods = new Stringmethods();
         public Admin admin;
 
         public AdminReg()
         {
             InitializeComponent();
-            Entry_Unternehmen.ReturnCommand = new Command(() => Entry_Unternehmen.Focus());
+            Entry_Entity.ReturnCommand = new Command(() => Entry_Entity.Focus());
             Entry_Username.ReturnCommand = new Command(() => Entry_Firstname.Focus());
             Entry_Firstname.ReturnCommand = new Command(() => Entry_Lastname.Focus());
             Entry_Lastname.ReturnCommand = new Command(() => Entry_Email.Focus());
@@ -34,19 +36,34 @@ namespace App1
             var missPw = false;
 
             //username is missing
-            if (string.IsNullOrEmpty(Entry_Username.Text) || string.IsNullOrWhiteSpace(Entry_Username.Text))
+            if (stringmethods.isEmpty(Entry_Entity.Text))
+            {
+                missEntity = true;
+            }
+            //username is missing
+            if (stringmethods.isEmpty(Entry_Username.Text))
             {
                 missUsern = true;
             }
-            //entity is missing
-            if (string.IsNullOrEmpty(Entry_Unternehmen.Text) || string.IsNullOrWhiteSpace(Entry_Unternehmen.Text)) {
-                 missEntity = true;
+                //cant use isempty method cause names have whitespace sometimes
+            if (string.IsNullOrEmpty(Entry_Firstname.Text) || string.IsNullOrEmpty(Entry_Lastname.Text))
+            { 
+                    missName = true;
             }
 
-            //name is missing
-            if (string.IsNullOrEmpty(Entry_Firstname.Text) && string.IsNullOrEmpty(Entry_Lastname.Text))
+            if (missName && missEntity == true)
             {
-                 missName = true;
+                missNameorEnt = true;
+            }
+
+            if (stringmethods.isEmpty(Entry_Email.Text))
+            {
+                missMail = true;
+            }
+
+            if (stringmethods.isEmpty(Entry_Password.Text) || stringmethods.isEmpty(Entry_Repeatedpassword.Text))
+            {
+                missPw = true;
             }
 
             // name and entity is missing
@@ -54,25 +71,13 @@ namespace App1
             {
                 missNameorEnt = true;
             }
-            //mail is missing
-            if (string.IsNullOrEmpty(Entry_Email.Text) || string.IsNullOrWhiteSpace(Entry_Email.Text))
-            {
-                missMail = true;
-            }
-
-            //password is missing
-            if (string.IsNullOrEmpty(Entry_Password.Text) || string.IsNullOrWhiteSpace(Entry_Password.Text) ||
-                string.IsNullOrEmpty(Entry_Repeatedpassword.Text) || string.IsNullOrWhiteSpace(Entry_Repeatedpassword.Text))
-            {
-                missPw = true;
-            }
 
             //check if username/mail/passwort or either name or entity is missing
             if (missUsern || missMail || missPw || missNameorEnt == true)
             {
                 await DisplayAlert("Achtung!", "Bitte Füllen Sie alle erforderlichen Felder aus", "OK");
                 if (missUsern) { Entry_Username.PlaceholderColor = Color.Red; Entry_Username.Placeholder = "Bitte Username angeben!"; }
-                if (missNameorEnt) { Entry_Lastname.PlaceholderColor = Color.Red; Entry_Lastname.Placeholder = "Bitte Name angeben!"; Entry_Unternehmen.PlaceholderColor = Color.Red; Entry_Unternehmen.Placeholder = "Bitte Name angeben!"; }
+                if (missNameorEnt) { Entry_Lastname.PlaceholderColor = Color.Red; Entry_Lastname.Placeholder = "Bitte Name angeben!"; Entry_Entity.PlaceholderColor = Color.Red; Entry_Entity.Placeholder = "Bitte Name angeben!"; }
                 if (missMail) { Entry_Email.PlaceholderColor = Color.Red; Entry_Email.Placeholder = "Bitte E-Mail angeben!"; }
                 if (missPw) { Entry_Password.PlaceholderColor = Color.Red; Entry_Password.Placeholder = "Bitte Passwort angeben!"; }
                 
@@ -91,6 +96,7 @@ namespace App1
             {
                 //My code
                 admin = new Admin();
+                admin.Entity = Entry_Entity.Text;
                 admin.Username = Entry_Username.Text;
                 admin.Email = Entry_Email.Text;
                 admin.FirstName = Entry_Firstname.Text;
