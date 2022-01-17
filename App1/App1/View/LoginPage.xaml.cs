@@ -22,7 +22,6 @@ namespace App1
             userDBHelper = new UserDBHelper();
             apiUserHelper = new APIUserHelper();
             adminDBHelper = new AdminDBHelper();
-            GlobalVariables.isAdmin = false;
         }
 
         // This prevents a user from being able to hit the back button and leave the login page.
@@ -34,41 +33,48 @@ namespace App1
 
         async void LogIn(object sender, EventArgs e)
         {
-            
+            var username = Entry_Username.Text.ToLower();
             //Check for the username and password are not empty
-            if (Entry_Username.Text != null && Entry_Password.Text != null)
+            if (username != null && Entry_Password.Text != null)
             {
                 
-                if(!adminDBHelper.CheckUserexist(Entry_Username.Text))
+
+                if (!adminDBHelper.CheckUserexist(username))
                 {
                     //If there is no registered user, force user to register.
-                    if (!userDBHelper.CheckUserexist(Entry_Username.Text))
+                    if (!userDBHelper.CheckUserexist(username))
                     {
                         await DisplayAlert("Login", "Der Benutzer ist nicht registriert! Bitte Passwort und Benutzername überprüfen!", "Okay");
                     }
                 }
 
-                //check if admin login
-                if (adminDBHelper.ValidateLogin(Entry_Username.Text, Entry_Password.Text))
+/*                //check if admin login
+                if (adminDBHelper.ValidateLogin(username, Entry_Password.Text))
                 {
-                    if (adminDBHelper.LogInUser(Entry_Username.Text))
+                    if (adminDBHelper.LogInUser(username))
                     {
                         await DisplayAlert("Login", "Admin Login erfolgreich", "Okay");
                     }
-                    // Get current logged in username, if login was successfull and enable Admin View
-                    //                  string userName = adminDBHelper.GetLoggedInUserName(); redundant, da der username ja schon richtig eingetippt wurde
-                    Preferences.Set(constants.loginUser, Entry_Username.Text);  // set login User to Username of admin
+                    Preferences.Set(constants.loginUser, username);  // set login User to Username of admin
+                    await Navigation.PushAsync(new AdminMenu());
+                }*/
 
-                    //GlobalVariables.isAdmin = true;
-                    //GlobalVariables.CurrentLoggedInUser = userName;
+                if (adminDBHelper.ValidateLogin(username,Entry_Password.Text))
+                {
+                    await DisplayAlert("Login", "Admin Login erfolgreich", "Okay");
+                    Preferences.Set(constants.loginUser, username);  // set login User to Username of admin
                     await Navigation.PushAsync(new AdminMenu());
                 }
 
                 //else check if user login
-                // If there is any registered user, check for the validation of username and password
-                else if (userDBHelper.ValidateLogin(Entry_Username.Text, Entry_Password.Text))
+                // If there is any registered user, check for the validation of username and password and login if true
+                else if (userDBHelper.ValidateLogin(username, Entry_Password.Text))
                 {
-                    if (!userDBHelper.IsUserIdUpdated())
+                    await DisplayAlert("Login", "Login erfolgreich", "Okay");
+                    Preferences.Set(constants.loginUser, username);  // set login User to Username of user
+                    var user = userDBHelper.GetLoggedUser();
+                    userDBHelper.debugUser(user);
+                    /*if (!userDBHelper.IsUserIdUpdated())
                     {
                         //If no Internet don't let user continue
                         while (Connectivity.NetworkAccess != NetworkAccess.Internet)
@@ -87,14 +93,7 @@ namespace App1
                             await DisplayAlert("Fehler!", "Der Server kann nicht erreicht werden!", "OK");
                             return;
                         }
-                    }
-
-                    if (userDBHelper.LogInUser(Entry_Username.Text))
-                    {
-                        await DisplayAlert("Login", "Login erfolgreich", "Okay");
-                        Preferences.Set(constants.loginUser, Entry_Username.Text);  // set login User to Username of user
-
-                    }
+                    }*/
 
                     // Check whether IsDataProtection accepted
                     if (userDBHelper.IsUserAskedForDataProtection(Preferences.Get(constants.loginUser,"false")))
@@ -111,7 +110,7 @@ namespace App1
             }
             else
             {
-                await DisplayAlert("Login", "Bitte füllen Sie alle felder aus", "Okay");
+                await DisplayAlert("Login", "Bitte Benutzername oder Passwort eingeben", "Okay");
             }
 
         }

@@ -42,6 +42,7 @@
             </Grid>
 
             <Button Text="OK"
+                Clicked="Continue_Clicked"
                 TextColor="White"
                 BackgroundColor="Blue"
                 HorizontalOptions="CenterAndExpand"/>

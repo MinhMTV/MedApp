@@ -97,15 +97,14 @@ namespace App1
                 //My code
                 admin = new Admin();
                 admin.Entity = Entry_Entity.Text;
-                admin.Username = Entry_Username.Text;
+                admin.Username = Entry_Username.Text.ToLower();
                 admin.Email = Entry_Email.Text;
                 admin.FirstName = Entry_Firstname.Text;
                 admin.LastName = Entry_Lastname.Text;
                 admin.Password = Entry_Password.Text;
-                admin.IsUserLoggedIn = false;
                 try
                 {
-                    var userAddingStatus = adminDBHelper.AddAdmin(admin,Entry_Username.Text);
+                    var userAddingStatus = adminDBHelper.AddUser(admin,Entry_Username.Text);
                     adminDBHelper.PrintUser(admin);
 
                     if (userAddingStatus)

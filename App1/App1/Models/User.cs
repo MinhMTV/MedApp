@@ -5,15 +5,17 @@ namespace App1.Models
 {
     public class User
     {
-        [PrimaryKey]
+        [PrimaryKey, AutoIncrement]
+        public int UserDBID { get; set; } //unique id increase by number of user, also key to login
         public string Username { get; set; }
         public string Email { get; set; }
-        public int UserID { get; set; }
+
+        [Indexed]
+        public int UserID { get; set; } //unique random id, necessary to send user to server
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Password { get; set; }
         public int Age { get; set; }
-        public bool IsUserLoggedIn { get; set; }
         public bool IsUserIdUpdated { get; set; }
         public bool IsUserAskedForDataProtection { get; set; }
         public bool IsDataProtectionAccepted { get; set; }

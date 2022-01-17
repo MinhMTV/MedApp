@@ -6,5 +6,6 @@
          * String Value means key name 
          */
         public static string loginUser { get { return "loginUser";} } //check in preferences if a user was loggin, if not default value is false
+
     }
 }

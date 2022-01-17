@@ -1,7 +1,8 @@
 ﻿using App1.Helpers;
 using App1.Models;
 using App1.View;
-
+using Xamarin.CommunityToolkit.Extensions;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,19 +15,8 @@ namespace App1
         public DataProtectionPage()
         {
             InitializeComponent();
-            string username = GlobalVariables.CurrentLoggedInUser;
         }
 
-        //async void Cancel_Clicked(object sender, System.EventArgs e)
-        //{
-        //    await DisplayAlert("Achtung", "Sie müssen die Datenschutzrichtlinien akzeptieren!", "ok");
-        //}
-
-        //async void Accept_Clicked(object sender, System.EventArgs e)
-        //{
-        //    //userDBHelper.UpdateDataPrptectionInformation(userDBHelper.Ge)
-        //    await Navigation.PushAsync(new LoginPage());
-        //}
 
         // Perform required operation after examining e.Value
         async void OnCheckBoxCheckedChanged(object sender, CheckedChangedEventArgs e)

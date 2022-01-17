@@ -8,6 +8,7 @@ using System.Linq;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
+
 namespace App1.Helpers
 {
     public class UserDBHelper
@@ -62,7 +63,7 @@ namespace App1.Helpers
         }
 
         /// <summary>
-        /// check username and password
+        /// check username and password and login user 
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
@@ -73,6 +74,7 @@ namespace App1.Helpers
             var d1 = data.Where(x => x.Username == username && x.Password == password).FirstOrDefault();
             if (d1 != null)
             {
+                Preferences.Set(constants.loginUser, username);
                 return true;
             }
             else
@@ -80,7 +82,7 @@ namespace App1.Helpers
         }
 
         /// <summary>
-        /// Log user by username
+        /// Log user by only username
         /// check first if exist then set preferences to username
         /// </summary>
         /// <param name="username"></param>
@@ -89,7 +91,8 @@ namespace App1.Helpers
         {
 
             var data = newConnection.Table<User>();
-            if(CheckUserexist(username))
+            var d1 = data.Where(x => x.Username == username ).FirstOrDefault();
+            if (CheckUserexist(username))
             {
                 Preferences.Set(constants.loginUser, username);
                 return true;
@@ -197,6 +200,9 @@ namespace App1.Helpers
                     {
                         switch (property.Trim().ToLower())
                         {
+                            case "userdbid":
+                                return returnedUser.UserDBID.ToString();
+
                             case "username":
                                 return returnedUser.Username;
                                  
@@ -278,16 +284,22 @@ namespace App1.Helpers
         public bool UpdateDataPrptectionInformation(bool isAccepted)
         {
             var data = newConnection.Table<User>();
-            var updatableUser = (from values in data
-                                 where values.IsUserLoggedIn == true
-                                 select values).Single();
-            if (updatableUser != null)
+            var username = Preferences.Get(constants.loginUser, "false");
+            if (username != "false")
             {
-                updatableUser.IsDataProtectionAccepted = isAccepted;
-                updatableUser.IsUserAskedForDataProtection = true;
-                if (newConnection.Update(updatableUser) == 1)
+                var updatableUser = (from values in data
+                                     where values.Username == username
+                                     select values).Single();
+
+                if (updatableUser != null)
                 {
-                    return true;
+                    updatableUser.IsDataProtectionAccepted = isAccepted;
+                    updatableUser.IsUserAskedForDataProtection = true;
+                    if (newConnection.Update(updatableUser) == 1)
+                    {
+                        return true;
+                    }
+                    else return false;
                 }
                 else return false;
             }
@@ -326,9 +338,10 @@ namespace App1.Helpers
         }
         public void UpdateDataAutoSend(bool decison)
         {
+            var username = Preferences.Get(constants.loginUser, "false");
             var data = newConnection.Table<User>();
             var updatableUser = (from values in data
-                                 where values.IsUserLoggedIn == true
+                                 where values.Username == username
                                  select values).Single();
             try
             {
@@ -345,7 +358,51 @@ namespace App1.Helpers
         }
         public void PrintUser(User user)
         {
+            Console.WriteLine(user.UserDBID);
             Console.WriteLine(user.Email);
+            Console.WriteLine(user.FirstName);
+            Console.WriteLine(user.LastName);
+            Console.WriteLine(user.Password);
+            Console.WriteLine(user.UserID);
+            Console.WriteLine(user.IsUserIdUpdated);
+            Console.WriteLine(user.IsUserAskedForDataProtection);
+            Console.WriteLine(user.IsToDataAutoSend);
+            Console.WriteLine(user.SessionLastUpdated);
+        }
+
+        public void PrintAllUser()
+        {
+            var data = newConnection.Table<User>();
+            foreach (var user in data)
+            {
+                Console.WriteLine(user.UserDBID);
+                Console.WriteLine(user.Email);
+                Console.WriteLine(user.FirstName);
+                Console.WriteLine(user.LastName);
+                Console.WriteLine(user.Password);
+                Console.WriteLine(user.UserID);
+                Console.WriteLine(user.IsUserIdUpdated);
+                Console.WriteLine(user.IsUserAskedForDataProtection);
+                Console.WriteLine(user.IsToDataAutoSend);
+                Console.WriteLine(user.SessionLastUpdated);
+            }
+        }
+
+        public async void debugUser (User user)
+        {
+            var message =
+                "Userdbid " + user. UserDBID.ToString() + 
+                "\nEmail " + user.Email +
+                "\nFirstname " + user.FirstName +
+                "\nLastname " + user.LastName +
+                "\nPassword " + user.Password +
+                "\nUserID " + user.UserID +
+                "\nisUseridupdated " + user.IsUserIdUpdated +
+                "\nisUserAskedforDataprotection " + user.IsUserAskedForDataProtection +
+                "\nisDataAutoSend " + user.IsToDataAutoSend +
+                "\nsessionlastupdated " + user.SessionLastUpdated;
+            await App.Current.MainPage.DisplayAlert("Debug", message, "OK");
+
         }
     }
 }

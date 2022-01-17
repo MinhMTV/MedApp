@@ -32,7 +32,5 @@ namespace App1.Methods
             return s1.ToLower().Equals(s2.ToLower());
 
         }
-
-            
     }
 }

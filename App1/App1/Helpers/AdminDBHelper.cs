@@ -1,5 +1,6 @@
 ﻿using App1.Database;
 using App1.Models;
+using App1.Methods;
 using SQLite;
 using System;
 using System.Diagnostics;
@@ -12,16 +13,16 @@ namespace App1.Helpers
     public class AdminDBHelper
     {
         private SQLiteConnection newConnection;
+        public Stringmethods stringmethods;
 
         public AdminDBHelper()
         {
             newConnection = DependencyService.Get<ISQLite>().GetConnection();
-            newConnection.CreateTable<Admin>();   //create table if not exists
-            Console.WriteLine("Reading data");
-
-
+            newConnection.CreateTable<Admin>(); // Create table if not exists
         }
-        public bool AddAdmin(Admin admin, string username)
+
+        //Add User if user already exist by username return false
+        public bool AddUser(Admin user, string username)
         {
             if (CheckUserexist(username))
             {
@@ -29,10 +30,12 @@ namespace App1.Helpers
             }
             else
             {
-                newConnection.Insert(admin);
+                newConnection.Insert(user);
                 return true;
             }
         }
+
+        //check if user already exist in table by name
         public bool CheckUserexist(string username)
         {
             var data = newConnection.Table<Admin>();
@@ -43,10 +46,11 @@ namespace App1.Helpers
             }
             else
                 return false;
-
         }
-        /* Check if user exist
-         Check, if there is a User Table already the database if not, no User is registered 
+
+
+        /* 
+         Check, if the a User Table already has entries in the database if not, no User are registered 
         */
         public bool IsRegisteredUserExists()
         {
@@ -56,22 +60,32 @@ namespace App1.Helpers
             }
             return false;
         }
-        public bool IsLoggedInUserExists()
-        {
-            Admin user = GetUser();
-            return user.IsUserLoggedIn;
-        }
+
+        /// <summary>
+        /// check username and password
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns>bool true if correct else false</returns>
         public bool ValidateLogin(string username, string password)
         {
             var data = newConnection.Table<Admin>();
             var d1 = data.Where(x => x.Username == username && x.Password == password).FirstOrDefault();
             if (d1 != null)
             {
+                Preferences.Set(constants.loginUser, username);
                 return true;
             }
             else
                 return false;
         }
+
+        /// <summary>
+        /// Log user by username
+        /// check first if exist then set preferences to username
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns>true if login was succesful else false</returns>
         public bool LogInUser(string username)
         {
 
@@ -85,29 +99,11 @@ namespace App1.Helpers
             {
                 return false;
             }
-
-            /*
-                        // Find nr of current logged in users
-                        var nrOfLoggedInUser = (from values in data
-                                                where values.IsUserLoggedIn == true
-                                                select values).Count();
-
-                        // Current logged in user should be zero
-                        if (nrOfLoggedInUser == 0)
-                        {
-                            var userToLogIn = (from values in data
-                                               where values.Username == username
-                                               select values).Single();
-                            userToLogIn.IsUserLoggedIn = true;
-
-                            var updateStatus = newConnection.Update(userToLogIn);
-                            if (updateStatus == 0)
-                            {
-                                return true;
-                            }
-                        }
-              */
         }
+
+        /// <summary>
+        /// log out user by pref login user
+        /// </summary>
         public async void LogOutUser()
         {
             var data = newConnection.Table<Admin>();
@@ -116,24 +112,15 @@ namespace App1.Helpers
             //Make sure any logged in user exists
             if (!Preferences.Get(constants.loginUser, "false").Equals("false"))
             {
-
-                // Get logged in user name
-                //              userName = GetLoggedInUserName();
                 userName = Preferences.Get(constants.loginUser, "false");
-                var userToLogOut = (from values in data
-                                    where values.Username == userName
-                                    select values).Single();
-                userToLogOut.IsUserLoggedIn = false;
-
-                var updateStatus = newConnection.Update(userToLogOut);
-
-                if (updateStatus != 0)
+                try
                 {
                     await App.Current.MainPage.DisplayAlert("Erfolg", "Sie wurden ausgeloggt", "OK");
                 }
-                else
+                catch (Exception ex)
                 {
-                    await App.Current.MainPage.DisplayAlert("Fehler", "Ausloggen nicht möglich", "OK");
+                    await App.Current.MainPage.DisplayAlert("Fehler", ex.ToString(), "OK");
+
                 }
 
             }
@@ -142,19 +129,21 @@ namespace App1.Helpers
                 await App.Current.MainPage.DisplayAlert("Achtung", "Es gibt keine eingeloggten Benutzer", "OK");
             }
         }
+
+        //get first user on user table
         public Admin GetAnyUser()
         {
             return newConnection.Table<Admin>().First();
         }
-        public Admin GetUser()
+
+        //get Userobj of current logged User
+        public Admin GetLoggedUser()
         {
             try
             {
                 foreach (Admin item in newConnection.Table<Admin>())
                 {
-                    Console.WriteLine(item.Username);
-                    Console.WriteLine(item.IsUserLoggedIn);   
-                    if (item.IsUserLoggedIn == true)
+                    if (item.Username == Preferences.Get(constants.loginUser, "false"))
                     {
                         return item;
                     }
@@ -162,12 +151,18 @@ namespace App1.Helpers
                 return null;
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
+                Console.WriteLine(e);
                 throw;
             }
         }
+
+        /// <summary>
+        /// get userobj by username 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns>userobj</returns>
         public Admin GetUserByName(string username)
         {
             var data = newConnection.Table<Admin>();
@@ -184,105 +179,63 @@ namespace App1.Helpers
                 throw;
             }
         }
-        // Get the loggedin user name
-        public string GetLoggedInUserName()
-        {
-            if (IsRegisteredUserExists())
-            {
-                var data = newConnection.Table<Admin>();
-                try
-                {
-                    var updatableUser = (from values in data
-                                         where values.IsUserLoggedIn == true
-                                         select values).Single();
 
-                    if (updatableUser != null)
-                    {
-                        return updatableUser.Username;
-                    }
-
-                }
-                catch (Exception)
-                {
-                }
-            }
-            return string.Empty;
-        }
-        public string GetLoggedInUserFirstName()
+        // Get the loggedin user property
+        public string getLoggedinUserProperty(string property)
         {
-            if (IsRegisteredUserExists())
+            if (!Preferences.Get(constants.loginUser, "false").Equals("false"))
             {
+                Console.WriteLine(Preferences.Get(constants.loginUser, "false"));
+
+                var username = Preferences.Get(constants.loginUser, "false");
                 var data = newConnection.Table<Admin>();
                 try
                 {
                     var returnedUser = (from values in data
-                                        where values.IsUserLoggedIn == true
+                                        where values.Username == username
                                         select values).Single();
 
                     if (returnedUser != null)
                     {
-                        return returnedUser.FirstName;
+                        switch (property.Trim().ToLower())
+                        {
+                            case "username":
+                                return returnedUser.Username;
+                            case "entity":
+                                return returnedUser.Entity;
+
+                            case "firstname":
+                                return returnedUser.FirstName;
+                            case "lastname":
+                                return returnedUser.LastName;
+                            case "password":
+                                return returnedUser.Password;
+                            case "email":
+                                return returnedUser.Email;
+                            case "userid":
+                                return returnedUser.AdminID.ToString();
+                        }
                     }
 
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    Console.WriteLine(e);
                 }
             }
             return string.Empty;
         }
-        // Get the loggedin user name
 
-
-        public string GetLoggedInUserEmail()
-        {
-            if (IsRegisteredUserExists())
-            {
-                var data = newConnection.Table<Admin>();
-                var updatableUser = (from values in data
-                                     where values.IsUserLoggedIn == true
-                                     select values).Single();
-
-                if (updatableUser != null)
-                {
-                    return updatableUser.Email;
-                }
-            }
-
-            return string.Empty;
-        }
-        // Get the loggedin user name
-        public int GetUserID()
-        {
-            var data = newConnection.Table<Admin>();
-            var updatableUser = (from values in data
-                                 where values.IsUserLoggedIn == true
-                                 select values).Single();
-            if (updatableUser != null)
-            {
-                return updatableUser.AdminID;
-            }
-            return 0;
-        }
-
-        public string GetUserPassword()
-        {
-            var data = newConnection.Table<Admin>();
-            var returnedUser = (from values in data
-                                where values.IsUserLoggedIn == true
-                                select values).Single();
-            if (returnedUser != null)
-            {
-                return returnedUser.Password;
-            }
-            return String.Empty;
-        }
-
-        public bool SetUserPassword(string password)
+        /// <summary>
+        /// change password of user by username
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public bool SetUserPassword(string username, string password)
         {
             var data = newConnection.Table<Admin>();
             var updateableUser = (from values in data
-                                  where values.IsUserLoggedIn == true
+                                  where values.Username == username
                                   select values).Single();
             if (updateableUser != null)
             {
@@ -293,6 +246,10 @@ namespace App1.Helpers
             return false;
         }
 
+        /// <summary>
+        /// delete all User in User Table
+        /// </summary>
+        /// <returns></returns>
         public int DeleteAllUser()
         {
             return newConnection.DeleteAll<Admin>();
@@ -301,6 +258,10 @@ namespace App1.Helpers
         public void PrintUser(Admin user)
         {
             Console.WriteLine(user.Email);
+            Console.WriteLine(user.FirstName);
+            Console.WriteLine(user.LastName);
+            Console.WriteLine(user.Password);
+            Console.WriteLine(user.Entity);
         }
     }
 }

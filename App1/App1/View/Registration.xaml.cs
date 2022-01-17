@@ -93,7 +93,7 @@ namespace App1
             {
                 //My code
                 user = new User();
-                user.Username = Entry_Username.Text;
+                user.Username = Entry_Username.Text.ToLower();
                 user.Email = Entry_Email.Text;
                 // To Do Please set it to zero
                 user.UserID = 0;
@@ -101,12 +101,13 @@ namespace App1
                 user.LastName = Entry_Lastname.Text;
                 user.Password = Entry_Password.Text;
                 user.Age = age;
-                user.IsUserLoggedIn = false;
                 user.IsUserIdUpdated = false;
                 user.IsUserAskedForDataProtection = false;
                 user.IsDataProtectionAccepted = true;
                 user.IsToDataAutoSend = true;
                 user.SessionLastUpdated = DateTime.Now;
+                userDBHelper.PrintUser(user);
+
                 try
                 {
                     var userAddingStatus = userDBHelper.AddUser(user, Entry_Username.Text);
