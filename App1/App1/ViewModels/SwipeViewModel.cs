@@ -9,7 +9,7 @@ using Xamarin.Forms;
 
 namespace App1.ViewModels
 {
-    class SwipeViewModel : BasePageViewModel
+    class SwipeViewModel : BaseViewModel
     {
         private PictureDBHelper pictureDBHelper = new PictureDBHelper();
 

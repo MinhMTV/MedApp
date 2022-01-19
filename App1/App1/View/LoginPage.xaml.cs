@@ -33,9 +33,9 @@ namespace App1
 
         async void LogIn(object sender, EventArgs e)
         {
-            var username = Entry_Username.Text.ToLower();
+            var username = Entry_Username.Text.ToLower().TrimEnd().TrimStart();
             //Check for the username and password are not empty
-            if (username != null && Entry_Password.Text != null)
+            if (username != null || Entry_Password.Text != null)
             {
                 
 
@@ -45,6 +45,7 @@ namespace App1
                     if (!userDBHelper.CheckUserexist(username))
                     {
                         await DisplayAlert("Login", "Der Benutzer ist nicht registriert! Bitte Passwort und Benutzername überprüfen!", "Okay");
+                        return;
                     }
                 }
 

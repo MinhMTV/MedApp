@@ -20,7 +20,7 @@ namespace App1
             InitializeComponent();
             userDBHelper = new UserDBHelper();
             adminDBHelper = new AdminDBHelper();
-        }
+        } 
 
         /* if app was closed and open again, check if a User is already logged in
          * if a user didnt log out, skip the login and go directly to training

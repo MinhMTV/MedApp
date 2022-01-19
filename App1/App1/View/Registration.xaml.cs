@@ -95,8 +95,16 @@ namespace App1
                 user = new User();
                 user.Username = Entry_Username.Text.ToLower();
                 user.Email = Entry_Email.Text;
-                // To Do Please set it to zero
-                user.UserID = 0;
+                // Generate random userID for the patient
+                var userid = 0;
+
+                do
+                {
+                    userid = userDBHelper.GenerateUserID();
+                    user.UserID = userid;
+                }
+                while (!userDBHelper.IsUserIDUnique(userid));
+
                 user.FirstName = Entry_Firstname.Text;
                 user.LastName = Entry_Lastname.Text;
                 user.Password = Entry_Password.Text;
@@ -110,7 +118,7 @@ namespace App1
 
                 try
                 {
-                    var userAddingStatus = userDBHelper.AddUser(user, Entry_Username.Text);
+                    var userAddingStatus = userDBHelper.AddUser(user, Entry_Username.Text.ToLower());
                     userDBHelper.PrintUser(user);
 
                     if (userAddingStatus)

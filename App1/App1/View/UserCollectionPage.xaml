@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="App1.View.UserCollectionPage"
+             xmlns:pg="App1.ViewModels.UserCollectionViewModel">
+    <NavigationPage.TitleView>
+        <StackLayout>
+            <Label Text="Patienten"  HorizontalOptions="StartAndExpand" FontSize="Large" TextColor="White"/>
+        </StackLayout>
+    </NavigationPage.TitleView>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Actions"
+                     Order="Secondary"
+                     Clicked="ToolbarItem_Clicked"/>
+        <ToolbarItem Text="Clear Selection"
+                     Order="Secondary"
+                     Clicked="ClearItem_Clicked"
+                     Command="{Binding ClearCommand}"/>
+    </ContentPage.ToolbarItems>
+    <StackLayout>
+    <CollectionView x:Name="UserCV" SelectionMode="{Binding SelectionMode}" SelectedItems="{Binding SelectedUser}" ItemsSource="{Binding User}">
+        <!--SelectionChanged="CollectionViewListSelectionChanged"-->
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <StackLayout Spacing="8" HorizontalOptions="FillAndExpand" xct:TouchEffect.Command="{Binding PressedCommand,
+                        Source={RelativeSource AncestorType={x:Type pg:UserCollectionViewModel}}}"
+                            xct:TouchEffect.CommandParameter="{Binding .}"
+                            xct:TouchEffect.LongPressCommand="{Binding LongPressCommand,
+                        Source={RelativeSource AncestorType={x:Type pg:UserCollectionViewModel}}}"
+                            xct:TouchEffect.LongPressCommandParameter="{Binding .}"
+                            xct:TouchEffect.PressedScale="1.1"
+                             xct:TouchEffect.NativeAnimation="True" 
+                            >
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter
+                                        Property="Padding"
+                                        Value="0"/>
+                                    <Setter
+                                        TargetName="CheckIcon"
+                                        Property="Image.IsVisible"
+                                        Value="False"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter
+                                        Property="Padding"
+                                        Value="1"/>
+                                    <Setter
+                                        TargetName="CheckIcon"
+                                        Property="Image.IsVisible"
+                                        Value="True"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                    
+                    <Frame Style="{StaticResource FrameCardViewStyle}">
+                        <StackLayout Style="{StaticResource itemsCardViewStackLayoutStyle}"    >
+                            <StackLayout Style="{StaticResource itemsInsideCardViewStackLayoutStyle}">
+                                <Frame Style="{StaticResource profileImageFrameStyle}">
+                                    <Image Style="{StaticResource profileImageStyle}" Source="https://img.icons8.com/ios-filled/50/000000/face.png" />
+                                </Frame>
+                                <StackLayout Style="{StaticResource detailsStackLayout}">
+                                    <Label Text="{Binding Fullname}" Style="{StaticResource NameLabel}" />
+                                    <StackLayout Style="{StaticResource imageLableStackLayout}">
+                                        <Image Source="https://img.icons8.com/material-outlined/24/000000/employee-card.png" Style="{StaticResource imageStyle}"></Image>
+                                        <Label Text="Username:" Style="{StaticResource LabelStyle}" />
+                                        <StackLayout Style="{StaticResource imageLableStackLayout}">
+                                            <Label Text="{Binding Username}" Style="{StaticResource LabelStyle}" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                    <StackLayout Style="{StaticResource imageLableStackLayout}">
+                                        <Image Source="https://img.icons8.com/material-outlined/24/000000/age.png" Style="{StaticResource imageStyle}"></Image>
+                                        <Label Text="Age:" Style="{StaticResource LabelStyle}" />
+                                        <StackLayout Style="{StaticResource imageLableStackLayout}">
+                                            <Label Text="{Binding Age}" Style="{StaticResource LabelStyle}" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                    <StackLayout Style="{StaticResource imageLableStackLayout}">
+                                        <Image Source="https://img.icons8.com/fluency-systems-regular/48/000000/key.png" Style="{StaticResource imageStyle}"></Image>
+                                        <Label Text="UserID:" Style="{StaticResource LabelStyle}" />
+                                        <StackLayout Style="{StaticResource imageLableStackLayout}">
+                                            <Label Text="{Binding UserID}" Style="{StaticResource LabelStyle}" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                    <StackLayout Style="{StaticResource imageLableStackLayout}">
+                                        <Image Source="https://img.icons8.com/material-two-tone/24/000000/time-machine.png" Style="{StaticResource imageStyle}"></Image>
+                                        <Label Text="lastSession:" Style="{StaticResource LabelStyle}"></Label>
+                                        <Label Text="{Binding LastSession}" Style="{StaticResource LabelStyle}" />
+                                    </StackLayout>
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+                                    <Image
+                                        x:Name="CheckIcon"
+                                        Source="https://img.icons8.com/ios-glyphs/30/fa314a/checked-checkbox.png"
+                                        WidthRequest="20" HeightRequest="20"
+                                        VerticalOptions="End"
+                                        HorizontalOptions="End"
+                                        Margin="4"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+    
+    
+        <!-- Backdrop -->
+        <BoxView Color="#4B000000"
+                 Opacity="0"
+                 InputTransparent="True"
+                 x:Name="Backdrop">
+            <BoxView.GestureRecognizers>
+                <TapGestureRecognizer
+                    Tapped="TapGestureRecognizer_Tapped"/>
+            </BoxView.GestureRecognizers>
+        </BoxView>
+    
+    
+        <!-- Bottom Drawer -->
+    <Frame
+            x:Name="BottomToolbar"
+            HeightRequest="200"
+            VerticalOptions="End"
+            BackgroundColor="#FFFFFF"
+            CornerRadius="20"
+            TranslationY="260"
+            Padding="15,6">
+        <Frame.GestureRecognizers>
+            <PanGestureRecognizer
+                    PanUpdated="PanGestureRecognizer_PanUpdated"
+            />
+        </Frame.GestureRecognizers>
+            <StackLayout Orientation="Vertical" Padding="0,4">
+                <BoxView CornerRadius="2" HeightRequest="4" WidthRequest="40"
+                         BackgroundColor="LightGray"
+                         HorizontalOptions="Center"/>
+                <Label Text="Actions"
+                       HorizontalOptions="Center"
+                       FontSize="18"
+                       FontAttributes="Bold"/>
+                <TableView Intent="Settings"
+                   VerticalOptions="End"
+                   BackgroundColor="White"
+                   >
+                    <TableSection>
+                        <TextCell
+                            Text="Favorite"/>
+                        <TextCell
+                            Command="{Binding ShareCommand}"
+                            Text="Share"/>
+                    </TableSection>
+                </TableView>
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</ContentPage>

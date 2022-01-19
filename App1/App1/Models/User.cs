@@ -21,6 +21,9 @@ namespace App1.Models
         public bool IsDataProtectionAccepted { get; set; }
         public bool IsToDataAutoSend { get; set; }
         public DateTime SessionLastUpdated { get; set; }
+        public DateTime TherapieStart { get; set; }
+        public DateTime TherapieEnd { get; set; }
+
 
 
         public User()
@@ -32,5 +35,8 @@ namespace App1.Models
             this.Password = Password;
         }
 
+        public string Fullname => FirstName + " " + LastName;
+
+        public String LastSession => SessionLastUpdated.ToShortDateString();
     }
 }

@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <Style x:Key="NameLabel" TargetType="Label">
+        <Setter Property="FontSize" Value="Medium" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="Black" />
+    </Style>
+
+    <!--Lable Style for Test inside FrameCardView -->
+    <Style x:Key="LabelStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="Small" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+        <Setter Property="MaxLines" Value="1"/>
+        <Setter Property="LineBreakMode" Value="TailTruncation"/>
+    </Style>
+
+    <!--Stacklayout of image and labele inside Framecardview -->
+    <Style x:Key="imageLableStackLayout" TargetType="StackLayout">
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
+    </Style>
+
+    <Style x:Key="detailsStackLayout" TargetType="StackLayout">
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <Setter Property="VerticalOptions" Value="FillAndExpand" />
+        <Setter Property="Spacing" Value="2" />
+    </Style>
+
+    <!--Icon Style for FrameCardView -->
+    <Style x:Key="imageStyle" TargetType="Image">
+        <Setter Property="WidthRequest" Value="8" />
+        <Setter Property="HeightRequest" Value="8" />
+    </Style>
+
+    <!--Image Style for FrameCardView -->
+    <Style x:Key="profileImageStyle" TargetType="Image">
+        <Setter Property="WidthRequest" Value="80" />
+        <Setter Property="HeightRequest" Value="60" />
+        <Setter Property="Aspect" Value="AspectFit" />
+    </Style>
+
+    <!--Frame of ProfilPicture -->
+    <Style x:Key="profileImageFrameStyle" TargetType="Frame">
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="IsClippedToBounds" Value="True" />
+    </Style>
+
+    <!--Frame of FrameCardView -->
+    <Style x:Key="FrameCardViewStyle" TargetType="Frame">
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <Setter Property="OutlineColor" Value="LightGray" />
+        <Setter Property="BorderColor" Value="LightGray" />
+        <Setter Property="HasShadow" Value="True" />
+    </Style>
+
+    <!--Stacklayout of FrameCardView -->
+    <Style x:Key="itemsCardViewStackLayoutStyle" TargetType="StackLayout">
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <Setter Property="Spacing" Value="8" />
+    </Style>
+
+    <!-- Space between item inside the FrameCardView -->
+    <Style x:Key="itemsInsideCardViewStackLayoutStyle" TargetType="StackLayout">
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="Spacing" Value="10" />
+    </Style>
+</ResourceDictionary>

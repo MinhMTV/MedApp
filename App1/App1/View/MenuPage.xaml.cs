@@ -24,7 +24,11 @@ namespace App1.View
             Console.WriteLine(Preferences.Get(constants.loginUser, "false"));
         }
 
-
+        // This prevents a user from being able to hit the back button and leave the Menu Page.
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+        }
         protected override void OnAppearing()
         {
             base.OnAppearing();

@@ -1,18 +1,15 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using Xamarin.Forms;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace App1.ViewModels
 {
-    public abstract class BaseViewModel : INotifyPropertyChanged
+    public class BaseViewModelUser : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void RaisePropertyChanged([CallerMemberName] string name = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
         bool isBusy = false;
         public bool IsBusy
@@ -32,7 +29,7 @@ namespace App1.ViewModels
 
         public ICommand BackCommand { get; set; }
 
-        public BaseViewModel()
+        public BaseViewModelUser()
         {
             SkeletonCommand = new Command(async (x) =>
             {
@@ -56,9 +53,20 @@ namespace App1.ViewModels
 
             backingStore = value;
             onChanged?.Invoke();
-            RaisePropertyChanged(propertyName);
+            OnPropertyChanged(propertyName);
             return true;
         }
+
+        #region INotifyPropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            var changed = PropertyChanged;
+            if (changed == null)
+                return;
+
+            changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
     }
 }
-

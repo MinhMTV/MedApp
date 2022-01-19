@@ -15,12 +15,18 @@ namespace App1.View
         public AdminMenu()
         { 
             InitializeComponent();
-            Detail = new NavigationPage(new DemoPage());
+            Detail = new NavigationPage(new UserCollectionPage());
             IsPresented = false;
             var loguser = Preferences.Get(constants.loginUser, "false");
             name.Text = "Hello Admin " + loguser;
             SendTrainingSessions();
             Console.WriteLine(Preferences.Get(constants.loginUser, "false"));
+        }
+
+        // This prevents a user from being able to hit the back button and leave the Admin Page.
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
         }
 
         protected override void OnAppearing()
@@ -29,9 +35,9 @@ namespace App1.View
             IsPresented = false;
         }
 
-        void Demo_Clicked(object sender, System.EventArgs e)
+        void ListUserView_Clicked(object sender, System.EventArgs e)
         {
-            Detail = new NavigationPage(new DemoPage());
+            Detail = new NavigationPage(new UserCollectionPage());
             IsPresented = false;
         }
 

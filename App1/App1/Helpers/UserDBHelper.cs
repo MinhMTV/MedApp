@@ -7,7 +7,9 @@ using System.Diagnostics;
 using System.Linq;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-
+using System.Collections.Generic;
+using Xamarin.CommunityToolkit.Extensions;
+using System.Collections.ObjectModel;
 
 namespace App1.Helpers
 {
@@ -21,6 +23,8 @@ namespace App1.Helpers
             newConnection = DependencyService.Get<ISQLite>().GetConnection();
             newConnection.CreateTable<User>(); // Create table if not exists
         }
+
+        //------------------------------------------------------DB MANIPULATION METHODS-----------------------------------------------------------------------------------------------
 
         //Add User if user already exist by username return false
         public bool AddUser(User user, string username)
@@ -36,6 +40,133 @@ namespace App1.Helpers
             }
         }
 
+        public bool DeleteUser(string username)
+        {
+            if (CheckUserexist(username))
+            {
+                return false;
+            }
+            else
+            {
+                var data = newConnection.Table<User>();      
+                var user = (from values in data
+                            where values.Username == username
+                                      select values).Single();
+                var succes = newConnection.Delete(user);
+                if(succes == 1)
+                {
+                    return true;
+                } else
+                {
+                    Console.WriteLine("User couldnt be deleted");
+                    return false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// delete all User in User Table
+        /// </summary>
+        /// <returns></returns>
+        public int DeleteAllUser()
+        {
+            return newConnection.DeleteAll<User>();
+        }
+
+        /// <summary>
+        /// change password of user by username
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public bool SetUserPassword(string username, string password)
+        {
+            var data = newConnection.Table<User>();
+            var updateableUser = (from values in data
+                                  where values.Username == username
+                                  select values).Single();
+            if (updateableUser != null)
+            {
+                updateableUser.Password = password;
+                newConnection.Update(updateableUser);
+                return true;
+            }
+            return false;
+        }
+
+        public bool UpdateUserID(int uID)
+        {
+            var data = newConnection.Table<User>();
+            var updatableUser = (from values in data
+                                 where values.UserID == 0
+                                 select values).Single();
+            try
+            {
+                if (uID > 1)
+                {
+                    updatableUser.UserID = uID;
+                    updatableUser.IsUserIdUpdated = true;
+                    newConnection.Update(updatableUser);
+                    return true;
+                }
+            }
+            catch (Exception exp)
+            {
+                Debug.WriteLine(exp);
+            }
+
+            return false;
+        }
+
+        public void UpdateDataAutoSend(bool decison)
+        {
+            var username = Preferences.Get(constants.loginUser, "false");
+            var data = newConnection.Table<User>();
+            var updatableUser = (from values in data
+                                 where values.Username == username
+                                 select values).Single();
+            try
+            {
+                if (updatableUser != null)
+                {
+                    updatableUser.IsToDataAutoSend = decison;
+                    newConnection.Update(updatableUser);
+                }
+            }
+            catch (Exception exp)
+            {
+                Debug.WriteLine(exp);
+            }
+        }
+
+        //update Information wheter user accepted data protection or not
+        public bool UpdateDataPrptectionInformation(bool isAccepted)
+        {
+            var data = newConnection.Table<User>();
+            var username = Preferences.Get(constants.loginUser, "false");
+            if (username != "false")
+            {
+                var updatableUser = (from values in data
+                                     where values.Username == username
+                                     select values).Single();
+
+                if (updatableUser != null)
+                {
+                    updatableUser.IsDataProtectionAccepted = isAccepted;
+                    updatableUser.IsUserAskedForDataProtection = true;
+                    if (newConnection.Update(updatableUser) == 1)
+                    {
+                        return true;
+                    }
+                    else return false;
+                }
+                else return false;
+            }
+            else return false;
+        }
+
+
+
+        //------------------------------------------------------DB SEARCH METHODS-----------------------------------------------------------------------------------------------
         //check if user already exist in table by name
         public bool CheckUserexist(string username)
         {
@@ -49,7 +180,6 @@ namespace App1.Helpers
                 return false;
         }
 
-
         /* 
          Check, if the a User Table already has entries in the database if not, no User are registered 
         */
@@ -62,6 +192,224 @@ namespace App1.Helpers
             return false;     
         }
 
+        /* 
+         Check, if the a user by username alreay accepted the dataprotection
+        */
+        public bool IsDataProtectionAccepted(string username)
+        {
+            var data = newConnection.Table<User>();
+            var user = (from values in data
+                        where values.Username == username
+                        select values).Single();
+            return user.IsDataProtectionAccepted;
+        }
+
+        /* 
+         Check, if the a user by username was already asked for data protection
+        */
+        public bool IsUserAskedForDataProtection(string username)
+        {
+            var data = newConnection.Table<User>();
+            var user = (from values in data
+                        where values.Username == username
+                        select values).Single();
+            return user.IsUserAskedForDataProtection;
+        }
+        //check if userid is unique and return true if so
+        public bool IsUserIDUnique(int userid)
+        {
+            var data = newConnection.Table<User>();
+            var d1 = data.Where(x => x.UserID == userid).FirstOrDefault();
+            if (d1 == null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool IsUserIdUpdated()
+        {
+            try
+            {
+                var data = newConnection.Table<User>();
+                var user = (from values in data
+                            select values).Single();
+                return user.IsUserIdUpdated;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+            }
+            return false;
+        }
+
+        //------------------------------------------------------DB GET METHODS-----------------------------------------------------------------------------------------------
+
+        //get first user on user table
+        public User GetAnyUser()
+        {
+            return newConnection.Table<User>().First();
+        }
+
+        //get Userobj of current logged User
+        public User GetLoggedUser()
+        {
+            try
+            {
+                foreach (User item in newConnection.Table<User>())
+                {
+                    if (item.Username == Preferences.Get(constants.loginUser, "false"))
+                    {
+                        return item;
+                    }
+                }
+                return null;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// get userobj by username 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns>userobj</returns>
+        public User GetUserByName(string username)
+        {
+            var data = newConnection.Table<User>();
+            try
+            {
+                var user = (from values in data
+                            where values.Username == username
+                            select values).Single();
+                return user;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+        public User GetUserByUserID(int userid)
+        {
+            var data = newConnection.Table<User>();
+            try
+            {
+                var user = (from values in data
+                            where values.UserID == userid
+                            select values).Single();
+                return user;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public User GetUserByUserDBID(int userdbid)
+        {
+            var data = newConnection.Table<User>();
+            try
+            {
+                var user = (from values in data
+                            where values.UserID == userdbid
+                            select values).Single();
+                return user;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        //get all User as a List of User Objects
+        public List<User> GetAllUserToList1()
+        {
+            var user = new List<User>();
+            var data = newConnection.Table<User>();
+            foreach (var item in data)
+            {
+                user.Add(item);
+            }
+            user.ForEach(x => Console.WriteLine(x.Username));
+            return user;
+        }
+        public List<User> GetAllUserToList()
+        {
+            var userList = newConnection.Table<User>().ToList();
+            return userList;
+        }
+
+        public ObservableCollection<User> GetAllUserToCollection()
+        {
+            var userList = GetAllUserToList();
+            ObservableCollection<User> UserCollection = new ObservableCollection<User>();
+
+           foreach (var item in userList)
+            {
+                UserCollection.Add(item);
+            }
+           return UserCollection;
+        }
+
+        // Get the loggedin user property
+        public string getLoggedinUserProperty(string property)
+        {
+            if (!Preferences.Get(constants.loginUser, "false").Equals("false"))
+            {
+                Console.WriteLine(Preferences.Get(constants.loginUser, "false"));
+
+                var username = Preferences.Get(constants.loginUser, "false");
+                var data = newConnection.Table<User>();
+                try
+                {
+                    var returnedUser = (from values in data
+                                        where values.Username == username
+                                        select values).Single();
+
+                    if (returnedUser != null)
+                    {
+                        switch (property.Trim().ToLower())
+                        {
+                            case "userdbid":
+                                return returnedUser.UserDBID.ToString();
+
+                            case "username":
+                                return returnedUser.Username;
+
+                            case "firstname":
+                                return returnedUser.FirstName;
+                            case "lastname":
+                                return returnedUser.LastName;
+                            case "password":
+                                return returnedUser.Password;
+                            case "email":
+                                return returnedUser.Email;
+                            case "userid":
+                                return returnedUser.UserID.ToString();
+                        }
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+            return string.Empty;
+        }
+
+        //------------------------------------------------------DB COMPARE METHODS-----------------------------------------------------------------------------------------------
         /// <summary>
         /// check username and password and login user 
         /// </summary>
@@ -81,6 +429,9 @@ namespace App1.Helpers
                 return false;
         }
 
+
+
+        //------------------------------------------------------DB USE METHODS-----------------------------------------------------------------------------------------------
         /// <summary>
         /// Log user by only username
         /// check first if exist then set preferences to username
@@ -131,243 +482,37 @@ namespace App1.Helpers
             }
         }
 
-        //get first user on user table
-        public User GetAnyUser()
+        //generate random user id between 10000 - 99999
+        public int GenerateUserID()
         {
-            return newConnection.Table<User>().First();
-        }
-
-        //get Userobj of current logged User
-        public User GetLoggedUser()
-        {
-            try
+            Random rand = new Random();
+            var userid = rand.Next(constants.minID, constants.maxId);
+            if (IsUserIDUnique(userid))
             {
-                foreach(User item in newConnection.Table<User>())
-                {
-                    if(item.Username == Preferences.Get(constants.loginUser,"false"))
-                    {
-                        return item;
-                    } 
-                } 
-                return null;
-
+                return userid;
             }
-            catch (Exception e)
+            else
             {
-                Console.WriteLine(e);
-                throw;
+                return -1;
             }
         }
 
-        /// <summary>
-        /// get userobj by username 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <returns>userobj</returns>
-        public User GetUserByName(string username)
-        {
-            var data = newConnection.Table<User>();
-            try
-            {
-                var user = (from values in data
-                            where values.Username == username
-                            select values).Single();
-                return user;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        // Get the loggedin user property
-        public string getLoggedinUserProperty(string property)
-        {
-            if (!Preferences.Get(constants.loginUser, "false").Equals("false"))
-            {
-                Console.WriteLine(Preferences.Get(constants.loginUser, "false"));
-
-                var username = Preferences.Get(constants.loginUser, "false");
-                var data = newConnection.Table<User>();
-                try
-                {
-                    var returnedUser = (from values in data
-                                        where values.Username == username
-                                        select values).Single();
-
-                    if (returnedUser != null)
-                    {
-                        switch (property.Trim().ToLower())
-                        {
-                            case "userdbid":
-                                return returnedUser.UserDBID.ToString();
-
-                            case "username":
-                                return returnedUser.Username;
-                                 
-                            case "firstname":
-                                return returnedUser.FirstName;
-                            case "lastname":
-                                return returnedUser.LastName;
-                            case "password":
-                                return returnedUser.Password;
-                            case "email":
-                                return returnedUser.Email;
-                            case "userid":
-                                return returnedUser.UserID.ToString();
-                        }
-                    }
-
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
-            }
-            return string.Empty;
-        }
-
-        /// <summary>
-        /// change password of user by username
-        /// </summary>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public bool SetUserPassword(string username, string password)
-        {
-            var data = newConnection.Table<User>();
-            var updateableUser = (from values in data
-                                  where values.Username == username
-                                  select values).Single();
-            if (updateableUser != null)
-            {
-                updateableUser.Password = password;
-                newConnection.Update(updateableUser);
-                return true;
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// delete all User in User Table
-        /// </summary>
-        /// <returns></returns>
-        public int DeleteAllUser()
-        {
-            return newConnection.DeleteAll<User>();
-        }
-
-
-        public bool UpdateUserID(int uID)
-        {
-            var data = newConnection.Table<User>();
-            var updatableUser = (from values in data
-                                 where values.UserID == 0
-                                 select values).Single();
-            try
-            {
-                if (uID > 1)
-                {
-                    updatableUser.UserID = uID;
-                    updatableUser.IsUserIdUpdated = true;
-                    newConnection.Update(updatableUser);
-                    return true;
-                }
-            }
-            catch (Exception exp)
-            {
-                Debug.WriteLine(exp);
-            }
-
-            return false;
-        }
-        public bool UpdateDataPrptectionInformation(bool isAccepted)
-        {
-            var data = newConnection.Table<User>();
-            var username = Preferences.Get(constants.loginUser, "false");
-            if (username != "false")
-            {
-                var updatableUser = (from values in data
-                                     where values.Username == username
-                                     select values).Single();
-
-                if (updatableUser != null)
-                {
-                    updatableUser.IsDataProtectionAccepted = isAccepted;
-                    updatableUser.IsUserAskedForDataProtection = true;
-                    if (newConnection.Update(updatableUser) == 1)
-                    {
-                        return true;
-                    }
-                    else return false;
-                }
-                else return false;
-            }
-            else return false;
-        }
-        public bool IsUserAskedForDataProtection(string username)
-        {
-            var data = newConnection.Table<User>();
-            var user = (from values in data
-                        where values.Username == username
-                        select values).Single();
-            return user.IsUserAskedForDataProtection;
-        }
-        public bool IsUserIdUpdated()
-        {
-            try
-            {
-                var data = newConnection.Table<User>();
-                var user = (from values in data
-                            select values).Single();
-                return user.IsUserIdUpdated;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.StackTrace);
-            }
-            return false;
-        }
-        public bool IsDataProtectionAccepted(string username)
-        {
-            var data = newConnection.Table<User>();
-            var user = (from values in data
-                        where values.Username == username
-                        select values).Single();
-            return user.IsDataProtectionAccepted;
-        }
-        public void UpdateDataAutoSend(bool decison)
-        {
-            var username = Preferences.Get(constants.loginUser, "false");
-            var data = newConnection.Table<User>();
-            var updatableUser = (from values in data
-                                 where values.Username == username
-                                 select values).Single();
-            try
-            {
-                if (updatableUser != null)
-                {
-                    updatableUser.IsToDataAutoSend = decison;
-                    newConnection.Update(updatableUser);
-                }
-            }
-            catch (Exception exp)
-            {
-                Debug.WriteLine(exp);
-            }
-        }
+        //------------------------------------------------------DEBUG METHODS-----------------------------------------------------------------------------------------------
         public void PrintUser(User user)
         {
-            Console.WriteLine(user.UserDBID);
-            Console.WriteLine(user.Email);
-            Console.WriteLine(user.FirstName);
-            Console.WriteLine(user.LastName);
-            Console.WriteLine(user.Password);
-            Console.WriteLine(user.UserID);
-            Console.WriteLine(user.IsUserIdUpdated);
-            Console.WriteLine(user.IsUserAskedForDataProtection);
-            Console.WriteLine(user.IsToDataAutoSend);
-            Console.WriteLine(user.SessionLastUpdated);
+            var message =
+                "Username " + user.Username +
+                "\nUserdbid " + user.UserDBID.ToString() +
+                "\nEmail " + user.Email +
+                "\nFirstname " + user.FirstName +
+                "\nLastname " + user.LastName +
+                "\nPassword " + user.Password +
+                "\nUserID " + user.UserID +
+                "\nisUseridupdated " + user.IsUserIdUpdated +
+                "\nisUserAskedforDataprotection " + user.IsUserAskedForDataProtection +
+                "\nisDataAutoSend " + user.IsToDataAutoSend +
+                "\nsessionlastupdated " + user.SessionLastUpdated;
+            Console.WriteLine(message);
         }
 
         public void PrintAllUser()
@@ -375,23 +520,27 @@ namespace App1.Helpers
             var data = newConnection.Table<User>();
             foreach (var user in data)
             {
-                Console.WriteLine(user.UserDBID);
-                Console.WriteLine(user.Email);
-                Console.WriteLine(user.FirstName);
-                Console.WriteLine(user.LastName);
-                Console.WriteLine(user.Password);
-                Console.WriteLine(user.UserID);
-                Console.WriteLine(user.IsUserIdUpdated);
-                Console.WriteLine(user.IsUserAskedForDataProtection);
-                Console.WriteLine(user.IsToDataAutoSend);
-                Console.WriteLine(user.SessionLastUpdated);
+                var message =
+                "Username " + user.Username +
+                "\nUserdbid " + user.UserDBID.ToString() +
+                "\nEmail " + user.Email +
+                "\nFirstname " + user.FirstName +
+                "\nLastname " + user.LastName +
+                "\nPassword " + user.Password +
+                "\nUserID " + user.UserID +
+                "\nisUseridupdated " + user.IsUserIdUpdated +
+                "\nisUserAskedforDataprotection " + user.IsUserAskedForDataProtection +
+                "\nisDataAutoSend " + user.IsToDataAutoSend +
+                "\nsessionlastupdated " + user.SessionLastUpdated;
+                Console.WriteLine(message);
             }
         }
 
         public async void debugUser (User user)
         {
             var message =
-                "Userdbid " + user. UserDBID.ToString() + 
+                "Username " + user.Username +
+                "\nUserdbid " + user. UserDBID.ToString() + 
                 "\nEmail " + user.Email +
                 "\nFirstname " + user.FirstName +
                 "\nLastname " + user.LastName +

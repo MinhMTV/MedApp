@@ -36,5 +36,10 @@ namespace App1
             await Navigation.PushAsync(new DataSendingPermissionPage());
         }
 
+        // This prevents a user from being able to hit the back button and leave the Dataprot page to login
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+        }
     }
 }
