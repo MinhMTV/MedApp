@@ -39,8 +39,20 @@ namespace App1.Helpers
                 return true;
             }
         }
+        public bool DeleteUser(object user)
+        {
+            if (newConnection.Delete(user) != 0)
+                return true;
+            else return false;
+        }
 
-        public bool DeleteUser(string username)
+/*        public object checktype(object obk)
+        {
+            var data = newConnection.Table<object>();
+            return
+        }*/
+
+        public bool DeleteUserbyName(string username)
         {
             if (CheckUserexist(username))
             {

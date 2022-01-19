@@ -13,7 +13,7 @@
             <ContentPage.Content>
                 <StackLayout Margin="5,30,5,5">
                     <Label x:Name="name" TextColor="Black" FontSize="20" HorizontalOptions="CenterAndExpand"/>
-                    <Button Text="Erklärung" Clicked="ListUserView_Clicked" TextColor="White" BackgroundColor="Blue"></Button>
+                    <Button Text="Patienten" Clicked="ListUserView_Clicked" TextColor="White" BackgroundColor="Blue"></Button>
                     <Button Text="Wochenübersicht" Clicked="WeeklyOverviewClicked" TextColor="White" BackgroundColor="Blue"></Button>
                     <Button Text="Passwort ändern"  Clicked="EditUserInformationClicked" TextColor="White"  BackgroundColor="Blue"></Button>
                     <Button Text="Datenschutzerkärung"  Clicked="EditDataProtectionClicked" TextColor="White" BackgroundColor="Blue"></Button>

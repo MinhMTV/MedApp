@@ -11,11 +11,11 @@ using Xamarin.Forms;
 
 namespace App1.ViewModels
 {
-    public class UserCollectionViewModel : BaseViewModelUser
+    public class UserCollectionViewModel : BaseViewModel
     {
         private ObservableCollection<User> _user;
 
-        private ObservableCollection<object> _selectedUser;
+        public ObservableCollection<object> _selectedUser { get; set; }
 
         private SelectionMode _selectionMode = SelectionMode.None;
 
@@ -47,11 +47,12 @@ namespace App1.ViewModels
         }
         private async void OnPressed(User obj)
          {
+            Console.WriteLine("User In Collection: " + SelectedUser.Count());
             if (_selectionMode != SelectionMode.None)
             {
                 Console.WriteLine("Test OnPress");
                 if (_selectedUser.Count() == 0)
-                    _selectionMode = SelectionMode.None;
+                    SelectionMode = SelectionMode.None;
                 else
 
                     Console.WriteLine("Test OnPress");
@@ -89,7 +90,7 @@ namespace App1.ViewModels
         {
             _selectedUser = new ObservableCollection<object>();
             _user = userDBHelper.GetAllUserToCollection();
-            OnPropertyChanged(nameof(User));
+            RaisePropertyChanged(nameof(User));
         }
     }
 

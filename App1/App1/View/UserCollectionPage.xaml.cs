@@ -3,6 +3,7 @@ using App1.Models;
 using App1.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,9 +16,9 @@ namespace App1.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class UserCollectionPage : ContentPage
     {
-        public List<User> AllUser { get; set; }
-        UserDBHelper userdbhelper = new UserDBHelper();
+
         private UserCollectionViewModel _uvm;
+        private UserDBHelper userDBHelper = new UserDBHelper();
         public UserCollectionPage()
         {
             BindingContext = _uvm = new UserCollectionViewModel();
@@ -26,15 +27,17 @@ namespace App1.View
 
         async void ToolbarItem_Clicked(System.Object sender, System.EventArgs e)
         {
-            if (Backdrop.Opacity == 0)
+
+            var userlist = UserCV.SelectedItems.ToList();
+            foreach(var item in userlist)
             {
-                await OpenDrawer();
-            }
-            else
-            {
-                await CloseDrawer();
+                userDBHelper.DeleteUser(item);
+                _uvm.User.Remove((User)item);
             }
         }
+
+
+
     async void ClearItem_Clicked(System.Object sender, System.EventArgs e)
         {
             await CloseDrawer();
@@ -107,19 +110,10 @@ namespace App1.View
             Backdrop.InputTransparent = true;
         }
 
-        void CollectionViewListSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void UserCV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            UpdateSelectionData(e.PreviousSelection, e.CurrentSelection);
-        }
-
-        void UpdateSelectionData(IEnumerable<object> previousSelectedContact, IEnumerable<object> currentSelectedContact)
-        {
-            var selectedContact = currentSelectedContact.FirstOrDefault() as User;
-            Console.WriteLine("FullName: " + selectedContact.Fullname);
-            Console.WriteLine("LastSession: " + selectedContact.LastSession);
-            Console.WriteLine("Email: " + selectedContact.Email);
-            Console.WriteLine("Age: " + selectedContact.Age);
-            Console.WriteLine("UserID: " + selectedContact.UserID);
+            var asdfasdfasdf = UserCV.SelectedItems;
+            
         }
     }
 }
