@@ -38,6 +38,8 @@ namespace App1.View
 
 
 
+
+
     async void ClearItem_Clicked(System.Object sender, System.EventArgs e)
         {
             await CloseDrawer();

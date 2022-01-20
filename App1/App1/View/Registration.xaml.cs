@@ -43,8 +43,9 @@ namespace App1
             var missNameorEnt = false;
             var missMail = false;
             var missPw = false;
+            var username = Entry_Username.Text.ToLower().Trim();
 
-            if (stringmethods.isEmpty(Entry_Username.Text))
+            if (stringmethods.isEmpty(username))
             {
                 missUsern = true;
             }
@@ -89,11 +90,16 @@ namespace App1
             {
                 await DisplayAlert("Achtung!", "Benutzer ist schon registriert!", "OK");
             }
+            else if (username == Entry_Password.Text.ToLower().Trim() || username == Entry_Firstname.Text.ToLower().Trim() ||
+                username == Entry_Lastname.Text.ToLower().Trim())
+            {
+                await DisplayAlert("Achtung!", "Name und Passwort sollte nicht gleich sein!", "OK");
+            }
             else 
             {
                 //My code
                 user = new User();
-                user.Username = Entry_Username.Text.ToLower();
+                user.Username = username;
                 user.Email = Entry_Email.Text;
                 // Generate random userID for the patient
                 var userid = 0;
@@ -118,7 +124,7 @@ namespace App1
 
                 try
                 {
-                    var userAddingStatus = userDBHelper.AddUser(user, Entry_Username.Text.ToLower());
+                    var userAddingStatus = userDBHelper.AddUser(user, username);
                     userDBHelper.PrintUser(user);
 
                     if (userAddingStatus)

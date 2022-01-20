@@ -35,17 +35,19 @@ namespace App1
             var missMail = false;
             var missPw = false;
 
+            var username = Entry_Username.Text.ToLower().Trim();
+
             //username is missing
             if (stringmethods.isEmpty(Entry_Entity.Text))
             {
                 missEntity = true;
             }
             //username is missing
-            if (stringmethods.isEmpty(Entry_Username.Text))
+            if (stringmethods.isEmpty(username))
             {
                 missUsern = true;
             }
-                //cant use isempty method cause names have whitespace sometimes
+             //cant use isempty method cause names have whitespace sometimes
             if (string.IsNullOrEmpty(Entry_Firstname.Text) || string.IsNullOrEmpty(Entry_Lastname.Text))
             { 
                     missName = true;
@@ -88,23 +90,28 @@ namespace App1
                 Entry_Password.Text = string.Empty;
                 Entry_Repeatedpassword.Text = string.Empty;
             }
-            else if (adminDBHelper.CheckUserexist(Entry_Username.Text))
+            else if (adminDBHelper.CheckUserexist(username))
             {
                 await DisplayAlert("Achtung!", "Benutzer ist schon registriert!", "OK");
+            } 
+            else if (username == Entry_Password.Text.ToLower().Trim() || username == Entry_Firstname.Text.ToLower().Trim() ||
+                username == Entry_Lastname.Text.ToLower().Trim())
+            {
+                await DisplayAlert("Achtung!", "Name und Passwort sollte nicht gleich sein!", "OK");
             }
             else
             {
                 //My code
                 admin = new Admin();
                 admin.Entity = Entry_Entity.Text;
-                admin.Username = Entry_Username.Text.ToLower();
+                admin.Username = username;
                 admin.Email = Entry_Email.Text;
                 admin.FirstName = Entry_Firstname.Text;
                 admin.LastName = Entry_Lastname.Text;
                 admin.Password = Entry_Password.Text;
                 try
                 {
-                    var userAddingStatus = adminDBHelper.AddUser(admin,Entry_Username.Text);
+                    var userAddingStatus = adminDBHelper.AddUser(admin, username);
                     adminDBHelper.PrintUser(admin);
 
                     if (userAddingStatus)
