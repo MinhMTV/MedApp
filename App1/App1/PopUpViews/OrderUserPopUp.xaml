@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage  xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+             mc:Ignorable="d"
+             x:Class="App1.PopUpViews.OrderUserPopUp">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation 
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8"
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"/>
+    </pages:PopupPage.Animation>
+    <!--You can use any elements here which are extended from Xamarin.Forms.View-->
+    <Frame  VerticalOptions="CenterAndExpand" 
+        HorizontalOptions="CenterAndExpand" >
+        <StackLayout>
+
+            <Label Text="Reihenfolge nach" FontSize="Medium" FontAttributes="Bold" />
+            <RadioButton GroupName="Order" FontSize="Body" Content="CreatedAt" x:Name="IsCreatedAt" CheckedChanged="CreatedAt_CheckedChanged"/>
+            <RadioButton GroupName="Order" FontSize="Body" Content="Username" x:Name="IsUsername" CheckedChanged="Username_CheckedChanged" />
+            <RadioButton GroupName="Order" FontSize="Body" Content="Vorname" x:Name="IsVorname" CheckedChanged="Vorname_CheckedChanged" />
+            <RadioButton GroupName="Order" FontSize="Body" Content="Nachname" x:Name="IsNachname" CheckedChanged="Nachname_CheckedChanged"/>
+            <RadioButton GroupName="Order" FontSize="Body" Content="Alter" x:Name="IsAlter" CheckedChanged="Alter_CheckedChanged" />
+            <RadioButton GroupName="Order" FontSize="Body" Content="Email" x:Name="IsEmail" CheckedChanged="Email_CheckedChanged" />
+            <RadioButton GroupName="Order" FontSize="Body" Content="UserID" x:Name="IsUserID" CheckedChanged="UserID_CheckedChanged"/>
+            <RadioButton GroupName="Order" FontSize="Body" Content="FirstSession" x:Name="IsFirstSession" CheckedChanged="FirstSession_CheckedChanged" />
+            <RadioButton GroupName="Order" FontSize="Body" Content="LastSession" x:Name="IsLastSession" CheckedChanged="LastSession_CheckedChanged" />
+            <RadioButton GroupName="Order" FontSize="Body" Content="SessionLastUpdated" x:Name="IsSessionLastUpdated" CheckedChanged="SessionLastUpdated_CheckedChanged" />
+            <RadioButton GroupName="Order" FontSize="Body" Content="TherapieStart" x:Name="IsTherapieStart" CheckedChanged="TherapieStart_CheckedChanged" />
+            <RadioButton GroupName="Order" FontSize="Body" Content="TherapieEnd" x:Name="IsTherapieEnd" CheckedChanged="TherapieEnd_CheckedChanged" />
+            <Button Text="Ok" Clicked="Button_Clicked"></Button>
+
+        </StackLayout>
+    </Frame>
+</pages:PopupPage>

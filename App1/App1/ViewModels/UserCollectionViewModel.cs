@@ -3,9 +3,11 @@ using App1.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using Xamarin.CommunityToolkit.Extensions;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 
@@ -23,16 +25,22 @@ namespace App1.ViewModels
 
         public User SelectedItem { get; set; }
 
+        private bool _selectedUser_IsVisible;
+
         public SelectionMode SelectionMode { get => _selectionMode; set => SetProperty(ref _selectionMode, value); }
 
         public ObservableCollection<User> User { get => _user; set => _user = value; }
 
         public ObservableCollection<object> SelectedUser { get => _selectedUser; set => _selectedUser = value; }
 
+        public String UserOrderBy { get; set; }
+
+        public bool IsAscending { get; set; }
         public Command ShareCommand { get; set; }
 
         public Command<User> LongPressCommand { get; private set; }
-
+        
+        public Command OrderByCommand { get; set; }
         public Command ClearCommand { get; private set; }
         public Command RefreshCommand { get; }
         public Command<User> PressedCommand { get; private set; }
@@ -49,6 +57,15 @@ namespace App1.ViewModels
             PressedCommand = new Command<User>(OnPressed);
             RefreshCommand = new Command(ExecuteRefreshCommand);
         }
+        public int NrofSelectedUser
+        {
+            get => _nrOfSelectedUser;
+            set
+            {
+                _nrOfSelectedUser = value;
+                OnPropertyChanged(nameof(NrofSelectedUser));
+            }
+        }
 
         private bool isRefreshing;
         public bool IsRefreshing
@@ -60,25 +77,29 @@ namespace App1.ViewModels
             }
         }
 
-        public int NrofSelectedUser
+        public bool SelectedUser_IsVisible
         {
-            get => _nrOfSelectedUser;
+            get { return _selectedUser_IsVisible; }
             set
             {
-                _nrOfSelectedUser = value;
-                RaisePropertyChanged(nameof(NrofSelectedUser));
+                _selectedUser_IsVisible = value;
+                OnPropertyChanged(nameof(SelectedUser_IsVisible));
             }
         }
 
-        private async void ExecuteRefreshCommand()
+        private void ExecuteRefreshCommand()
         {
             _user.Clear();
+            _selectedUser.Clear();
             IsRefreshing = true;
-            foreach(var item in userDBHelper.GetAllUserToList())
+
+            foreach (var item in userDBHelper.GetAllUserToListByOrder(UserOrderBy,IsAscending))
             {
                 _user.Add(item);
-            }         
-
+            }
+            SelectedUser_IsVisible = false;
+            NrofSelectedUser = SelectedUser.Count();
+            SelectionMode = SelectionMode.None; 
             // Stop refreshing
             IsRefreshing = false;
         }
@@ -88,14 +109,15 @@ namespace App1.ViewModels
             Console.WriteLine("User In Collection: " + SelectedUser.Count());
             if (_selectionMode != SelectionMode.None)
             {
-                _nrOfSelectedUser = SelectedUser.Count();
                 Console.WriteLine("Test OnPress");
                 if (_selectedUser.Count() == 0)
                 {
                     SelectionMode = SelectionMode.None;
+                    SelectedUser_IsVisible = false;
                 }
                 else
                 {
+                    SelectedUser_IsVisible = true;
                     Console.WriteLine("Test OnPress");
                 }
                 
@@ -104,6 +126,8 @@ namespace App1.ViewModels
             {
                 await  App.Current.MainPage.DisplayToastAsync("Navigiere zu User Details");
             }
+
+            NrofSelectedUser = SelectedUser.Count();
         }
 
         private void OnClear()
@@ -113,17 +137,33 @@ namespace App1.ViewModels
 
         private void OnLongPress(User p)
         {
-            Console.WriteLine("LongPressed");
-            if (_selectionMode == SelectionMode.None)
+            try
             {
-                SelectionMode = SelectionMode.Multiple;
-                SelectedUser.Add(p);
-                _nrOfSelectedUser = SelectedUser.Count();
-                Console.Write("Add User");
+                // Use default vibration length
+                Vibration.Vibrate();
+                Console.WriteLine("LongPressed");
+                if (_selectionMode == SelectionMode.None)
+                {
+                    SelectionMode = SelectionMode.Multiple;
+                    SelectedUser.Add(p);
+                    NrofSelectedUser++;
+                    SelectedUser_IsVisible = true;
+                    Console.Write("Add User");
+                }
             }
+            catch (FeatureNotSupportedException ex)
+            {
+                Console.WriteLine("Feature not supported on device" + ex);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            NrofSelectedUser = SelectedUser.Count();
         }
 
-        private async void OnShare()
+        private void OnShare()
         {
             
         }
@@ -135,8 +175,7 @@ namespace App1.ViewModels
             _selectedUser = new ObservableCollection<object>();
             _user = userDBHelper.GetAllUserToCollection();
             _nrOfSelectedUser = SelectedUser.Count();
-            RaisePropertyChanged(nameof(User));
+            _selectedUser_IsVisible = false;
         }
     }
-
 }

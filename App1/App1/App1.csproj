@@ -15,6 +15,7 @@
     <PackageReference Include="Microcharts.Forms" Version="0.9.5.9" />
     <PackageReference Include="MLToolkit.Forms.SwipeCardView" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.13" />
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
     <PackageReference Include="Xam.Plugin.Connectivity" Version="3.2.0" />
     <PackageReference Include="Xam.Plugins.Notifier" Version="3.0.1" />
@@ -32,6 +33,9 @@
   <ItemGroup>
     <Compile Update="LoginPage3.xaml.cs">
       <DependentUpon>LoginPage3.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="PopUpViews\OrderUserPopUp.xaml.cs">
+      <DependentUpon>OrderUserPopUp.xaml</DependentUpon>
     </Compile>
     <Compile Update="View\DataProtectionPage.xaml.cs">
       <DependentUpon>DataProtectionPage.xaml</DependentUpon>
@@ -66,6 +70,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="PopUpViews\AscendingPopUp.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="PopUpViews\OrderUserPopUp.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Styles\UserCollectionStyle.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

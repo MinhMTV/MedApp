@@ -16,6 +16,7 @@ namespace App1.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Entity { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         public Admin()
         {

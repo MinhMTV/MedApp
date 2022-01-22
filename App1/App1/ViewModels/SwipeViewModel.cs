@@ -57,8 +57,8 @@ namespace App1.ViewModels
             set
             {
                 _isDraggingUpSupported = value;
-                RaisePropertyChanged();
-                RaisePropertyChanged(nameof(SupportedDraggingDirections));
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(SupportedDraggingDirections));
             }
         }
 
@@ -68,8 +68,8 @@ namespace App1.ViewModels
             set
             {
                 _isDraggingDownSupported = value;
-                RaisePropertyChanged();
-                RaisePropertyChanged(nameof(SupportedDraggingDirections));
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(SupportedDraggingDirections));
             }
         }
 
@@ -82,8 +82,8 @@ namespace App1.ViewModels
             set
             {
                 _isSwipeUpSupported = value;
-                RaisePropertyChanged();
-                RaisePropertyChanged(nameof(SupportedSwipeDirections));
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(SupportedSwipeDirections));
             }
         }
 
@@ -93,8 +93,8 @@ namespace App1.ViewModels
             set
             {
                 _isSwipeDownSupported = value;
-                RaisePropertyChanged();
-                RaisePropertyChanged(nameof(SupportedSwipeDirections));
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(SupportedSwipeDirections));
             }
         }
 
@@ -106,7 +106,7 @@ namespace App1.ViewModels
             set
             {
                 _animationLength = value;
-                RaisePropertyChanged();
+                OnPropertyChanged();
             }
         }
 
@@ -116,7 +116,7 @@ namespace App1.ViewModels
             set
             {
                 _threshold = value;
-                RaisePropertyChanged();
+                OnPropertyChanged();
             }
         }
 
@@ -141,7 +141,7 @@ namespace App1.ViewModels
             set
             {
                 _pictures = value;
-                RaisePropertyChanged();
+                OnPropertyChanged();
             }
         }
 

@@ -33,11 +33,11 @@ namespace App1
 
         async void LogIn(object sender, EventArgs e)
         {
-            var username = Entry_Username.Text.ToLower().TrimEnd().TrimStart();
+            
             //Check for the username and password are not empty
-            if (username != null || Entry_Password.Text != null)
+            if (Entry_Username.Text != null || Entry_Password.Text != null)
             {
-                
+                var username = Entry_Username.Text.ToLower().TrimEnd().TrimStart();
 
                 if (!adminDBHelper.CheckUserexist(username))
                 {

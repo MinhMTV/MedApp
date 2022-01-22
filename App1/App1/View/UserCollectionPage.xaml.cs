@@ -1,13 +1,17 @@
 ﻿using App1.Helpers;
 using App1.Models;
+using App1.PopUpViews;
 using App1.ViewModels;
+using Rg.Plugins.Popup.Animations;
+using Rg.Plugins.Popup.Enums;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xamarin.CommunityToolkit.Extensions;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -19,31 +23,104 @@ namespace App1.View
 
         private UserCollectionViewModel _uvm;
         private UserDBHelper userDBHelper = new UserDBHelper();
+
+        private bool isAdmin = true;
         public UserCollectionPage()
         {
             BindingContext = _uvm = new UserCollectionViewModel();
             InitializeComponent();
-        }
 
-        async void ToolbarItem_Clicked(System.Object sender, System.EventArgs e)
-        {
-
-            var userlist = UserCV.SelectedItems.ToList();
-            foreach(var item in userlist)
+            MessagingCenter.Subscribe<App, string>(App.Current, "PopUpOrder", (snd, arg) =>
             {
-                userDBHelper.DeleteUser(item);
-                _uvm.User.Remove((User)item);
+                _uvm.SelectionMode = SelectionMode.None;
+                _uvm.SelectedUser.Clear();
+                _uvm.SelectedUser_IsVisible = false;
+                _uvm.User.Clear();
+                var user = userDBHelper.GetAllUserToListByOrder(arg.ToString(), bool.Parse(Preferences.Get(constants.isAscending,"true")));
+                foreach(var item in user)
+                {
+                    _uvm.User.Add(item);
+
+                }
+               _uvm.UserOrderBy = arg.ToString();
+                _uvm.IsAscending = true;
+            });
+
+            MessagingCenter.Subscribe<App, string>(App.Current, "PopUpSort", (snd, arg) =>
+            {
+                _uvm.SelectionMode = SelectionMode.None;
+                _uvm.SelectedUser.Clear();
+                _uvm.SelectedUser_IsVisible = false;
+                _uvm.User.Clear();
+                var user = userDBHelper.GetAllUserToListByOrder(Preferences.Get(constants.OrderBy, "createdat"), bool.Parse(arg));
+                foreach (var item in user)
+                {
+                    _uvm.User.Add(item);
+
+                }
+                _uvm.UserOrderBy = arg.ToString();
+                _uvm.IsAscending = true;
+            });
+
+
+        }
+            async void AddUser_Clicked(System.Object sender, System.EventArgs e)
+        {
+            await Navigation.PushModalAsync(new Registration(isAdmin), false);
+
+        }
+
+        async void OrderBy_Clicked(System.Object sender, System.EventArgs e)
+        {
+            await Navigation.PushModalAsync(new OrderUserPopUp());
+
+        }
+
+        async void Sortby_Clicked(System.Object sender, System.EventArgs e)
+        {
+            await Navigation.PushModalAsync(new AscendingPopUp());
+
+        }
+
+        async void OnTrashTapped(object sender, EventArgs args)
+        {
+            var result = await this.DisplayAlert("Achtung!", "Wollen Sie die User wirklich löschen?", "Ja", "Nein");
+
+            if (result)
+            {
+                try
+                {
+                    var userlist = UserCV.SelectedItems.ToList();
+                    foreach (var item in userlist)
+                    {
+                        userDBHelper.DeleteUser(item);
+                        _uvm.User.Remove((User)item);
+                    }
+                    _uvm.SelectionMode = SelectionMode.None;
+                    _uvm.SelectedUser.Clear();
+                    _uvm.SelectedUser_IsVisible = false;
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
+            else
+            {
+                //do nothing
+            }
+            
         }
 
 
 
-
-
-    async void ClearItem_Clicked(System.Object sender, System.EventArgs e)
+        void ClearSelect_Clicked(System.Object sender, System.EventArgs e)
         {
-            await CloseDrawer();
-            UserCV.SelectedItems.Clear();
+            //           await CloseDrawer();
+            _uvm.SelectionMode = SelectionMode.None;
+            _uvm.SelectedUser.Clear();
+            _uvm.SelectedUser_IsVisible = false;
         }
 
         protected override void OnAppearing()

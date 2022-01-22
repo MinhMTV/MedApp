@@ -1,6 +1,7 @@
 ﻿using App1.Helpers;
 using App1.Methods;
 using App1.Models;
+using App1.View;
 using System;
 using System.Diagnostics;
 using Xamarin.Forms;
@@ -17,7 +18,8 @@ namespace App1
         private AdminDBHelper adminDBHelper = new AdminDBHelper();
         private Stringmethods stringmethods = new Stringmethods();
         public User user;
-        
+        private String username = "";
+        private bool isAdmin = false;
 
         public Registration()
         {
@@ -30,6 +32,21 @@ namespace App1
             age = (int)slider_age.Value;
         }
 
+        public Registration(bool passingData)
+        {
+            InitializeComponent();
+            Entry_Username.ReturnCommand = new Command(() => Entry_Firstname.Focus());
+            Entry_Firstname.ReturnCommand = new Command(() => Entry_Lastname.Focus());
+            Entry_Lastname.ReturnCommand = new Command(() => Entry_Email.Focus());
+            Entry_Email.ReturnCommand = new Command(() => Entry_Password.Focus());
+            Entry_Password.ReturnCommand = new Command(() => Entry_Repeatedpassword.Focus());
+            age = (int)slider_age.Value;
+            if(passingData)
+            {
+                isAdmin = true;
+            }
+        }
+
         private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
         {
             age = Convert.ToInt32(e.NewValue);
@@ -38,12 +55,16 @@ namespace App1
         async private void CompleteRegistration_Clicked(object sender, EventArgs e)
         {
             var missUsern = false;
-            var missEntity = false;
-            var missName = false;
-            var missNameorEnt = false;
+            var missFirstName = false;
+            var missLastname = false;
             var missMail = false;
             var missPw = false;
-            var username = Entry_Username.Text.ToLower().Trim();
+
+            if (!string.IsNullOrEmpty(Entry_Username.Text))
+            {
+                username = Entry_Username.Text.ToLower().Trim();
+            }
+            
 
             if (stringmethods.isEmpty(username))
             {
@@ -52,13 +73,13 @@ namespace App1
             
             {
                 //cant use isempty method cause names have whitespace sometimes
-                if (string.IsNullOrEmpty(Entry_Firstname.Text) || string.IsNullOrEmpty(Entry_Lastname.Text)) 
-                missName = true;
+                if (string.IsNullOrEmpty(Entry_Firstname.Text))
+                    missFirstName = true;
             }
 
-            if (missName && missEntity == true)
+            if (stringmethods.isEmpty(Entry_Lastname.Text))
             {
-                missNameorEnt = true;
+                missLastname = true;
             }
 
             if (stringmethods.isEmpty(Entry_Email.Text))
@@ -71,11 +92,12 @@ namespace App1
                 missPw = true;
             }
 
-            if (missMail || missPw || missNameorEnt == true)
+            if (missUsern || missMail || missPw || missFirstName || missLastname == true)
             {
                 await DisplayAlert("Achtung!", "Bitte Füllen Sie alle erforderlichen Felder aus", "OK");
                 if (missUsern) { Entry_Username.PlaceholderColor = Color.Red; Entry_Username.Placeholder = "Bitte Username angeben!"; }
-                if (missNameorEnt) { Entry_Lastname.PlaceholderColor = Color.Red; Entry_Lastname.Placeholder = "Bitte Name angeben!";  }
+                if (missLastname) { Entry_Lastname.PlaceholderColor = Color.Red; Entry_Lastname.Placeholder = "Bitte Name angeben!";  }
+                if (missFirstName) { Entry_Firstname.PlaceholderColor = Color.Red; Entry_Firstname.Placeholder = "Bitte Name angeben!"; }
                 if (missMail) { Entry_Email.PlaceholderColor = Color.Red; Entry_Email.Placeholder = "Bitte E-Mail angeben!"; }
                 if (missPw) { Entry_Password.PlaceholderColor = Color.Red; Entry_Password.Placeholder = "Bitte Passwort angeben!"; }
 
@@ -90,10 +112,10 @@ namespace App1
             {
                 await DisplayAlert("Achtung!", "Benutzer ist schon registriert!", "OK");
             }
-            else if (username == Entry_Password.Text.ToLower().Trim() || username == Entry_Firstname.Text.ToLower().Trim() ||
-                username == Entry_Lastname.Text.ToLower().Trim())
+            else if (username == Entry_Password.Text.ToLower().Trim() || Entry_Firstname.Text.ToLower().Trim() == Entry_Password.Text.ToLower().Trim() ||
+                Entry_Lastname.Text.ToLower().Trim() == Entry_Password.Text.ToLower().Trim())
             {
-                await DisplayAlert("Achtung!", "Name und Passwort sollte nicht gleich sein!", "OK");
+                await DisplayAlert("Achtung!", "Name oder Passwort sollten nicht gleich sein!", "OK");
             }
             else 
             {
@@ -119,7 +141,9 @@ namespace App1
                 user.IsUserAskedForDataProtection = false;
                 user.IsDataProtectionAccepted = true;
                 user.IsToDataAutoSend = true;
-                user.SessionLastUpdated = DateTime.Now;
+                user.CreatedAt = DateTime.Now;
+                user.Start = DateTime.Now;
+                user.End = DateTime.MaxValue; //TherapieEnde wird auf unedlich gesetzt
                 userDBHelper.PrintUser(user);
 
                 try
@@ -135,7 +159,14 @@ namespace App1
                     {
                         await DisplayAlert("Achtung!", "Sie sind bereits registriert. Sie können sich einloggen.", "OK");
                     }
-                    await Navigation.PushAsync(new LoginPage());
+                    if(isAdmin)
+                    {
+                        await Navigation.PopModalAsync();
+                    } else
+                    {
+                        await Navigation.PushAsync(new LoginPage());
+                    }
+                    
                 }
                 catch (Exception exception)
                 {

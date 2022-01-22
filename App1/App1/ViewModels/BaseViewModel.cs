@@ -12,7 +12,7 @@ namespace App1.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void RaisePropertyChanged([CallerMemberName] string name = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        protected void OnPropertyChanged([CallerMemberName] string name = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
         bool isBusy = false;
         public bool IsBusy
@@ -56,7 +56,7 @@ namespace App1.ViewModels
 
             backingStore = value;
             onChanged?.Invoke();
-            RaisePropertyChanged(propertyName);
+            OnPropertyChanged(propertyName);
             return true;
         }
     }

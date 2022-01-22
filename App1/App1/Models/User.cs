@@ -20,10 +20,14 @@ namespace App1.Models
         public bool IsUserAskedForDataProtection { get; set; }
         public bool IsDataProtectionAccepted { get; set; }
         public bool IsToDataAutoSend { get; set; }
-        public DateTime SessionLastUpdated { get; set; }
-        public DateTime TherapieStart { get; set; }
-        public DateTime TherapieEnd { get; set; }
+        public DateTime FirstSession { get; set; } //first trainingsession
+        public DateTime LastSession { get; set; } //last Trainingsession
+        public DateTime SessionLastUpdated { get; set; } //time, where session was last send to database online
+        public DateTime CreatedAt { get; set; } //when user was created
+        public DateTime Start { get; set; } //therapystart (only adjust by admin)
+        public DateTime End { get; set; } //therapyend(only adjust by admin)
 
+        //therapyend/start = time of therapy, where user can login 
 
 
         public User()
@@ -37,6 +41,6 @@ namespace App1.Models
 
         public string Fullname => FirstName + " " + LastName;
 
-        public String LastSession => SessionLastUpdated.ToShortDateString();
+        public String SessionLastUpdatedshort => SessionLastUpdated.ToShortDateString();
     }
 }

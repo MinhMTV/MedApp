@@ -19,6 +19,8 @@ namespace App1.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            Rg.Plugins.Popup.Popup.Init();
+
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 
@@ -51,6 +53,8 @@ namespace App1.iOS
 
             return base.FinishedLaunching(app, options);
         }
+
+
 
         public override void ReceivedLocalNotification(UIApplication application, UILocalNotification notification)
         {

@@ -4,7 +4,13 @@
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="App1.View.UserCollectionPage"
              xmlns:pg="clr-namespace:App1.ViewModels"
-             x:Name="UserCollectionView">
+             x:Name="UserCollectionView"
+             xmlns:converters="clr-namespace:App1.Methods;assembly=App1">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:IntToString x:Key="IntToString" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <NavigationPage.TitleView>
         <Grid >
 
@@ -25,33 +31,42 @@
                FontSize="Medium"
                HorizontalOptions="StartAndExpand"
                VerticalOptions="Center"/>
-            <StackLayout Grid.Column="1" 
+            <StackLayout x:Name="SelectedLayout"  
+                         Grid.Column="1" 
                          HorizontalOptions="EndAndExpand"
-                         Orientation="Horizontal">
-            <Label Text="Selected:"
-               VerticalOptions="Center"
-               FontSize="Medium"
-                   HorizontalOptions="EndAndExpand"/>
-                <Label Text="{Binding Path=BindingContext.NrofSelectedUser, Source={x:Reference UserCollectionView}}" VerticalOptions="Center" FontSize="Medium" HorizontalOptions="EndAndExpand"/>
-                <Image
-                Grid.Column="2" Source="https://img.icons8.com/external-tulpahn-flat-tulpahn/64/fa314a/external-bin-mobile-user-interface-tulpahn-flat-tulpahn.png"
-                    HorizontalOptions="EndAndExpand"/>
+                         Orientation="Horizontal" 
+                         IsVisible="{Binding SelectedUser_IsVisible}"
+                         >
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTrashTapped"/>
+                </StackLayout.GestureRecognizers>
+                <Label Text="{Binding NrofSelectedUser, StringFormat='Selected: {0}'}" VerticalOptions="Center" FontSize="Medium" HorizontalOptions="EndAndExpand" MaxLines="1"/>
+                <Image Source="https://img.icons8.com/external-tulpahn-flat-tulpahn/64/fa314a/external-bin-mobile-user-interface-tulpahn-flat-tulpahn.png"
+                    HorizontalOptions="EndAndExpand">
+                </Image>
             </StackLayout>
         </Grid>
     </NavigationPage.TitleView>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Delete"
+        <ToolbarItem Text="User Hinzufügen"
                      Order="Secondary"
-                     Clicked="ToolbarItem_Clicked"/>
-        <ToolbarItem Text="Clear Selection"
+                     Clicked="AddUser_Clicked"/>
+        <ToolbarItem Text="Auswahl zurücksetzen"
                      Order="Secondary"
-                     Clicked="ClearItem_Clicked"
+                     Clicked="ClearSelect_Clicked"
                      Command="{Binding ClearCommand}"/>
+        <ToolbarItem Text="Reihenfolge ändern"
+                     Order="Secondary"
+                     Clicked="Sortby_Clicked" />
+        <ToolbarItem Text="Sortieren nach"
+                     Order="Secondary"
+                     Clicked="OrderBy_Clicked"/>
+        
     </ContentPage.ToolbarItems>
     
     <StackLayout>
-        <RefreshView IsRefreshing="{Binding IsRefreshing, Mode=OneWay}}"
+        <RefreshView IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"
              Command="{Binding RefreshCommand}">
         <CollectionView x:Name="UserCV" SelectionMode="{Binding SelectionMode}" SelectedItems="{Binding SelectedUser}" ItemsSource="{Binding User}"
                         >
@@ -106,7 +121,10 @@
                                         TargetName="CheckIcon"
                                         Property="Image.IsVisible"
                                         Value="True"/>
-                                    </VisualState.Setters>
+                                            <Setter 
+                                                Property="BackgroundColor" 
+                                                Value="Red" />
+                                        </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
@@ -143,7 +161,7 @@
                                         <StackLayout Style="{StaticResource imageLableStackLayout}">
                                             <Image Source="https://img.icons8.com/material-two-tone/24/000000/time-machine.png" Style="{StaticResource imageStyle}"></Image>
                                             <Label Text="lastSession:" Style="{StaticResource LabelStyle}"></Label>
-                                            <Label Text="{Binding LastSession}" Style="{StaticResource LabelStyle}" />
+                                                <Label Text="{Binding SessionLastUpdatedshort}" Style="{StaticResource LabelStyle}" />
                                         </StackLayout>
                                     </StackLayout>
                                     <StackLayout Orientation="Horizontal" HorizontalOptions="End">

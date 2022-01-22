@@ -14,6 +14,7 @@ namespace App1
         private AdminDBHelper adminDBHelper = new AdminDBHelper();
         private Stringmethods stringmethods = new Stringmethods();
         public Admin admin;
+        private String username = "";
 
         public AdminReg()
         {
@@ -35,7 +36,10 @@ namespace App1
             var missMail = false;
             var missPw = false;
 
-            var username = Entry_Username.Text.ToLower().Trim();
+            if (!string.IsNullOrEmpty(Entry_Firstname.Text))
+            {
+                username = Entry_Username.Text.ToLower().Trim();
+            }
 
             //username is missing
             if (stringmethods.isEmpty(Entry_Entity.Text))
@@ -93,11 +97,11 @@ namespace App1
             else if (adminDBHelper.CheckUserexist(username))
             {
                 await DisplayAlert("Achtung!", "Benutzer ist schon registriert!", "OK");
-            } 
-            else if (username == Entry_Password.Text.ToLower().Trim() || username == Entry_Firstname.Text.ToLower().Trim() ||
-                username == Entry_Lastname.Text.ToLower().Trim())
+            }
+            else if (username == Entry_Password.Text.ToLower().Trim() || Entry_Firstname.Text.ToLower().Trim() == Entry_Password.Text.ToLower().Trim() ||
+                Entry_Lastname.Text.ToLower().Trim() == Entry_Password.Text.ToLower().Trim())
             {
-                await DisplayAlert("Achtung!", "Name und Passwort sollte nicht gleich sein!", "OK");
+                await DisplayAlert("Achtung!", "Name oder Passwort sollten nicht gleich sein!", "OK");
             }
             else
             {
@@ -109,6 +113,7 @@ namespace App1
                 admin.FirstName = Entry_Firstname.Text;
                 admin.LastName = Entry_Lastname.Text;
                 admin.Password = Entry_Password.Text;
+                admin.CreatedAt = DateTime.Now;
                 try
                 {
                     var userAddingStatus = adminDBHelper.AddUser(admin, username);
