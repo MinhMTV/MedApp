@@ -39,5 +39,9 @@ namespace App1.Models
                 return "ti.uni-due.de";
             }
         }
+
+        public static int defaultMin { get { return 5; } } //Session default min are 5
+
+        public static int defaultSec { get { return 0; } } //Session default sec are 0
     }
 }

@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="App1.View.UserPages.EditDataProtectionPage"
+             Title="Datenschutzerklärung">
+    <ContentPage.Content>
+
+        <StackLayout>
+            <Label
+                    Text="Datenschutzrichtlinien"
+                    HorizontalOptions="CenterAndExpand"
+                    FontSize="30"
+                    FontAttributes="Bold"
+                    Padding="0,0,0,10"/>
+            <ScrollView>
+                <Label TextColor="Black"
+                       Padding="20"
+                       FontSize="Medium">
+                    <Label.Text>Diese App wurde entwickelt, um kognitive Verzerrungen von Suchtpatienten positiv zu beeinflussen.&#x0a;&#x0a;Durch die Nutzung der App stimmen Sie der Erfassung, Verwendung und Übertragung Ihrer persönlichen Daten zur Verarbeitung durch Ihren Arzt oder Psyschologen zu. Dieser hat die Möglichkeit, die Trainingsdaten in anonymisierter Form zu medizinischen Forschungszwecken weiterzuleiten.&#x0a;Der Schutz Ihrer persönlichen Daten hat für uns höchste Priorität, daher erfolgt die Übertragung der Daten verschlüsselt. &#x0a;Ihre persönlichen Daten werden gelöscht, sobald der Zweck der Speicherung entfallen ist bzw. wenn sie Ihre Zustimmung zur Nutzung Ihrer Daten widerrufen!</Label.Text>
+                </Label>
+            </ScrollView>
+
+
+            <Grid Margin="10,15,0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <CheckBox
+                    Color="Blue"
+                    Grid.Column="0"
+                    IsChecked="True"
+                    x:Name="CheckBox_IsDataProtectionAccepted"
+                    Scale="1.5"/>
+                <Label Grid.Column="1"
+                       Text="Ich bin damit einverstanden"
+                       FontSize="Large"/>
+            </Grid>
+
+            <Button Text="OK"
+                Clicked="Continue_Clicked"
+                TextColor="White"
+                BackgroundColor="Blue"
+                HorizontalOptions="CenterAndExpand"/>
+
+        </StackLayout>
+
+    </ContentPage.Content>
+</ContentPage>

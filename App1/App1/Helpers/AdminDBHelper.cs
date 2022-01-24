@@ -199,21 +199,22 @@ namespace App1.Helpers
                     {
                         switch (property.Trim().ToLower())
                         {
-                            case "username":
+                            case constants.username:
                                 return returnedUser.Username;
-                            case "entity":
+                            case constants.entity:
                                 return returnedUser.Entity;
-
-                            case "firstname":
+                            case constants.firstname:
                                 return returnedUser.FirstName;
-                            case "lastname":
+                            case constants.lastname:
                                 return returnedUser.LastName;
-                            case "password":
+                            case constants.password:
                                 return returnedUser.Password;
-                            case "email":
+                            case constants.email:
                                 return returnedUser.Email;
-                            case "userid":
+                            case constants.userid:
                                 return returnedUser.AdminID.ToString();
+                            case constants.createdat:
+                                return returnedUser.CreatedAt.ToString();
                         }
                     }
 

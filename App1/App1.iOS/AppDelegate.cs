@@ -1,5 +1,6 @@
 ﻿
 using Foundation;
+using System.Linq;
 using UIKit;
 
 namespace App1.iOS
@@ -20,6 +21,7 @@ namespace App1.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             Rg.Plugins.Popup.Popup.Init();
+            NativeMedia.Platform.Init(GetTopViewController);
 
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
@@ -52,6 +54,16 @@ namespace App1.iOS
 
 
             return base.FinishedLaunching(app, options);
+        }
+
+        public UIViewController GetTopViewController()
+        {
+            var vc = UIApplication.SharedApplication.KeyWindow.RootViewController;
+
+            if (vc is UINavigationController navController)
+                vc = navController.ViewControllers.Last();
+
+            return vc;
         }
 
 

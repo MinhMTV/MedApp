@@ -23,7 +23,6 @@ namespace App1.ViewModels
 
         private int _nrOfSelectedUser { get; set; }
 
-        public User SelectedItem { get; set; }
 
         private bool _selectedUser_IsVisible;
 
@@ -35,8 +34,7 @@ namespace App1.ViewModels
 
         public String UserOrderBy { get; set; }
 
-        public bool IsAscending { get; set; }
-        public Command ShareCommand { get; set; }
+        public bool IsAscending { get; set; } = true;
 
         public Command<User> LongPressCommand { get; private set; }
         
@@ -51,7 +49,6 @@ namespace App1.ViewModels
         {
             InitData();
             
-            ShareCommand = new Command(OnShare);
             LongPressCommand = new Command<User>(OnLongPress);
             ClearCommand = new Command(OnClear);
             PressedCommand = new Command<User>(OnPressed);

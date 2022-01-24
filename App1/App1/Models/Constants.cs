@@ -5,13 +5,43 @@
         /*Shared Preferences
          * String Value means key name 
          */
-        public static string loginUser { get { return "loginUser";} } //check in preferences if a user was loggin, if not default value is false
-        
-        public static int minID { get { return 10000; } } //set range of UserID
+        public const string loginUser = "loginUser";//check in preferences if a user was loggin, if not default value is false
+        public const string isAscending = "IsAscending"; //set default sort by ascending
+        public const string OrderBy = "OrderBy";  //set order of usercollection, default is empty string, which leads to userdbid
 
-        public static int maxId { get { return 99999; } }
+        /*User Properties*/
+        public const string userdbid = "userdbid";
+        public const string password = "password";
+        public const string IsUserIdUpdated = "isuseridupdated";
 
-        public static string isAscending { get { return "True"; } } //set default sort by ascending
-        public static string OrderBy { get { return ""; } } //set order of usercollection, default is empty string, which leads to userdbid
+
+        public const string username = "username";
+        public const string email = "email";
+        public const string userid = "userid"; 
+        public const string firstname = "firstname";
+        public const string lastname = "lastname"; 
+        public const string age = "age"; 
+        public const string createdat = "createdat"; 
+        public const string IsDataProtectionAccepted = "isdataprotectionaccepted"; 
+        public const string IsToDataAutoSend = "istodataautosend";
+        public const string firstsession = "firstsession"; 
+        public const string lastsession = "lastsession"; 
+        public const string sessionlastupdated = "sessionlastupdated";
+        public const string start = "start"; 
+        public const string end = "end"; 
+        public const string minutes = "minutes"; 
+        public const string seconds = "seconds";
+
+        //admin
+        public const string entity = "entity";
+
+
+        //constant user settings
+
+        public const int minID = 10000;  //set range of UserID
+
+        public const int maxId = 99999;
+
+
     }
 }

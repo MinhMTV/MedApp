@@ -88,8 +88,9 @@ namespace App1.Helpers
         /// <summary>
         /// change password of user by username
         /// </summary>
-        /// <param name="password"></param>
-        /// <returns></returns>
+        /// <param name="username">username</param>
+        /// <param name="password">old password</param>
+        /// <returns>true if new password was set succesfully</returns>
         public bool SetUserPassword(string username, string password)
         {
             var data = newConnection.Table<User>();
@@ -291,7 +292,7 @@ namespace App1.Helpers
         /// <summary>
         /// get userobj by username 
         /// </summary>
-        /// <param name="username"></param>
+        /// <param name=constants.susername></param>
         /// <returns>userobj</returns>
         public User GetUserByName(string username)
         {
@@ -362,6 +363,7 @@ namespace App1.Helpers
             return userList;
         }
 
+        //get all user as Collection
         public ObservableCollection<User> GetAllUserToCollection()
         {
             var userList = GetAllUserToList();
@@ -374,6 +376,7 @@ namespace App1.Helpers
            return UserCollection;
         }
 
+        //get all user by Collection by inserting UserList
         public ObservableCollection<User> GetAllUserByListToCollection (List<User> users)
         {
             ObservableCollection<User> UserCollection = new ObservableCollection<User>();
@@ -384,6 +387,12 @@ namespace App1.Helpers
             return UserCollection;
         }
 
+        /// <summary>
+        /// get all User By Collection by specific order
+        /// </summary>
+        /// <param name="order">insert String like username, email...</param>
+        /// <param name="isAscending">true = sort order Ascending, false = Descending</param>
+        /// <returns></returns>
         public ObservableCollection<User> GetAllUserByOrder(String order, bool isAscending)
         {
             List<User> userList = GetAllUserToListByOrder(order, isAscending);
@@ -398,34 +407,38 @@ namespace App1.Helpers
             {
                 switch (order)
                 {
-                    case "username":
+                    case constants.username:
                         return data.OrderBy(x => x.Username).ToList();
-                    case "email":
+                    case constants.email:
                         return data.OrderBy(x => x.Email).ToList();
-                    case "vorname":
-                        return data.OrderBy(x => x.FirstName).ToList();
-                    case "nachname":
-                        return data.OrderBy(x => x.LastName).ToList();
-                    case "alter":
-                        return data.OrderBy(x => x.Age).ToList();
-                    case "userid":
+                    case constants.userid:
                         return data.OrderBy(x => x.UserID).ToList();
-                    case "createdat":
+                    case constants.firstname:
+                        return data.OrderBy(x => x.FirstName).ToList();
+                    case constants.lastname:
+                        return data.OrderBy(x => x.LastName).ToList();
+                    case constants.age:
+                        return data.OrderBy(x => x.Age).ToList();
+                    case constants.createdat:
                         return data.OrderBy(x => x.CreatedAt).ToList();
-                    case "start":
-                        return data.OrderBy(x => x.Start).ToList();
-                    case "end":
-                        return data.OrderBy(x => x.End).ToList();
-                    case "IsDataProtectionAccepted":
+                    case constants.IsDataProtectionAccepted:
                         return data.OrderBy(x => x.IsDataProtectionAccepted).ToList();
-                    case "IsToDataAutoSend":
+                    case constants.IsToDataAutoSend:
                         return data.OrderBy(x => x.IsToDataAutoSend).ToList();
-                    case "firstsession":
+                    case constants.firstsession:
                         return data.OrderBy(x => x.FirstSession).ToList();
-                    case "lastsession":
+                    case constants.lastsession:
                         return data.OrderBy(x => x.LastSession).ToList();
-                    case "lastupdate":
+                    case constants.sessionlastupdated:
                         return data.OrderBy(x => x.SessionLastUpdated).ToList();
+                    case constants.start:
+                        return data.OrderBy(x => x.Start).ToList();
+                    case constants.end:
+                        return data.OrderBy(x => x.End).ToList();
+                    case constants.minutes:
+                        return data.OrderBy(x => x.SessionTimeMin).ToList();
+                    case constants.seconds:
+                        return data.OrderBy(x => x.SessionTimeSec).ToList();
                     default:
                         return data.OrderBy(x => x.UserDBID).ToList(); ;
 
@@ -435,34 +448,38 @@ namespace App1.Helpers
             {
                 switch (order)
                 {
-                    case "username":
+                    case constants.username:
                         return data.OrderByDescending(x => x.Username).ToList();
-                    case "email":
+                    case constants.email:
                         return data.OrderByDescending(x => x.Email).ToList();
-                    case "userid":
+                    case constants.userid:
                         return data.OrderByDescending(x => x.UserID).ToList();
-                    case "firstname":
+                    case constants.firstname:
                         return data.OrderByDescending(x => x.FirstName).ToList();
-                    case "lastname":
+                    case constants.lastname:
                         return data.OrderByDescending(x => x.LastName).ToList();
-                    case "age":
+                    case constants.age:
                         return data.OrderByDescending(x => x.Age).ToList();
-                    case "createdat":
+                    case constants.createdat:
                         return data.OrderByDescending(x => x.CreatedAt).ToList();
-                    case "IsDataProtectionAccepted":
+                    case constants.IsDataProtectionAccepted:
                         return data.OrderByDescending(x => x.IsDataProtectionAccepted).ToList();
-                    case "IsToDataAutoSend":
+                    case constants.IsToDataAutoSend:
                         return data.OrderByDescending(x => x.IsToDataAutoSend).ToList();
-                    case "firstsession":
+                    case constants.firstsession:
                         return data.OrderByDescending(x => x.FirstSession).ToList();
-                    case "lastsession":
+                    case constants.lastsession:
                         return data.OrderByDescending(x => x.LastSession).ToList();
-                    case "sessionlastupdated":
+                    case constants.sessionlastupdated:
                         return data.OrderByDescending(x => x.SessionLastUpdated).ToList();
-                    case "start":
+                    case constants.start:
                         return data.OrderByDescending(x => x.Start).ToList();
-                    case "end":
+                    case constants.end:
                         return data.OrderByDescending(x => x.End).ToList();
+                    case constants.minutes:
+                        return data.OrderByDescending(x => x.SessionTimeMin).ToList();
+                    case constants.seconds:
+                        return data.OrderByDescending(x => x.SessionTimeSec).ToList();
                     default:
                         return data.OrderByDescending(x => x.UserDBID).ToList(); ;
 
@@ -489,41 +506,44 @@ namespace App1.Helpers
                     {
                         switch (property.Trim().ToLower())
                         {
-                            case "userdbid":
+                            case constants.userdbid:
                                 return returnedUser.UserDBID.ToString();
-
-                            case "username":
+                            case constants.username:
                                 return returnedUser.Username;
-                            case "email":
+                            case constants.email:
                                 return returnedUser.Email;
-                            case "userid":
+                            case constants.userid:
                                 return returnedUser.UserID.ToString();
-                            case "firstname":
+                            case constants.firstname:
                                 return returnedUser.FirstName;
-                            case "lastname":
+                            case constants.lastname:
                                 return returnedUser.LastName;
-                            case "password":
+                            case constants.password:
                                 return returnedUser.Password;
-                            case "IsUserIdUpdated":
+                            case constants.IsUserIdUpdated:
                                 return returnedUser.IsUserIdUpdated.ToString();
-                            case "age":
+                            case constants.age:
                                 return returnedUser.Age.ToString();
-                            case "createdat":
+                            case constants.createdat:
                                 return returnedUser.CreatedAt.ToString();
-                            case "IsDataProtectionAccepted":
+                            case constants.IsDataProtectionAccepted:
                                 return returnedUser.IsDataProtectionAccepted.ToString();
-                            case "IsToDataAutoSend":
+                            case constants.IsToDataAutoSend:
                                 return returnedUser.IsToDataAutoSend.ToString();
-                            case "firstsession":
+                            case constants.firstsession:
                                 return returnedUser.FirstSession.ToString();
-                            case "lastsession":
+                            case constants.lastsession:
                                 return returnedUser.LastSession.ToString();
-                            case "sessionlastupdated":
+                            case constants.sessionlastupdated:
                                 return returnedUser.SessionLastUpdated.ToString();
-                            case "start":
+                            case constants.start:
                                 return returnedUser.Start.ToString();
-                            case "end":
+                            case constants.end:
                                 return returnedUser.End.ToString();
+                            case constants.minutes:
+                                return returnedUser.SessionTimeMin.ToString();
+                            case constants.seconds:
+                                return returnedUser.SessionTimeSec.ToString();
                             default:
                                 break;
                         }
@@ -542,8 +562,8 @@ namespace App1.Helpers
         /// <summary>
         /// check username and password and login user 
         /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
+        /// <param name=username> </param>
+        /// <param name=password> </param>
         /// <returns>bool true if correct else false</returns>
         public bool ValidateLogin(string username, string password)
         {
@@ -565,7 +585,7 @@ namespace App1.Helpers
         /// Log user by only username
         /// check first if exist then set preferences to username
         /// </summary>
-        /// <param name="username"></param>
+        /// <param name=username></param>
         /// <returns>true if login was succesful else false</returns>
         public bool LogInUser(string username)
         {

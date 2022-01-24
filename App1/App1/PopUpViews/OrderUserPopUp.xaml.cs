@@ -17,17 +17,17 @@ namespace App1.PopUpViews
     {
         bool IsCreatedAtSelect { get; set; }
         bool IsUsernameSelect { get; set; }
-        bool IsAlterSelect { get; set; }
-        bool IsNachnameSelect { get; set; }
-        bool IsVornameSelect { get; set; }
+        bool IsAgeSelect { get; set; }
+        bool IsLastnameSelect { get; set; }
+        bool IsFirstnameSelect { get; set; }
         bool IsEmailSelect { get; set; }
         bool IsUserIdSelect { get; set; }
         bool IsFirstSessionSelect { get; set; }
         bool IsLastSessionSelect { get; set; }
         bool IsSessionLastUpdatedSelect { get; set; }
-        bool IsTherapieStartSelect { get; set; }
-        bool IsTherapieEndSelect { get; set; }
-        //kein platz im frame mehr
+        bool IsTherapyStartSelect { get; set; }
+        bool IsTherapyEndSelect { get; set; }
+        //no place in frame 
 /*        bool IsIsToDataAutoSendSelect { get; set; }
         bool IsIsDataProtectionAcceptedSelect { get; set; }*/
         public OrderUserPopUp()
@@ -45,13 +45,13 @@ namespace App1.PopUpViews
             IsUsernameSelect = e.Value;
         }
 
-        private void Nachname_CheckedChanged(object sender, CheckedChangedEventArgs e)
+        private void Lastname_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
-            IsNachnameSelect = e.Value;
+            IsLastnameSelect = e.Value;
         }
-        private void Vorname_CheckedChanged(object sender, CheckedChangedEventArgs e)
+        private void Firstname_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
-            IsVornameSelect = e.Value;
+            IsFirstnameSelect = e.Value;
         }
 
         private void Email_CheckedChanged(object sender, CheckedChangedEventArgs e)
@@ -59,9 +59,9 @@ namespace App1.PopUpViews
             IsEmailSelect = e.Value;
         }
 
-        private void Alter_CheckedChanged(object sender, CheckedChangedEventArgs e)
+        private void Age_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
-            IsAlterSelect = e.Value;
+            IsAgeSelect = e.Value;
         }
 
 
@@ -83,14 +83,14 @@ namespace App1.PopUpViews
             IsSessionLastUpdatedSelect = e.Value;
         }
 
-        private void TherapieStart_CheckedChanged(object sender, CheckedChangedEventArgs e)
+        private void TherapyStart_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
-            IsTherapieStartSelect = e.Value;
+            IsTherapyStartSelect = e.Value;
         }
 
-        private void TherapieEnd_CheckedChanged(object sender, CheckedChangedEventArgs e)
+        private void TherapyEnd_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
-            IsTherapieEndSelect = e.Value;
+            IsTherapyEndSelect = e.Value;
         }
 
 /*        private void IsDataProtectionAccepted_CheckedChanged(object sender, CheckedChangedEventArgs e)
@@ -107,41 +107,41 @@ namespace App1.PopUpViews
         {
             switch (name.ToLower())
             {
-                case "username":
+                case constants.username:
                     IsUsername.IsChecked = true;
                     break;
-                case "email":
+                case constants.email:
                     IsEmail.IsChecked = true;
                     break;
-                case "vorname":
-                    IsVorname.IsChecked = true;
+                case constants.firstname:
+                    IsFirstname.IsChecked = true;
                     break;
-                case "nachname":
-                    IsNachname.IsChecked = true;
+                case constants.lastname:
+                    IsLastname.IsChecked = true;
                     break;
-                case "alter":
-                    IsAlter.IsChecked = true;
+                case constants.age:
+                    IsAge.IsChecked = true;
                     break;
-                case "userid":
+                case constants.userid:
                     IsUserID.IsChecked = true;
                     break;
-                case "firstsession":
+                case constants.firstsession:
                     IsFirstSession.IsChecked = true;
                     break;
-                case "lastsession":
+                case constants.lastsession:
                     IsLastSession.IsChecked = true;
                     break;
-                case "createdat":
+                case constants.createdat:
                     IsCreatedAt.IsChecked = true;
                     break;
-                case "isSessionlastupdated":
+                case constants.sessionlastupdated:
                     IsSessionLastUpdated.IsChecked = true;
                     break;
-                case "start":
-                    IsTherapieStart.IsChecked = true;
+                case constants.start:
+                    IsTherapyStart.IsChecked = true;
                     break;
-                case "end":
-                    IsTherapieEnd.IsChecked = true;
+                case constants.end:
+                    IsTherapyEnd.IsChecked = true;
                     break;
                 /*                case "IsDataProtectionAccepted":
                                     IsIsDataProtectionAccepted.IsChecked = true;
@@ -160,50 +160,57 @@ namespace App1.PopUpViews
             String name = "";
             if(IsUsernameSelect)
             {
-                name = "username";
-            } else if (IsAlterSelect)
+                name = constants.username;
+            } else if (IsAgeSelect)
             {
-                name = "alter";
+                name = constants.age;
             }
-            else if (IsNachnameSelect)
+            else if (IsLastnameSelect)
             {
-                name = "nachname";
+                name = constants.lastname;
             }
-            else if (IsVornameSelect)
+            else if (IsFirstnameSelect)
             {
-                name = "vorname";
+                name = constants.firstname;
             }
             else if (IsEmailSelect)
             {
-                name = "email";
+                name = constants.email;
             }
             else if (IsUserIdSelect)
             {
-                name = "userid";
+                name = constants.userid;
+            }
+            else if (IsFirstSessionSelect)
+            {
+                name = constants.firstsession;
             }
             else if (IsLastSessionSelect)
             {
-                name = "lastsession";
+                name = constants.lastsession;
+            }
+            else if(IsSessionLastUpdatedSelect) {
+                name = constants.sessionlastupdated;
             }
             else if (IsCreatedAtSelect)
             {
-                name = "createdat";
+                name = constants.createdat;
             }
-            else if (IsTherapieStartSelect)
+            else if (IsTherapyStartSelect)
             {
-                name = "start";
+                name = constants.start;
             }
-            else if (IsTherapieEndSelect)
+            else if (IsTherapyEndSelect)
             {
-                name = "end";
+                name = constants.end;
             }
 /*            else if (IsIsDataProtectionAcceptedSelect)
             {
-                name = "IsDataProtectionAccepted";
+                name = constants.IsDataProtectionAccepted;
             }
             else if (IsIsToDataAutoSendSelect)
             {
-                name = "IsToDataAutoSend";
+                name = constants.IsToDataAutoSend;
             }*/
             else
             {

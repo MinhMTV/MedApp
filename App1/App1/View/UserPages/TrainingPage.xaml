@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App1.View.UserPages.TrainingPage"
+             xmlns:swipeCardView="clr-namespace:MLToolkit.Forms.SwipeCardView;assembly=MLToolkit.Forms.SwipeCardView"
+             NavigationPage.HasNavigationBar="false"
+             Padding="20"
+             BackgroundColor="SlateGray">
+    <StackLayout HorizontalOptions="FillAndExpand">
+
+        <AbsoluteLayout>
+            <Button x:Name="exit_button" Image="exit.png" Clicked="Exit_button_Clicked"
+                 AbsoluteLayout.LayoutBounds="1,0,50,50" AbsoluteLayout.LayoutFlags="PositionProportional" />
+        </AbsoluteLayout>
+
+        <swipeCardView:SwipeCardView
+                x:Name="SwipeCardView"
+                ItemsSource="{Binding Pictures}"
+                HorizontalOptions="FillAndExpand" 
+                VerticalOptions="FillAndExpand"
+                Padding="10"
+                SwipedCommand="{Binding SwipedCommand}"
+                DraggingCommand="{Binding DraggingCommand}"
+                Threshold="{Binding Threshold}"
+                SupportedSwipeDirections="{Binding SupportedDraggingDirections}"
+                SupportedDraggingDirections="{Binding SupportedDraggingDirections}"
+                AnimationLength="{Binding AnimationLength}"
+            >
+            <swipeCardView:SwipeCardView.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnSpacing="0" RowSpacing="0" HorizontalOptions="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Grid.Column="0" Grid.Row="0" >
+                            <Image Source="{Binding Photo}" Aspect="AspectFit"  VerticalOptions="Fill" />
+                        </StackLayout>
+                    </Grid>       
+                </DataTemplate>
+            </swipeCardView:SwipeCardView.ItemTemplate>
+        </swipeCardView:SwipeCardView>
+    </StackLayout>
+</ContentPage>

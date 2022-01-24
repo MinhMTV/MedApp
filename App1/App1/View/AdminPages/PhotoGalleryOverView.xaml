@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App1.View.AdminPages.PhotoGalleryOverView">
+    <ContentPage.Content>
+        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <StackLayout Grid.Column="0" Grid.Row="0" Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Red">
+                <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="20" Padding="20" BackgroundColor="AliceBlue">
+                    <Label Text="Good Pictures" FontSize="Large" HorizontalOptions="CenterAndExpand"/>
+                    <Image x:Name="AddGood" Source="https://img.icons8.com/ios-glyphs/120/000000/plus.png" HorizontalOptions="EndAndExpand">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnAddImageGoodTapped" NumberOfTapsRequired="1" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </StackLayout>
+                <!-- Second Row for good pictures -->
+                <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="5" Padding="5" BackgroundColor="Black">
+                    <Grid>
+                        <Image x:Name="testimage" HorizontalOptions="CenterAndExpand" Aspect="AspectFit"/>
+                        <Image x:Name="testimage1" HorizontalOptions="CenterAndExpand" Aspect="AspectFit"/>
+                        <Image x:Name="testimage2" HorizontalOptions="CenterAndExpand" Aspect="AspectFit"/>
+                    </Grid>
+                </StackLayout>
+            </StackLayout>
+            <StackLayout Grid.Column="0" Grid.Row="1" Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Red">
+                <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="20" Padding="20" BackgroundColor="AliceBlue">
+                    <Label Text="Bad Pictures" FontSize="Large" HorizontalOptions="CenterAndExpand"/>
+                    <Image x:Name="AddBad" Source="https://img.icons8.com/ios-glyphs/120/000000/plus.png" HorizontalOptions="EndAndExpand"/>
+                </StackLayout>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

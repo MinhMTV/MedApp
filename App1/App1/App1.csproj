@@ -22,11 +22,16 @@
     <PackageReference Include="Xamarin.CommunityToolkit" Version="1.3.2" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2291" />
+    <PackageReference Include="Xamarin.MediaGallery" Version="2.1.1" />
+    <PackageReference Include="Xamarin.MediaGallery.Permision" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="Mono.Android">
       <HintPath>..\..\..\..\Program Files (x86)\Visual Studio\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v8.1\Mono.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.iOS">
+      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\Xamarin.iOS\v1.0\Xamarin.iOS.dll</HintPath>
     </Reference>
   </ItemGroup>
 
@@ -37,34 +42,39 @@
     <Compile Update="PopUpViews\OrderUserPopUp.xaml.cs">
       <DependentUpon>OrderUserPopUp.xaml</DependentUpon>
     </Compile>
-    <Compile Update="View\DataProtectionPage.xaml.cs">
+    <Compile Update="View\AdminPages\AdminMenu.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="View\AdminPages\AdminReg.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="View\AdminPages\PhotoGalleryPage.xaml.cs">
+      <DependentUpon>PhotoGalleryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="View\UserPages\DataProtectionPage.xaml.cs">
       <DependentUpon>DataProtectionPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="View\DemoPage.xaml.cs">
+    <Compile Update="View\UserPages\DemoPage.xaml.cs">
       <DependentUpon>DemoPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="View\AdminReg.xaml.cs">
-      <DependentUpon>AdminReg.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="View\AdminMenu.xaml.cs">
-      <DependentUpon>AdminMenu.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="View\UserCollectionPage.xaml.cs">
+    <Compile Update="View\AdminPages\UserCollectionPage.xaml.cs">
       <DependentUpon>UserCollectionPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="View\WelcomePage.xaml.cs">
+    <Compile Update="View\GeneralPages\WelcomePage.xaml.cs">
       <DependentUpon>WelcomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="View\WeeklyOverviewPage.xaml.cs">
+    <Compile Update="View\UserPages\WeeklyOverviewPage.xaml.cs">
       <DependentUpon>WeeklyOverviewPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="View\TrainingPage.xaml.cs">
+    <Compile Update="View\UserPages\TrainingPage.xaml.cs">
       <DependentUpon>TrainingPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="View\ResultsPage.xaml.cs">
+    <Compile Update="View\UserPages\ResultsPage.xaml.cs">
       <DependentUpon>ResultsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="View\Registration.xaml.cs">
+    <Compile Update="View\GeneralPages\Registration.xaml.cs">
       <DependentUpon>Registration.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -79,46 +89,63 @@
     <EmbeddedResource Update="Styles\UserCollectionStyle.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="View\APITest.xaml">
+    <EmbeddedResource Update="View\AdminPages\AdminMenu.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="View\AdminPages\AdminReg.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="View\AdminPages\PhotoGalleryOverView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="View\DataSendingPermissionPage.xaml">
+    <EmbeddedResource Update="View\AdminPages\PhotoGalleryPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="View\EditDataProtectionPage.xaml">
+    <EmbeddedResource Update="View\GeneralPages\APITest.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="View\EditUserInformtionPage.xaml">
+    <EmbeddedResource Update="View\UserPages\DataSendingPermissionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="View\LocalNotificationPage.xaml">
+    <EmbeddedResource Update="View\UserPages\EditDataProtectionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="View\MenuPage.xaml">
+    <EmbeddedResource Update="View\UserPages\EditUserInformtionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="View\UserCollectionPage.xaml">
+    <EmbeddedResource Update="View\GeneralPages\LocalNotificationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="View\ResultOverviewPage.xaml">
+    <EmbeddedResource Update="View\UserPages\MenuPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="View\TrainingOverviewPage.xaml">
+    <EmbeddedResource Update="View\AdminPages\UserCollectionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="View\WeeklyOverviewPage.xaml">
+    <EmbeddedResource Update="View\UserPages\Page1.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="View\TrainingPage.xaml">
+    <EmbeddedResource Update="View\UserPages\ResultOverviewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="View\UserPages\TrainingOverviewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="View\UserPages\WeeklyOverviewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="View\UserPages\TrainingPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="LoginPage3.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="View\ResultsPage.xaml">
+    <EmbeddedResource Update="View\UserPages\ResultsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="View\Registration.xaml">
+    <EmbeddedResource Update="View\GeneralPages\Registration.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

@@ -2,7 +2,7 @@
 
 namespace App1.Models
 {
-    class Pictures
+    public class Pictures
     {
         [PrimaryKey]
         public int TypeId { get; set; }

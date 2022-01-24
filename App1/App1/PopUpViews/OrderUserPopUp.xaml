@@ -27,16 +27,16 @@
             <Label Text="Reihenfolge nach" FontSize="Medium" FontAttributes="Bold" />
             <RadioButton GroupName="Order" FontSize="Body" Content="CreatedAt" x:Name="IsCreatedAt" CheckedChanged="CreatedAt_CheckedChanged"/>
             <RadioButton GroupName="Order" FontSize="Body" Content="Username" x:Name="IsUsername" CheckedChanged="Username_CheckedChanged" />
-            <RadioButton GroupName="Order" FontSize="Body" Content="Vorname" x:Name="IsVorname" CheckedChanged="Vorname_CheckedChanged" />
-            <RadioButton GroupName="Order" FontSize="Body" Content="Nachname" x:Name="IsNachname" CheckedChanged="Nachname_CheckedChanged"/>
-            <RadioButton GroupName="Order" FontSize="Body" Content="Alter" x:Name="IsAlter" CheckedChanged="Alter_CheckedChanged" />
+            <RadioButton GroupName="Order" FontSize="Body" Content="Firstname" x:Name="IsFirstname" CheckedChanged="Firstname_CheckedChanged" />
+            <RadioButton GroupName="Order" FontSize="Body" Content="Lastname" x:Name="IsLastname" CheckedChanged="Lastname_CheckedChanged"/>
+            <RadioButton GroupName="Order" FontSize="Body" Content="Age" x:Name="IsAge" CheckedChanged="Age_CheckedChanged" />
             <RadioButton GroupName="Order" FontSize="Body" Content="Email" x:Name="IsEmail" CheckedChanged="Email_CheckedChanged" />
             <RadioButton GroupName="Order" FontSize="Body" Content="UserID" x:Name="IsUserID" CheckedChanged="UserID_CheckedChanged"/>
             <RadioButton GroupName="Order" FontSize="Body" Content="FirstSession" x:Name="IsFirstSession" CheckedChanged="FirstSession_CheckedChanged" />
             <RadioButton GroupName="Order" FontSize="Body" Content="LastSession" x:Name="IsLastSession" CheckedChanged="LastSession_CheckedChanged" />
             <RadioButton GroupName="Order" FontSize="Body" Content="SessionLastUpdated" x:Name="IsSessionLastUpdated" CheckedChanged="SessionLastUpdated_CheckedChanged" />
-            <RadioButton GroupName="Order" FontSize="Body" Content="TherapieStart" x:Name="IsTherapieStart" CheckedChanged="TherapieStart_CheckedChanged" />
-            <RadioButton GroupName="Order" FontSize="Body" Content="TherapieEnd" x:Name="IsTherapieEnd" CheckedChanged="TherapieEnd_CheckedChanged" />
+            <RadioButton GroupName="Order" FontSize="Body" Content="TherapyStart" x:Name="IsTherapyStart" CheckedChanged="TherapyStart_CheckedChanged" />
+            <RadioButton GroupName="Order" FontSize="Body" Content="TherapyEnd" x:Name="IsTherapyEnd" CheckedChanged="TherapyEnd_CheckedChanged" />
             <Button Text="Ok" Clicked="Button_Clicked"></Button>
 
         </StackLayout>

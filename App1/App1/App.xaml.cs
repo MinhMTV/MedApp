@@ -1,4 +1,5 @@
 ﻿using App1.Models;
+using App1.View.GeneralPages;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
