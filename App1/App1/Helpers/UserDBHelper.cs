@@ -46,12 +46,6 @@ namespace App1.Helpers
             else return false;
         }
 
-/*        public object checktype(object obk)
-        {
-            var data = newConnection.Table<object>();
-            return
-        }*/
-
         public bool DeleteUserbyName(string username)
         {
             if (CheckUserexist(username))
@@ -262,7 +256,7 @@ namespace App1.Helpers
         //------------------------------------------------------DB GET METHODS-----------------------------------------------------------------------------------------------
 
         //get first user on user table
-        public User GetAnyUser()
+        public User GetFirstUser()
         {
             return newConnection.Table<User>().First();
         }
@@ -346,17 +340,6 @@ namespace App1.Helpers
         }
 
         //get all User as a List of User Objects
-        public List<User> GetAllUserToList1()
-        {
-            var user = new List<User>();
-            var data = newConnection.Table<User>();
-            foreach (var item in data)
-            {
-                user.Add(item);
-            }
-            user.ForEach(x => Console.WriteLine(x.Username));
-            return user;
-        }
         public List<User> GetAllUserToList()
         {
             var userList = newConnection.Table<User>().ToList();
@@ -555,6 +538,71 @@ namespace App1.Helpers
                     Console.WriteLine(e);
                 }
             }
+            return string.Empty;
+        }
+
+        // Get the  user property vy Username
+        public string getUserProperty(string property,string username)
+        {
+                var data = newConnection.Table<User>();
+                try
+                {
+                    var returnedUser = (from values in data
+                                        where values.Username == username
+                                        select values).Single();
+
+                    if (returnedUser != null)
+                    {
+                        switch (property.Trim().ToLower())
+                        {
+                            case constants.userdbid:
+                                return returnedUser.UserDBID.ToString();
+                            case constants.username:
+                                return returnedUser.Username;
+                            case constants.email:
+                                return returnedUser.Email;
+                            case constants.userid:
+                                return returnedUser.UserID.ToString();
+                            case constants.firstname:
+                                return returnedUser.FirstName;
+                            case constants.lastname:
+                                return returnedUser.LastName;
+                            case constants.password:
+                                return returnedUser.Password;
+                            case constants.IsUserIdUpdated:
+                                return returnedUser.IsUserIdUpdated.ToString();
+                            case constants.age:
+                                return returnedUser.Age.ToString();
+                            case constants.createdat:
+                                return returnedUser.CreatedAt.ToString();
+                            case constants.IsDataProtectionAccepted:
+                                return returnedUser.IsDataProtectionAccepted.ToString();
+                            case constants.IsToDataAutoSend:
+                                return returnedUser.IsToDataAutoSend.ToString();
+                            case constants.firstsession:
+                                return returnedUser.FirstSession.ToString();
+                            case constants.lastsession:
+                                return returnedUser.LastSession.ToString();
+                            case constants.sessionlastupdated:
+                                return returnedUser.SessionLastUpdated.ToString();
+                            case constants.start:
+                                return returnedUser.Start.ToString();
+                            case constants.end:
+                                return returnedUser.End.ToString();
+                            case constants.minutes:
+                                return returnedUser.SessionTimeMin.ToString();
+                            case constants.seconds:
+                                return returnedUser.SessionTimeSec.ToString();
+                            default:
+                                break;
+                        }
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             return string.Empty;
         }
 

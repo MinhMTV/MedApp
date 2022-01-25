@@ -35,12 +35,23 @@
         //admin
         public const string entity = "entity";
 
+        //pictures
+        public const string imageid = "imageid";
+        public const string imagetype = "imagetype";
+        public const string imagepath = "imagepath";
+        public const string typebad = "bad";
+        public const string typegood = "good";
+
+
 
         //constant user settings
 
         public const int minID = 10000;  //set range of UserID
 
         public const int maxId = 99999;
+
+
+        
 
 
     }

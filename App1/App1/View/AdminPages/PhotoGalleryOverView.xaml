@@ -28,6 +28,7 @@
                     <Image x:Name="AddBad" Source="https://img.icons8.com/ios-glyphs/120/000000/plus.png" HorizontalOptions="EndAndExpand"/>
                 </StackLayout>
             </StackLayout>
+
         </Grid>
     </ContentPage.Content>
 </ContentPage>
