@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Xamarin.Forms;
+using App1.Extensions;
 
 namespace App1.ViewModels
 {
@@ -122,8 +123,12 @@ namespace App1.ViewModels
 
         public SwipeViewModel()
         {
-            _pictures = pictureDBHelper.GetAllImagesToCollection();
- //           InitializePictures();
+ //           _pictures = pictureDBHelper.GetAllImagesToCollection();
+            var tempPicsList = pictureDBHelper.GetAllImagesToList();
+            tempPicsList.Shuffle();
+            _pictures = pictureDBHelper.GetAllImagesByListToCollection(tempPicsList);
+
+            //           InitializePictures();
 
             Threshold = (uint)(App.ScreenWidth / 3);
 
