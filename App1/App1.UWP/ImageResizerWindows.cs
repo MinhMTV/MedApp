@@ -8,7 +8,9 @@ using System.IO;
 using Windows.Storage.Streams;
 using Windows.Graphics.Imaging;
 using System.Runtime.InteropServices.WindowsRuntime;
+using App1.UWP;
 
+[assembly: Xamarin.Forms.Dependency(typeof(ImageResizerWindows))]
 
 namespace App1.UWP
 {

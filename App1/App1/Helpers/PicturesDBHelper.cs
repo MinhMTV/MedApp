@@ -28,13 +28,15 @@ namespace App1.Helpers
         //------------------------------------------------------DB Init METHODS-----------------------------------------------------------------------------------------------
 
         //initialize the embedded pictures
-        public void initGivenPictures()
+        public async void initGivenPictures()
         {
-            newConnection.DropTable<Pictures>();
-            newConnection.CreateTable<Pictures>();
-            var data = newConnection.Table<Pictures>();
-            DeleteAllImages();
+            /*            newConnection.DropTable<Pictures>();
+                        newConnection.CreateTable<Pictures>();
+                        var data = newConnection.Table<Pictures>();
+            DeleteAllImages();*/
             var ImageResizer = DependencyService.Get<IImageResizer>();
+            var ImageResizerWin = DependencyService.Get<IImageResizerWin>();
+
 
             var screenwidth = deviceMetricHelper.getWidth();
             var screenheight = deviceMetricHelper.getHeight();
@@ -45,38 +47,60 @@ namespace App1.Helpers
 
             for (int i = 1; i <= GlobalVariables.NroOfAvailablePics; i++)
             {
+                byte[] newImage;
                 Console.WriteLine("counter i: " + i.ToString());
                 if (i <= GlobalVariables.NrOfAvailableGoodPics)
                 {
                     var imageArray = ImageDataFromResource(constants.ImageFolderPath + "g" + i.ToString("00") + ".jpg");
-                    if(imageArray != null)
+                    if (imageArray != null)
                     {
-                        var newImage = ImageResizer.ResizeImage(imageArray, (float)screenwidth, (float)screenheight);
+
+                        if (Device.RuntimePlatform == Device.UWP)
+                        {
+                            newImage = await ImageResizerWin.ResizeImageWindows(imageArray, (float)screenwidth, (float)screenheight);
+                        }
+                        else
+                        {
+                            newImage = ImageResizer.ResizeImage(imageArray, (float)screenwidth, (float)screenheight);
+                        }
+
                         Pictures picture = new Pictures { TypeId = i, Type = PicType.Good, Image = newImage, Photo = "g" + i.ToString("00") + ".jpg" };
                         if (!CheckImageExist(imageArray))
                         {
-                            
+
                             newConnection.Insert(picture);
                         }
                         else
                         {
-                            return;
+                            Console.WriteLine("Image already exist");
                         }
                     }
                 }
                 else
                 {
-                    var imageArray = ImageDataFromResource(constants.ImageFolderPath + "b" + (i-GlobalVariables.NrOfAvailableGoodPics).ToString("00") + ".jpg");
-                    Pictures picture = new Pictures { TypeId = i, Type = PicType.Bad, Image = imageArray, Photo = "b" + i.ToString("00") + ".jpg" };
-                    if (!CheckImageExist(imageArray))
-                        {
-                        newConnection.Insert(picture);
-                    }
-                    else
+                    var imageArray = ImageDataFromResource(constants.ImageFolderPath + "b" + (i - GlobalVariables.NrOfAvailableGoodPics).ToString("00") + ".jpg");
+                    if (imageArray != null)
                     {
-                        return;
+                        if (Device.RuntimePlatform == Device.UWP)
+                        {
+                            newImage = await ImageResizerWin.ResizeImageWindows(imageArray, (float)screenwidth, (float)screenheight);
+                        }
+                        else
+                        {
+                            newImage = ImageResizer.ResizeImage(imageArray, (float)screenwidth, (float)screenheight);
+                        }
+
+                        Pictures picture = new Pictures { TypeId = i, Type = PicType.Bad, Image = imageArray, Photo = "b" + i.ToString("00") + ".jpg" };
+                        if (!CheckImageExist(imageArray))
+                        {
+                            newConnection.Insert(picture);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Image already exist");
+                        }
                     }
-                }
+                }  
             }
         }
 

@@ -123,7 +123,7 @@ namespace App1.ViewModels
 
         public SwipeViewModel()
         {
- //           _pictures = pictureDBHelper.GetAllImagesToCollection();
+            pictureDBHelper.initGivenPictures();
             var tempPicsList = pictureDBHelper.GetAllImagesToList();
             tempPicsList.Shuffle();
             _pictures = pictureDBHelper.GetAllImagesByListToCollection(tempPicsList);

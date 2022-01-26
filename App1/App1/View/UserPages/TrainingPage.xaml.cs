@@ -7,6 +7,8 @@ using System.Collections.ObjectModel;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using App1.Helpers;
+using App1.Extensions;
 
 namespace App1.View.UserPages
 {
@@ -20,6 +22,8 @@ namespace App1.View.UserPages
         public TrainingSession trainingSession;
         PicType currentPicType;
         ObservableCollection<Pictures> newCollection;
+        private PictureDBHelper pictureDBHelper = new PictureDBHelper();
+
         int indexer = 0;
         public TrainingPage()
         {

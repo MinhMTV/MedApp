@@ -26,9 +26,9 @@ namespace App1.Models
         public DateTime CreatedAt { get; set; } //when user was created
         public DateTime Start { get; set; } //therapystart (only adjust by admin)
         public DateTime End { get; set; } //therapyend(only adjust by admin)
-        public int SessionTimeMin { get; set; }
+        public int SessionTimeMin { get; set; } //Time for Session in min for User (adjust by admin)
 
-        public int SessionTimeSec { get; set; }
+        public int SessionTimeSec { get; set; } //Time for Session sec for User(adjust by admin)
 
         //therapyend/start = time of therapy, where user can login 
 
