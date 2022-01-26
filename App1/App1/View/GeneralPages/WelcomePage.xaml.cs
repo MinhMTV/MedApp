@@ -22,6 +22,14 @@ namespace App1.View.GeneralPages
             InitializeComponent();
             userDBHelper = new UserDBHelper();
             adminDBHelper = new AdminDBHelper();
+
+            if (Settings.FirstRun)
+            {
+                // Perform an action such as a "Pop-Up".
+                Settings.FirstRun = false;
+            }
+
+
         } 
 
         /* if app was closed and open again, check if a User is already logged in

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 
 namespace App1.Methods
@@ -12,7 +13,7 @@ namespace App1.Methods
         static ImageHelper()
         {
         }
-
+        
         public static byte[] ConvertStreamToByteArray(System.IO.Stream stream)
         {
             long originalPosition = 0;

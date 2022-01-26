@@ -42,6 +42,8 @@
         public const string typebad = "bad";
         public const string typegood = "good";
 
+        public const string ImageFolderPath = "App1.EmbeddedImages.";
+
 
 
         //constant user settings

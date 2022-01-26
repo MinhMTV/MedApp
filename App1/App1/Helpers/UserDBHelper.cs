@@ -746,7 +746,7 @@ namespace App1.Helpers
                 "\nisUseridupdated " + user.IsUserIdUpdated +
                 "\nisUserAskedforDataprotection " + user.IsUserAskedForDataProtection +
                 "\nisDataAutoSend " + user.IsToDataAutoSend +
-                "\nsessionlastupdated " + user.SessionLastUpdated;
+                "\nCreated " + user.CreatedAt;
             await App.Current.MainPage.DisplayAlert("Debug", message, "OK");
 
         }

@@ -122,7 +122,8 @@ namespace App1.ViewModels
 
         public SwipeViewModel()
         {
-            InitializePictures();
+            _pictures = pictureDBHelper.GetAllImagesToCollection();
+ //           InitializePictures();
 
             Threshold = (uint)(App.ScreenWidth / 3);
 

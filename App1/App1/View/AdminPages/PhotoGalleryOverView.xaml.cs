@@ -25,7 +25,14 @@ namespace App1.View.AdminPages
         public PhotoGalleryOverView()
         {
             InitializeComponent();
-            
+            picturesDBHelper.initGivenPictures();
+            var piclist = picturesDBHelper.GetAllImagesToList();
+            foreach(var pic in piclist)
+            {
+                Console.WriteLine(pic.TypeId);
+                Console.WriteLine(pic.Type.ToString());
+                Console.WriteLine(pic.Image.Length);
+            }
         }
         async void OnAddImageGoodTapped1(object sender, EventArgs args)
         {

@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App1.View.UserPages.TrainingPage"
-             xmlns:swipeCardView="clr-namespace:MLToolkit.Forms.SwipeCardView;assembly=MLToolkit.Forms.SwipeCardView"
+             xmlns:swipeCardView="clr-namespace:MLToolkit.Forms.SwipeCardView;assembly=MLToolkit.Forms.SwipeCardView" 
+             xmlns:valueconverter="clr-namespace:App1.Methods"
              NavigationPage.HasNavigationBar="false"
              Padding="20"
              BackgroundColor="SlateGray">
@@ -18,6 +19,7 @@
                 ItemsSource="{Binding Pictures}"
                 HorizontalOptions="FillAndExpand" 
                 VerticalOptions="FillAndExpand"
+                BackgroundColor="Red"
                 Padding="10"
                 SwipedCommand="{Binding SwipedCommand}"
                 DraggingCommand="{Binding DraggingCommand}"
@@ -28,15 +30,18 @@
             >
             <swipeCardView:SwipeCardView.ItemTemplate>
                 <DataTemplate>
-                    <Grid ColumnSpacing="0" RowSpacing="0" HorizontalOptions="Center">
+                    <Grid ColumnSpacing="0" RowSpacing="0" HorizontalOptions="Center" BackgroundColor="Wheat">
+                        <Grid.Resources>
+                            <valueconverter:ByteArrayToImageSourceConverter x:Key="SourceConverter" />
+                        </Grid.Resources>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Grid.Column="0" Grid.Row="0" >
-                            <Image Source="{Binding Photo}" Aspect="AspectFit"  VerticalOptions="Fill" />
+                        <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Grid.Column="0" Grid.Row="0" BackgroundColor="Black">
+                            <Image Source="{Binding Image, Converter={StaticResource SourceConverter}}" Aspect="AspectFit"  VerticalOptions="Fill" />
                         </StackLayout>
                     </Grid>       
                 </DataTemplate>

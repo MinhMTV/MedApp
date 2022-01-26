@@ -6,19 +6,104 @@ using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
+using System.Reflection;
+using App1.DependencyServices;
+using App1.Methods;
 
 namespace App1.Helpers
 {
     class PictureDBHelper
     {
         private SQLiteConnection newConnection;
+        DeviceMetricHelper deviceMetricHelper = new DeviceMetricHelper();
+
 
         public PictureDBHelper()
         {
             newConnection = DependencyService.Get<ISQLite>().GetConnection();
             newConnection.CreateTable<Pictures>(); // Create table if not exists
- //           AddPictures();
+            //           AddPictures();
         }
+
+        //------------------------------------------------------DB Init METHODS-----------------------------------------------------------------------------------------------
+
+        //initialize the embedded pictures
+        public void initGivenPictures()
+        {
+            newConnection.DropTable<Pictures>();
+            newConnection.CreateTable<Pictures>();
+            var data = newConnection.Table<Pictures>();
+            DeleteAllImages();
+            var ImageResizer = DependencyService.Get<IImageResizer>();
+
+            var screenwidth = deviceMetricHelper.getWidth();
+            var screenheight = deviceMetricHelper.getHeight();
+
+            screenwidth = screenwidth * 0.8;
+            screenheight = screenheight * 0.8;
+
+
+            for (int i = 1; i <= GlobalVariables.NroOfAvailablePics; i++)
+            {
+                Console.WriteLine("counter i: " + i.ToString());
+                if (i <= GlobalVariables.NrOfAvailableGoodPics)
+                {
+                    var imageArray = ImageDataFromResource(constants.ImageFolderPath + "g" + i.ToString("00") + ".jpg");
+                    if(imageArray != null)
+                    {
+                        var newImage = ImageResizer.ResizeImage(imageArray, (float)screenwidth, (float)screenheight);
+                        Pictures picture = new Pictures { TypeId = i, Type = PicType.Good, Image = newImage, Photo = "g" + i.ToString("00") + ".jpg" };
+                        if (!CheckImageExist(imageArray))
+                        {
+                            
+                            newConnection.Insert(picture);
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                }
+                else
+                {
+                    var imageArray = ImageDataFromResource(constants.ImageFolderPath + "b" + (i-GlobalVariables.NrOfAvailableGoodPics).ToString("00") + ".jpg");
+                    Pictures picture = new Pictures { TypeId = i, Type = PicType.Bad, Image = imageArray, Photo = "b" + i.ToString("00") + ".jpg" };
+                    if (!CheckImageExist(imageArray))
+                        {
+                        newConnection.Insert(picture);
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+            }
+        }
+
+
+        //convert Image fom Resource to byte[]
+        public byte[] ImageDataFromResource(string r)
+        {
+            // Ensure "this" is an object that is part of your implementation within your Xamarin forms project
+            var assembly = this.GetType().GetTypeInfo().Assembly;
+            byte[] buffer = null;
+
+            using (System.IO.Stream s = assembly.GetManifestResourceStream(r))
+            {
+                if (s != null)
+                {
+                    long length = s.Length;
+                    buffer = new byte[length];
+                    s.Read(buffer, 0, (int)length);
+                }
+            }
+
+            return buffer;
+        }
+
+
+
+
 
         //------------------------------------------------------DB MANIPULATION METHODS-----------------------------------------------------------------------------------------------
 
@@ -43,6 +128,7 @@ namespace App1.Helpers
             else return false;
         }
 
+        //if a table gets delete, delete also the autoincrementID to force new table starting by one
         /// <summary>
         /// delete all User in User Table
         /// </summary>
@@ -177,13 +263,13 @@ namespace App1.Helpers
         }
 
         //get all Images as Collection
-        public ObservableCollection<Pictures> GetAllUserToCollection()
+        public ObservableCollection<Pictures> GetAllImagesToCollection()
         {
             var imageList = GetAllImagesToList();
             ObservableCollection<Pictures> ImageCollection = new ObservableCollection<Pictures>();
 
             foreach (var item in imageList)
-            {
+             {
                 ImageCollection.Add(item);
             }
             return ImageCollection;
@@ -191,7 +277,7 @@ namespace App1.Helpers
 
 
         //get all Images by Collection by inserting imageList
-        public ObservableCollection<Pictures> GetAllUserByListToCollection(List<Pictures> images)
+        public ObservableCollection<Pictures> GetAllImagesByListToCollection(List<Pictures> images)
         {
             ObservableCollection<Pictures> ImageCollection = new ObservableCollection<Pictures>();
             foreach (var item in images)
@@ -202,7 +288,7 @@ namespace App1.Helpers
         }
 
         // Get the  Image property by image
-        public string getUserProperty(string property,byte[] image)
+        public string getImageProperty(string property,byte[] image)
         {
             var data = newConnection.Table<Pictures>();
             try
