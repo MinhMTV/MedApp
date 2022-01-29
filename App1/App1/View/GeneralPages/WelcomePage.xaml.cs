@@ -22,10 +22,12 @@ namespace App1.View.GeneralPages
             InitializeComponent();
             userDBHelper = new UserDBHelper();
             adminDBHelper = new AdminDBHelper();
+            PictureDBHelper pictureDBHelper = new PictureDBHelper();
 
             if (Settings.FirstRun)
             {
                 // Perform an action such as a "Pop-Up".
+                pictureDBHelper.initGivenPictures();
                 Settings.FirstRun = false;
             }
 

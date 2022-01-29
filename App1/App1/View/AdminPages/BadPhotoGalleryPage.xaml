@@ -6,13 +6,13 @@
              xmlns:pg="clr-namespace:App1.ViewModels" 
              xmlns:valueconverter="clr-namespace:App1.Methods"
              xmlns:converters="clr-namespace:App1.Methods;assembly=App1"
-             x:Class="App1.View.AdminPages.PhotoGalleryPage">
+             x:Class="App1.View.AdminPages.BadPhotoGalleryPage">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:IntToString x:Key="IntToString" />
         </ResourceDictionary>
     </ContentPage.Resources>
-    
+
     <NavigationPage.TitleView>
         <Grid >
 
@@ -49,7 +49,7 @@
             </StackLayout>
         </Grid>
     </NavigationPage.TitleView>
-    
+
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Auswahl zurücksetzen"
                      Order="Secondary"
@@ -68,15 +68,15 @@
                     SelectedItems="{Binding SelectedPictures}"
                     ItemsSource="{Binding Pictures}"
                     >
-            
+
             <CollectionView.ItemsLayout>
                 <GridItemsLayout
                 Orientation="Vertical"
                 Span="2"
                 HorizontalItemSpacing="8"
                 VerticalItemSpacing="8" />
-                
-            </CollectionView.ItemsLayout>       
+
+            </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame
@@ -113,13 +113,13 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        
+
                         <Grid
                             xct:TouchEffect.Command="{Binding PressedCommand,
-                        Source={RelativeSource AncestorType={x:Type pg:PhotoCollectionViewModel}}}"
+                        Source={RelativeSource AncestorType={x:Type pg:AllBadPhotosCollectionViewModel}}}"
                             xct:TouchEffect.CommandParameter="{Binding .}"
                             xct:TouchEffect.LongPressCommand="{Binding LongPressCommand,
-                        Source={RelativeSource AncestorType={x:Type pg:PhotoCollectionViewModel}}}"
+                        Source={RelativeSource AncestorType={x:Type pg:AllBadPhotosCollectionViewModel}}}"
                             xct:TouchEffect.LongPressCommandParameter="{Binding .}"
                             xct:TouchEffect.PressedScale="1.2"
                              xct:TouchEffect.NativeAnimation="True"
@@ -130,7 +130,7 @@
                             <Image
                                 BackgroundColor="White"
                             Source="{Binding Image, Converter={StaticResource SourceConverter}}"
-                            Aspect="AspectFit"/>
+                            Aspect="Fill"/>
                             <Image
                             x:Name="CheckIcon"
                             Source="https://img.icons8.com/ios-glyphs/30/fa314a/checked-checkbox.png"

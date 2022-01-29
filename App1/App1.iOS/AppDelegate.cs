@@ -22,7 +22,7 @@ namespace App1.iOS
         {
             Rg.Plugins.Popup.Popup.Init();
             NativeMedia.Platform.Init(GetTopViewController);
-
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 

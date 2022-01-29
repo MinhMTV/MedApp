@@ -27,9 +27,9 @@ namespace App1.Helpers
         //------------------------------------------------------DB MANIPULATION METHODS-----------------------------------------------------------------------------------------------
 
         //Add User if user already exist by username return false
-        public bool AddUser(User user, string username)
+        public bool AddUser(User user)
         {
-            if (CheckUserexist(username))
+            if (CheckUserexist(user.Username))
             {
                     return false;
             }
@@ -422,6 +422,8 @@ namespace App1.Helpers
                         return data.OrderBy(x => x.SessionTimeMin).ToList();
                     case constants.seconds:
                         return data.OrderBy(x => x.SessionTimeSec).ToList();
+                    case constants.isTutorial:
+                        return data.OrderBy(x => x.isAskForTutorial).ToList();
                     default:
                         return data.OrderBy(x => x.UserDBID).ToList(); ;
 
@@ -463,12 +465,15 @@ namespace App1.Helpers
                         return data.OrderByDescending(x => x.SessionTimeMin).ToList();
                     case constants.seconds:
                         return data.OrderByDescending(x => x.SessionTimeSec).ToList();
+                    case constants.isTutorial:
+                        return data.OrderByDescending(x => x.isAskForTutorial).ToList();
                     default:
                         return data.OrderByDescending(x => x.UserDBID).ToList(); ;
 
                 }
             }     
         }
+
 
         // Get the loggedin user property
         public string getLoggedinUserProperty(string property)
@@ -527,6 +532,8 @@ namespace App1.Helpers
                                 return returnedUser.SessionTimeMin.ToString();
                             case constants.seconds:
                                 return returnedUser.SessionTimeSec.ToString();
+                            case constants.isTutorial:
+                                return returnedUser.isAskForTutorial.ToString();
                             default:
                                 break;
                         }
@@ -593,7 +600,9 @@ namespace App1.Helpers
                                 return returnedUser.SessionTimeMin.ToString();
                             case constants.seconds:
                                 return returnedUser.SessionTimeSec.ToString();
-                            default:
+                            case constants.isTutorial:
+                                return returnedUser.isAskForTutorial.ToString();
+                        default:
                                 break;
                         }
                     }

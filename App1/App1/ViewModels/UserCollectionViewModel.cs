@@ -1,5 +1,6 @@
 ﻿using App1.Helpers;
 using App1.Models;
+using App1.View.AdminPages;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -90,8 +91,8 @@ namespace App1.ViewModels
             _selectedUser.Clear();
             IsRefreshing = true;
 
-            foreach (var item in userDBHelper.GetAllUserToListByOrder(UserOrderBy,IsAscending))
-            {
+            foreach (var item in userDBHelper.GetAllUserToListByOrder(Preferences.Get(constants.OrderBy, "createdat"), bool.Parse(Preferences.Get(constants.isAscending, "true"))))
+            { 
                 _user.Add(item);
             }
             SelectedUser_IsVisible = false;
@@ -121,7 +122,7 @@ namespace App1.ViewModels
             }
             else
             {
-                await  App.Current.MainPage.DisplayToastAsync("Navigiere zu User Details");
+                await App.Current.MainPage.Navigation.PushAsync(new UserDetailPage());
             }
 
             NrofSelectedUser = SelectedUser.Count();
@@ -170,7 +171,8 @@ namespace App1.ViewModels
         private void InitData()
         {
             _selectedUser = new ObservableCollection<object>();
-            _user = userDBHelper.GetAllUserToCollection();
+            var userlist = userDBHelper.GetAllUserToListByOrder(Preferences.Get(constants.OrderBy, "createdat"), bool.Parse(Preferences.Get(constants.isAscending, "true")));
+            _user = userDBHelper.GetAllUserByListToCollection(userlist);
             _nrOfSelectedUser = SelectedUser.Count();
             _selectedUser_IsVisible = false;
         }

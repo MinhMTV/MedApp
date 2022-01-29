@@ -152,7 +152,7 @@ namespace App1.View.GeneralPages
 
                 try
                 {
-                    var userAddingStatus = userDBHelper.AddUser(user, username);
+                    var userAddingStatus = userDBHelper.AddUser(user);
                     userDBHelper.PrintUser(user);
 
                     if (userAddingStatus)

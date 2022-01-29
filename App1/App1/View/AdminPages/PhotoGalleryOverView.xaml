@@ -1,34 +1,104 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="App1.View.AdminPages.PhotoGalleryOverView">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:valueconverter="clr-namespace:App1.Methods"
+             xmlns:viewmodels="clr-namespace:App1.ViewModels"
+             x:Class="App1.View.AdminPages.PhotoGalleryOverView"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:models="clr-namespace:App1.Models"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms">
+   
+        <ContentPage.ToolbarItems>
+            <ToolbarItem Text="Alle Bilder Anzeigen"
+                     Order="Secondary"
+                     Clicked="ShowAll_Clicked" />
+
+        </ContentPage.ToolbarItems>
     <ContentPage.Content>
+        
+        
         <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-            <StackLayout Grid.Column="0" Grid.Row="0" Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Red">
+            <StackLayout Grid.Column="0" Grid.Row="0" Orientation="Vertical" VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="Red" >
                 <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="20" Padding="20" BackgroundColor="AliceBlue">
-                    <Label Text="Good Pictures" FontSize="Large" HorizontalOptions="CenterAndExpand"/>
-                    <Image x:Name="AddGood" Source="https://img.icons8.com/ios-glyphs/120/000000/plus.png" HorizontalOptions="EndAndExpand">
+                    <Button Text="See All" Font="Large" HorizontalOptions="StartAndExpand" Clicked="AllGoodTapped"/>
+                    <Label Text="Good Pictures" FontSize="Large" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+                    <Image x:Name="AddGood" Source="https://img.icons8.com/ios-glyphs/120/000000/plus.png" HorizontalOptions="EndAndExpand" HeightRequest="50" WidthRequest="50">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnAddImageGoodTapped" NumberOfTapsRequired="1" />
                         </Image.GestureRecognizers>
                     </Image>
                 </StackLayout>
                 <!-- Second Row for good pictures -->
-                <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="5" Padding="5" BackgroundColor="Black">
-                    <Grid>
-                        <Image x:Name="testimage" HorizontalOptions="CenterAndExpand" Aspect="AspectFit"/>
-                        <Image x:Name="testimage1" HorizontalOptions="CenterAndExpand" Aspect="AspectFit"/>
-                        <Image x:Name="testimage2" HorizontalOptions="CenterAndExpand" Aspect="AspectFit"/>
-                    </Grid>
-                </StackLayout>
-            </StackLayout>
-            <StackLayout Grid.Column="0" Grid.Row="1" Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Red">
-                <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="20" Padding="20" BackgroundColor="AliceBlue">
-                    <Label Text="Bad Pictures" FontSize="Large" HorizontalOptions="CenterAndExpand"/>
-                    <Image x:Name="AddBad" Source="https://img.icons8.com/ios-glyphs/120/000000/plus.png" HorizontalOptions="EndAndExpand"/>
-                </StackLayout>
+                        <CollectionView ItemsSource="{Binding Pictures}" SelectionMode="Single">
+                    <CollectionView.BindingContext>
+                        <viewmodels:GoodPhotoCollectionViewModel/>
+                    </CollectionView.BindingContext>
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Horizontal" Span="2"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate >
+                            <Grid RowSpacing="0" ColumnSpacing="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.Resources>
+                                    <valueconverter:ByteArrayToImageSourceConverter x:Key="SourceConverter" />
+                                </Grid.Resources>
+                                
+                                    <ff:CachedImage xct:TouchEffect.LongPressCommand="{Binding LongPressCommand, Source={RelativeSource AncestorType={x:Type viewmodels:GoodPhotoCollectionViewModel}}}"
+                                     xct:TouchEffect.CommandParameter="{Binding .}"
+                                     xct:TouchEffect.PressedScale="1.1"
+                                     xct:TouchEffect.NativeAnimation="True" 
+                                     Source="{Binding Image, Converter={StaticResource SourceConverter}}" Aspect="AspectFill"  VerticalOptions="Fill" DownsampleToViewSize = "false" 
+                                                />
+                                
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </StackLayout>
 
+            <StackLayout Grid.Column="0" Grid.Row="1" Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Red">
+                <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="20" Padding="20" BackgroundColor="AliceBlue">
+                    <Button Text="See All" Font="Large" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Clicked="AllBadTapped"/>
+                    <Label Text="Bad Pictures" FontSize="Large" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+                    <Image x:Name="AddBad" Source="https://img.icons8.com/ios-glyphs/120/000000/plus.png" HorizontalOptions="EndAndExpand" HeightRequest="50" WidthRequest="50">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnAddImageBadTapped" NumberOfTapsRequired="1" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </StackLayout>
+
+                <!-- Second Row for Bad pictures -->
+                <CollectionView ItemsSource="{Binding Pictures}" SelectionMode="Single">
+                    <CollectionView.BindingContext>
+                        <viewmodels:BadPhotoCollectionViewModel/>
+                    </CollectionView.BindingContext>
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Horizontal" Span="2"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate >
+                            <Grid RowSpacing="0" ColumnSpacing="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.Resources>
+                                    <valueconverter:ByteArrayToImageSourceConverter x:Key="SourceConverter" />
+                                </Grid.Resources>
+
+                                <ff:CachedImage xct:TouchEffect.LongPressCommand="{Binding LongPressCommand, Source={RelativeSource AncestorType={x:Type viewmodels:BadPhotoCollectionViewModel}}}"
+                                     xct:TouchEffect.CommandParameter="{Binding .}"
+                                     xct:TouchEffect.PressedScale="1.1"
+                                     xct:TouchEffect.NativeAnimation="True" 
+                                     Source="{Binding Image, Converter={StaticResource SourceConverter}}" Aspect="AspectFill"  VerticalOptions="Fill" DownsampleToViewSize = "false" 
+                                                />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

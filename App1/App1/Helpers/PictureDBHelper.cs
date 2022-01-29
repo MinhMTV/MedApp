@@ -12,7 +12,7 @@ using App1.Methods;
 
 namespace App1.Helpers
 {
-    class PictureDBHelper
+    public class PictureDBHelper
     {
         private SQLiteConnection newConnection;
         DeviceMetricHelper deviceMetricHelper = new DeviceMetricHelper();
@@ -41,8 +41,8 @@ namespace App1.Helpers
             var screenwidth = deviceMetricHelper.getWidth();
             var screenheight = deviceMetricHelper.getHeight();
 
-            screenwidth = screenwidth * 0.8;
-            screenheight = screenheight * 0.8;
+            screenwidth = screenwidth * 0.4;
+            screenheight = screenheight * 0.4;
 
 
             for (int i = 1; i <= GlobalVariables.NroOfAvailablePics; i++)
@@ -310,6 +310,93 @@ namespace App1.Helpers
             }
             return ImageCollection;
         }
+
+        public List<Pictures> GetAllGoodImagesToList()
+        {
+            var imageList = newConnection.Table<Pictures>().Where(x => x.Type == PicType.Good).ToList();
+            return imageList;
+        }
+
+        public ObservableCollection<Pictures> GetAllGoodImagesToCollection()
+        {
+            var imagelist = GetAllGoodImagesToList();
+            return GetAllImagesByListToCollection(imagelist);
+        }
+
+        public List<Pictures> GetAllBadImagesToList()
+        {
+            var imageList = newConnection.Table<Pictures>().Where(x => x.Type == PicType.Bad).ToList();
+            return imageList;
+        }
+
+        public ObservableCollection<Pictures> GetAllBadImagesToCollection()
+        {
+            var imagelist = GetAllBadImagesToList();
+            return GetAllImagesByListToCollection(imagelist);
+        }
+
+
+        /// <summary>
+        /// get all Pictures By Collection by specific order
+        /// </summary>
+        /// <param name="isAscending">true = sort order Ascending, false = Descending</param>
+        /// <returns></returns>
+        public ObservableCollection<Pictures> GetAllImagesByOrder(bool isAscending)
+        {
+            List<Pictures> imageList = GetAllImagesToListByOrder(isAscending);
+            return GetAllImagesByListToCollection(imageList);
+        }
+
+        public List<Pictures> GetAllImagesToListByOrder(bool isAscending)
+        {
+            var data = newConnection.Table<Pictures>();
+
+            if (isAscending)
+            {
+                return data.OrderBy(x => x.TypeId).ToList();
+            }
+            else
+            {
+                return data.OrderByDescending(x => x.TypeId).ToList();
+            }
+        }
+
+        public List<Pictures> GetAllGoodImagesToListByOrder(bool isAscending)
+        {
+            if (isAscending)
+            {
+                return newConnection.Table<Pictures>().Where(x => x.Type == PicType.Good).OrderBy(x => x.TypeId).ToList();
+            }
+            else
+            {
+                return newConnection.Table<Pictures>().Where(x => x.Type == PicType.Good).OrderByDescending(x => x.TypeId).ToList();
+            }
+        }
+
+        public ObservableCollection<Pictures> GetAllGoodImagesToCollectionByOrder(bool isAscending)
+        {
+            var imagelist = GetAllGoodImagesToListByOrder(isAscending);
+            return GetAllImagesByListToCollection(imagelist);
+        }
+
+        public List<Pictures> GetAllBadImagesToListByOrder(bool isAscending)
+        {
+            if (isAscending)
+            {
+                return newConnection.Table<Pictures>().Where(x => x.Type == PicType.Bad).OrderBy(x => x.TypeId).ToList();
+            }
+            else
+            {
+                return newConnection.Table<Pictures>().Where(x => x.Type == PicType.Bad).OrderByDescending(x => x.TypeId).ToList();
+            }
+        }
+
+        public ObservableCollection<Pictures> GetAllBadImagesToCollectionByOrder(bool isAscending)
+        {
+            var imagelist = GetAllBadImagesToListByOrder(isAscending);
+            return GetAllImagesByListToCollection(imagelist);
+        }
+
 
         // Get the  Image property by image
         public string getImageProperty(string property,byte[] image)

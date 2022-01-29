@@ -14,23 +14,23 @@ using Xamarin.Forms.Xaml;
 namespace App1.View.AdminPages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PhotoGalleryPage : ContentPage
+    public partial class BadPhotoGalleryPage : ContentPage
     {
-        private PhotoCollectionViewModel _pvm;
+        private AllBadPhotosCollectionViewModel _pvm;
         private PictureDBHelper picturesDBHelper = new PictureDBHelper();
 
-        public PhotoGalleryPage()
+        public BadPhotoGalleryPage()
         {
             InitializeComponent();
-            BindingContext = _pvm = new PhotoCollectionViewModel();
+            BindingContext = _pvm = new AllBadPhotosCollectionViewModel();
 
-            MessagingCenter.Subscribe<App, string>(App.Current, constants.imagePopup , (snd, arg) =>
+            MessagingCenter.Subscribe<App, string>(App.Current, constants.badimagePopup, (snd, arg) =>
             {
                 _pvm.SelectionMode = SelectionMode.None;
                 _pvm.SelectedPictures.Clear();
                 _pvm.SelectedPictures_IsVisible = false;
                 _pvm.Pictures.Clear();
-                var user = picturesDBHelper.GetAllImagesToListByOrder(bool.Parse(arg));
+                var user = picturesDBHelper.GetAllBadImagesToListByOrder(bool.Parse(arg));
                 foreach (var item in user)
                 {
                     _pvm.Pictures.Add(item);
@@ -42,7 +42,7 @@ namespace App1.View.AdminPages
 
         async void Sortby_Clicked(System.Object sender, System.EventArgs e)
         {
-            await Navigation.PushModalAsync(new AscendingPopUp(constants.imagePopup)); //set isImage to false, because we want User sort
+            await Navigation.PushModalAsync(new AscendingPopUp(constants.badimagePopup)); //set isImage to false, because we want User sort
 
         }
         async void OnTrashTapped(object sender, EventArgs args)

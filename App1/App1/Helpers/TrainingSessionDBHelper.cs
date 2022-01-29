@@ -18,10 +18,29 @@ namespace App1.Helpers
             newConnection.CreateTable<TrainingSession>();
         }
 
+        //------------------------------------------------------DB MANIPULATION METHODS-----------------------------------------------------------------------------------------------
+
+
         public void AddTrainingSession(TrainingSession trainingSession)
         {
             newConnection.Insert(trainingSession);
         }
+
+        public bool DeleteTrainingSession(object tsession)
+        {
+            if (newConnection.Delete(tsession) != 0)
+                return true;
+            else return false;
+        }
+
+        public bool DeleteTrainingSessionbyUser(User user)
+        {
+
+
+
+
+        }
+
 
         public List<TrainingSession> GetTrainingSessions()
         {

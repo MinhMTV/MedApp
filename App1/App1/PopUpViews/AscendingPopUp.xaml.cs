@@ -18,11 +18,29 @@ namespace App1.PopUpViews
     {
         bool isAscendingSelect;
         bool isDescendingSelect;
+        string nagivationType;
 
-        public AscendingPopUp()
+        public AscendingPopUp(string navigationtype)
         {
+
             InitializeComponent();
-            setIsChecked(Preferences.Get(constants.isAscending, "True"));
+            nagivationType = navigationtype;
+            switch (navigationtype)
+            {
+                case constants.userPopup:
+                    setIsChecked(Preferences.Get(constants.isAscending, "True"));
+                    break;
+                case constants.imagePopup:
+                    setIsChecked(Preferences.Get(constants.isImageAscending, "True"));
+                    break;
+                case constants.goodimagePopup:
+                    setIsChecked(Preferences.Get(constants.isGoodImageAscending, "True"));
+                    break;
+                case constants.badimagePopup:
+                    setIsChecked(Preferences.Get(constants.isBadImageAscending, "True"));
+                    break;
+
+            }
         }
 
         private void Ascending_CheckedChanged(object sender, CheckedChangedEventArgs e)
@@ -45,17 +63,53 @@ namespace App1.PopUpViews
 
         private async void Button_Clicked(object sender, EventArgs e)
         {
-            
-            if (isAscendingSelect)
+            switch (nagivationType)
             {
-                Preferences.Set(constants.isAscending, isAscendingSelect.ToString());
+                case constants.userPopup:
+                    if (isAscendingSelect)
+                    {
+                        Preferences.Set(constants.isAscending, isAscendingSelect.ToString());
+                    }
+                    else if (isDescendingSelect)
+                    {
+                        Preferences.Set(constants.isAscending, isAscendingSelect.ToString());
+                    }
+                    MessagingCenter.Send<App, string>(App.Current as App, constants.userPopup, isAscendingSelect.ToString());
+                    break;
+                case constants.imagePopup:
+                    if (isAscendingSelect)
+                    {
+                        Preferences.Set(constants.isImageAscending, isAscendingSelect.ToString());
+                    }
+                    else if (isDescendingSelect)
+                    {
+                        Preferences.Set(constants.isImageAscending, isAscendingSelect.ToString());
+                    }
+                    MessagingCenter.Send<App, string>(App.Current as App, constants.imagePopup, isAscendingSelect.ToString());
+                    break;
+                case constants.goodimagePopup:
+                    if (isAscendingSelect)
+                    {
+                        Preferences.Set(constants.isGoodImageAscending, isAscendingSelect.ToString());
+                    }
+                    else if (isDescendingSelect)
+                    {
+                        Preferences.Set(constants.isGoodImageAscending, isAscendingSelect.ToString());
+                    }
+                    MessagingCenter.Send<App, string>(App.Current as App, constants.goodimagePopup, isAscendingSelect.ToString());
+                    break;
+                case constants.badimagePopup:
+                    if (isAscendingSelect)
+                    {
+                        Preferences.Set(constants.isBadImageAscending, isAscendingSelect.ToString());
+                    }
+                    else if (isDescendingSelect)
+                    {
+                        Preferences.Set(constants.isBadImageAscending, isAscendingSelect.ToString());
+                    }
+                    MessagingCenter.Send<App, string>(App.Current as App, constants.badimagePopup, isAscendingSelect.ToString());
+                    break;
             }
-            else if (isDescendingSelect)
-            {
-                Preferences.Set(constants.isAscending, isAscendingSelect.ToString());
-            }
-            
-            MessagingCenter.Send<App, string>(App.Current as App, "PopUpSort", isAscendingSelect.ToString());
             await Navigation.PopModalAsync();
         }
 

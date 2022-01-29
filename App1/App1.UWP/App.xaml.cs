@@ -44,6 +44,7 @@ namespace App1.UWP
 
                 Rg.Plugins.Popup.Popup.Init();
                 Xamarin.Forms.Forms.Init(e, Rg.Plugins.Popup.Popup.GetExtraAssemblies());
+                FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {

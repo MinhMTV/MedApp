@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- UserCollectionPage -->
+
     <Style x:Key="NameLabel" TargetType="Label">
         <Setter Property="FontSize" Value="Medium" />
         <Setter Property="FontAttributes" Value="Bold" />
@@ -50,10 +53,11 @@
 
     <!--Frame of FrameCardView -->
     <Style x:Key="FrameCardViewStyle" TargetType="Frame">
-        <Setter Property="CornerRadius" Value="5" />
-        <Setter Property="Margin" Value="5" />
-        <Setter Property="Padding" Value="5" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Margin" Value="2" />
+        <Setter Property="Padding" Value="3" />
         <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <Setter Property="VerticalOptions" Value="FillAndExpand"/>
         <Setter Property="OutlineColor" Value="LightGray" />
         <Setter Property="BorderColor" Value="LightGray" />
         <Setter Property="HasShadow" Value="True" />
@@ -71,4 +75,31 @@
         <Setter Property="Orientation" Value="Horizontal" />
         <Setter Property="Spacing" Value="10" />
     </Style>
+
+    <!--  UserDetailPage -->
+    <Style x:Key="NameConstant" TargetType="Label">
+        <Setter Property="FontSize" Value="Medium" />
+        <Setter Property="TextColor" Value="Gray" />
+        <Setter Property="FontAttributes" Value="Italic" />
+    </Style>
+
+    <Style x:Key="TextBindingDetail" TargetType="Label">
+        <Setter Property="FontSize" Value="Medium" />
+        <Setter Property="TextColor" Value="Black" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="MaxLines" Value="1"/>
+    </Style>
+
+    <Style x:Key="Text_Underline" TargetType="BoxView">
+        <Setter Property="HeightRequest" Value="1" />
+        <Setter Property="Color" Value="LightGray" />
+    </Style>
+
+    <Style x:Key="Session_Style" TargetType="Label">
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="FontSize" Value="Medium"/>
+        <Setter Property="TextColor" Value="Black"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+    </Style>
+
 </ResourceDictionary>

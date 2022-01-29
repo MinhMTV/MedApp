@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App1.View.AdminPages.UserDetailPage" 
+              xmlns:pg="clr-namespace:App1.ViewModels"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit" >
+    
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="User bearbeiten"
+                     Order="Secondary"
+                     />
+        <ToolbarItem Text="User löschen"
+                     Order="Secondary"
+                     />
+    </ContentPage.ToolbarItems>
+
+    <StackLayout HorizontalOptions="Fill">
+        <NavigationPage.TitleView>
+            <Grid >
+
+                <Grid.ColumnDefinitions>
+
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.5*"/>
+
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Label Grid.Column="0"
+               MaxLines="1"
+               Text="PatientenName"
+               FontSize="Medium"
+               HorizontalOptions="StartAndExpand"
+               VerticalOptions="Center"/>
+            </Grid>
+        </NavigationPage.TitleView>
+
+
+        <!--  User Personal Data First Frame-->
+        <Frame Style="{StaticResource FrameCardViewStyle}">
+            <StackLayout Style="{StaticResource itemsCardViewStackLayoutStyle}">
+                <StackLayout Style="{StaticResource itemsInsideCardViewStackLayoutStyle}">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Frame Style="{StaticResource profileImageFrameStyle}" Grid.Column="0" Grid.Row="0">
+                            <Image Style="{StaticResource profileImageStyle}" Source="https://img.icons8.com/ios-filled/50/000000/face.png" />
+                        </Frame>
+                        <StackLayout  Grid.Column="0" Grid.Row="1">
+                            <Label Text="Anzahl" Style="{StaticResource Session_Style}"  />
+                            <Label Text="Sessions:" Style="{StaticResource Session_Style}" />
+                            <Label Text="5"  Style="{StaticResource Session_Style}" />
+                        </StackLayout>
+                    </Grid>
+                    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="0" Margin="10,0,0,10">
+                            <Label  Text="Username"  Style="{StaticResource NameConstant}" />
+                            <Label  Text="Placeholder"  Style="{StaticResource TextBindingDetail}"/>
+                            <BoxView Style="{StaticResource Text_Underline}"/>
+                        </StackLayout>
+
+                        <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="1" Margin="10,0,0,10" >
+                            <Label  Text="UserID" Style="{StaticResource NameConstant}"/>
+                            <Label  Text="Placeholder"  Style="{StaticResource TextBindingDetail}"/>
+                            <BoxView Style="{StaticResource Text_Underline}"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0" Margin="10,0,0,10" >
+                            <Label  Text="Vorname" Style="{StaticResource NameConstant}"/>
+                            <Label  Text="Placeholder"  Style="{StaticResource TextBindingDetail}"/>
+                            <BoxView Style="{StaticResource Text_Underline}"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="1"  Margin="10,0,0,10" >
+                            <Label  Text="Nachname" Style="{StaticResource NameConstant}"/>
+                            <Label  Text="Placeholder"  Style="{StaticResource TextBindingDetail}"/>
+                            <BoxView Style="{StaticResource Text_Underline}"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="0" Margin="10,0,0,10" >
+                            <Label  Text="E-Mail" Style="{StaticResource NameConstant}"/>
+                            <Label  Text="Placeholder"  Style="{StaticResource TextBindingDetail}"/>
+                            <BoxView Style="{StaticResource Text_Underline}"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="1" Margin="10,0,0,10">
+                            <Label  Text="Alter" Style="{StaticResource NameConstant}"/>
+                            <Label  Text="Placeholder"  Style="{StaticResource TextBindingDetail}"/>
+                            <BoxView Style="{StaticResource Text_Underline}"/>
+                        </StackLayout>
+                    </Grid>
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+
+        <!--  User Accepted Data --> 
+        <Frame Style="{StaticResource FrameCardViewStyle}">
+            <StackLayout Style="{StaticResource itemsCardViewStackLayoutStyle}">
+                <StackLayout Style="{StaticResource itemsInsideCardViewStackLayoutStyle}">
+                    <Grid HorizontalOptions="FillAndExpand">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="0" HorizontalOptions="FillAndExpand" >
+                            <Label  Text="DataProtection?"  Style="{StaticResource NameConstant}" />
+                            <Image  Source="https://img.icons8.com/ios-filled/50/000000/face.png"  HorizontalOptions="CenterAndExpand"/>
+                        </StackLayout>
+
+                        <StackLayout  Grid.Row="0" Grid.Column="1" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                            <Label  Text="Autosend?" Style="{StaticResource NameConstant}"/>
+                            <Image  Source="https://img.icons8.com/ios-filled/50/000000/face.png" HorizontalOptions="CenterAndExpand"/>
+                        </StackLayout>
+
+                        
+                        <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0">
+                            <BoxView Style="{StaticResource Text_Underline}"/>
+                            <Label  Text="Created At"  Style="{StaticResource NameConstant}" />
+                            <Label  Text="26.03.1997"  Style="{StaticResource TextBindingDetail}"/>
+                            <BoxView Style="{StaticResource Text_Underline}"/>
+                        </StackLayout>
+
+                        <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="1">
+                            <BoxView Style="{StaticResource Text_Underline}"/>
+                            <Label  Text="First Session"  Style="{StaticResource NameConstant}" />
+                            <Label  Text="29.01.2022"  Style="{StaticResource TextBindingDetail}"/>
+                            <BoxView Style="{StaticResource Text_Underline}"/>
+                        </StackLayout>
+
+                    </Grid>
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+
+
+        <!--  User Traingssession Data -->
+        <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill">
+            <Grid HorizontalOptions="FillAndExpand" BackgroundColor="LightBlue">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Text="Last 3 Session" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Grid.Column="0" Style="{StaticResource TextBindingDetail}"/>
+                <Label Text="See All" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Grid.Column="1" Style="{StaticResource TextBindingDetail}"/>
+            </Grid>
+            <RefreshView IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"
+             Command="{Binding RefreshCommand}">
+                <CollectionView x:Name="UserCV" SelectionMode="{Binding SelectionMode}" SelectedItems="{Binding SelectedUser}" ItemsSource="{Binding User}"
+                        >
+                    
+                    <CollectionView.EmptyView>
+                        <Grid>
+                            <StackLayout>
+                                <Label Text="Keine Trainingssession vorhanden" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
+                                FontSize="Large" FontAttributes="Bold"/>
+                            </StackLayout>
+                        </Grid>
+                    </CollectionView.EmptyView>
+
+                    <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <StackLayout Spacing="8" VerticalOptions="Fill" xct:TouchEffect.Command="{Binding PressedCommand,
+                        Source={RelativeSource AncestorType={x:Type pg:UserCollectionViewModel}}}"
+                            xct:TouchEffect.CommandParameter="{Binding .}"
+                            xct:TouchEffect.LongPressCommand="{Binding LongPressCommand,
+                        Source={RelativeSource AncestorType={x:Type pg:UserCollectionViewModel}}}"
+                            xct:TouchEffect.LongPressCommandParameter="{Binding .}"
+                            xct:TouchEffect.PressedScale="1.1"
+                             xct:TouchEffect.NativeAnimation="True" 
+                            >
+
+
+                    <Frame Style="{StaticResource FrameCardViewStyle}">
+                        <StackLayout Style="{StaticResource itemsCardViewStackLayoutStyle}"    >
+                            <StackLayout Style="{StaticResource itemsInsideCardViewStackLayoutStyle}">
+                                <Frame Style="{StaticResource profileImageFrameStyle}">
+                                    <Image Style="{StaticResource profileImageStyle}" Source="https://img.icons8.com/ios-filled/50/000000/face.png" />
+                                </Frame>
+                                            <StackLayout Style="{StaticResource detailsStackLayout}">
+                                                <Label Text="{Binding Fullname}" Style="{StaticResource NameLabel}" />
+                                                <StackLayout Style="{StaticResource imageLableStackLayout}">
+                                                    <Image Source="https://img.icons8.com/material-outlined/24/000000/employee-card.png" Style="{StaticResource imageStyle}"></Image>
+                                                    <Label Text="Username:" Style="{StaticResource LabelStyle}" />
+                                                    <StackLayout Style="{StaticResource imageLableStackLayout}">
+                                                        <Label Text="{Binding Username}" Style="{StaticResource LabelStyle}" />
+                                                    </StackLayout>
+                                                </StackLayout>
+                                                <StackLayout Style="{StaticResource imageLableStackLayout}">
+                                                    <Image Source="https://img.icons8.com/material-outlined/24/000000/age.png" Style="{StaticResource imageStyle}"></Image>
+                                                    <Label Text="Age:" Style="{StaticResource LabelStyle}" />
+                                                    <StackLayout Style="{StaticResource imageLableStackLayout}">
+                                                        <Label Text="{Binding Age}" Style="{StaticResource LabelStyle}" />
+                                                    </StackLayout>
+                                                </StackLayout>
+                                                <StackLayout Style="{StaticResource imageLableStackLayout}">
+                                                    <Image Source="https://img.icons8.com/fluency-systems-regular/48/000000/key.png" Style="{StaticResource imageStyle}"></Image>
+                                                    <Label Text="UserID:" Style="{StaticResource LabelStyle}" />
+                                                    <StackLayout Style="{StaticResource imageLableStackLayout}">
+                                                        <Label Text="{Binding UserID}" Style="{StaticResource LabelStyle}" />
+                                                    </StackLayout>
+                                                </StackLayout>
+                                                <StackLayout Style="{StaticResource imageLableStackLayout}">
+                                                    <Image Source="https://img.icons8.com/material-two-tone/24/000000/time-machine.png" Style="{StaticResource imageStyle}"></Image>
+                                                    <Label Text="lastSession:" Style="{StaticResource LabelStyle}"></Label>
+                                                    <Label Text="{Binding SessionLastUpdatedshort}" Style="{StaticResource LabelStyle}" />
+                                                </StackLayout>
+                                            </StackLayout>
+                                        </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+        </CollectionView>
+            </RefreshView>
+        </StackLayout>
+    </StackLayout>
+</ContentPage>

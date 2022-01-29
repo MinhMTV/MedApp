@@ -4,13 +4,16 @@ using System.Text;
 using Xamarin.Forms;
 using System.Globalization;
 using System.IO;
+using App1.DependencyServices;
 
 namespace App1.Methods
 {
     class ByteArrayToImageSourceConverter : IValueConverter
     {
+        
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            var ImageResizer = DependencyService.Get<IImageResizer>();
             ImageSource xValue = null;
             try
             {

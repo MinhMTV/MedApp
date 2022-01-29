@@ -21,7 +21,7 @@
     </pages:PopupPage.Animation>
     <!--You can use any elements here which are extended from Xamarin.Forms.View-->
     <Frame  VerticalOptions="CenterAndExpand" 
-        HorizontalOptions="CenterAndExpand" >
+        HorizontalOptions="CenterAndExpand" BackgroundColor="White">
         <StackLayout>
 
             <Label Text="Reihenfolge nach" FontSize="Medium" FontAttributes="Bold" />

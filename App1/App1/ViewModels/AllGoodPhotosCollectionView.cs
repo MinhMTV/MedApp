@@ -13,7 +13,7 @@ using App1.View.AdminPages;
 
 namespace App1.ViewModels
 {
-    public class PhotoCollectionViewModel : BaseViewModel
+    public class AllGoodPhotosCollectionView : BaseViewModel
     {
         private ObservableCollection<Pictures> _pictures = new ObservableCollection<Pictures>();
 
@@ -42,7 +42,7 @@ namespace App1.ViewModels
         public PictureDBHelper picturesDbHelper = new PictureDBHelper();
 
 
-        public PhotoCollectionViewModel()
+        public AllGoodPhotosCollectionView()
         {
             InitData();
 
@@ -55,7 +55,7 @@ namespace App1.ViewModels
         private void InitData()
         {
             _selectedpictures = new ObservableCollection<object>();
-            _pictures = picturesDbHelper.GetAllImagesByOrder(bool.Parse(Preferences.Get(constants.isImageAscending, "true")));
+            _pictures = picturesDbHelper.GetAllGoodImagesToCollectionByOrder(bool.Parse(Preferences.Get(constants.isGoodImageAscending, "true")));
             _nrOfSelectedPictures = SelectedPictures.Count();
             _selectedPictures_IsVisible = false;
         }
@@ -96,7 +96,7 @@ namespace App1.ViewModels
             _selectedpictures.Clear();
             IsRefreshing = true;
 
-            foreach (var item in picturesDbHelper.GetAllImagesToListByOrder(bool.Parse(Preferences.Get(constants.isImageAscending, "true"))))
+            foreach (var item in picturesDbHelper.GetAllGoodImagesToCollectionByOrder(bool.Parse(Preferences.Get(constants.isGoodImageAscending, "true"))))
             {
                 _pictures.Add(item);
             }

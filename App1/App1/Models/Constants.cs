@@ -8,6 +8,9 @@
         public const string loginUser = "loginUser";//check in preferences if a user was loggin, if not default value is false
         public const string isAscending = "IsAscending"; //set default sort by ascending
         public const string OrderBy = "OrderBy";  //set order of usercollection, default is empty string, which leads to userdbid
+        public const string isImageAscending = "IsImageAscending"; //set default sort for images by ascending 
+        public const string isGoodImageAscending = "IsGoodImageAscending"; //set default sort for good images by ascending 
+        public const string isBadImageAscending = "IsBadImageAscending"; //set default sort for bad images by ascending 
 
         /*User Properties*/
         public const string userdbid = "userdbid";
@@ -31,6 +34,7 @@
         public const string end = "end"; 
         public const string minutes = "minutes"; 
         public const string seconds = "seconds";
+        public const string isTutorial = "isTutorial";
 
         //admin
         public const string entity = "entity";
@@ -44,7 +48,11 @@
 
         public const string ImageFolderPath = "App1.EmbeddedImages.";
 
-
+        //PopupNavigation
+        public const string userPopup = "userpopup";
+        public const string imagePopup = "imagepopup";
+        public const string goodimagePopup = "goodimagepopup";
+        public const string badimagePopup = "badimagepopup";
 
         //constant user settings
 

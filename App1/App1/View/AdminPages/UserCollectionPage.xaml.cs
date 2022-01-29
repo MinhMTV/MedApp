@@ -44,10 +44,10 @@ namespace App1.View.AdminPages
 
                 }
                _uvm.UserOrderBy = arg.ToString();
-                _uvm.IsAscending = true;
+                _uvm.IsAscending = bool.Parse(Preferences.Get(constants.isAscending, "true"));
             });
 
-            MessagingCenter.Subscribe<App, string>(App.Current, "PopUpSort", (snd, arg) =>
+            MessagingCenter.Subscribe<App, string>(App.Current, constants.userPopup, (snd, arg) =>
             {
                 _uvm.SelectionMode = SelectionMode.None;
                 _uvm.SelectedUser.Clear();
@@ -60,7 +60,7 @@ namespace App1.View.AdminPages
 
                 }
                 _uvm.UserOrderBy = arg.ToString();
-                _uvm.IsAscending = true;
+                _uvm.IsAscending = bool.Parse(Preferences.Get(constants.isAscending, "true"));
             });
 
 
@@ -68,7 +68,7 @@ namespace App1.View.AdminPages
             async void AddUser_Clicked(System.Object sender, System.EventArgs e)
         {
             await Navigation.PushModalAsync(new Registration(isAdmin), false);
-
+             
         }
 
         async void OrderBy_Clicked(System.Object sender, System.EventArgs e)
@@ -79,7 +79,7 @@ namespace App1.View.AdminPages
 
         async void Sortby_Clicked(System.Object sender, System.EventArgs e)
         {
-            await Navigation.PushModalAsync(new AscendingPopUp());
+            await Navigation.PushModalAsync(new AscendingPopUp(constants.userPopup)); //set isImage to false, because we want User sort
 
         }
 
