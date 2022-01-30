@@ -17,6 +17,8 @@ namespace App1.Helpers
     {
         private SQLiteConnection newConnection;
         public Stringmethods stringmethods;
+        public TrainingSessionDBHelper TrainingSessionDBHelper = new TrainingSessionDBHelper();
+        public PicTimeDBHelper PicTimeDBHelper = new PicTimeDBHelper();
 
         public UserDBHelper()
         {
@@ -39,11 +41,24 @@ namespace App1.Helpers
                 return true;
             }
         }
-        public bool DeleteUser(object user)
+
+        //Delete Only User, but keep Trainingsessions and Pictime
+        public bool DeleteOnlyUser(User user)
         {
             if (newConnection.Delete(user) != 0)
                 return true;
             else return false;
+        }
+
+        //Delete Whole user with TrainingSession and Pictime
+        public bool DeleteUser(User user)
+        {
+            PicTimeDBHelper.DeleteAllPicTimesbyUser(user);
+            TrainingSessionDBHelper.DeleteAllTrainingSessionbyUser(user);
+            if (newConnection.Delete(user) != 0)
+                return true;
+            else return false;
+
         }
 
         public bool DeleteUserbyName(string username)
@@ -78,6 +93,14 @@ namespace App1.Helpers
         {
             return newConnection.DeleteAll<User>();
         }
+
+        public int UpdateUser(User user)
+        {
+           return newConnection.Update(user);
+            
+        }
+
+
 
         /// <summary>
         /// change password of user by username
@@ -173,6 +196,73 @@ namespace App1.Helpers
 
 
 
+
+
+
+
+     /*   public bool UpdateUserbyProperty(User user, string property, string updateData)
+        {
+            var data = newConnection.Table<User>();
+            if (user != null)
+            {
+                switch (property.Trim().ToLower())
+                {
+                    case constants.userdbid:
+
+                        var singleData = data.Where(x => x.UserID == user.UserID).Single();
+                        if (singleData != null)
+                        {
+                            singleData.UserID = Convert.ToInt32(updateData);
+
+                        }
+
+
+                    case constants.username:
+                        return returnedUser.Username;
+                    case constants.email:
+                        return returnedUser.Email;
+                    case constants.userid:
+                        return returnedUser.UserID.ToString();
+                    case constants.firstname:
+                        return returnedUser.FirstName;
+                    case constants.lastname:
+                        return returnedUser.LastName;
+                    case constants.password:
+                        return returnedUser.Password;
+                    case constants.IsUserIdUpdated:
+                        return returnedUser.IsUserIdUpdated.ToString();
+                    case constants.age:
+                        return returnedUser.Age.ToString();
+                    case constants.createdat:
+                        return returnedUser.CreatedAt.ToString();
+                    case constants.IsDataProtectionAccepted:
+                        return returnedUser.IsDataProtectionAccepted.ToString();
+                    case constants.IsToDataAutoSend:
+                        return returnedUser.IsToDataAutoSend.ToString();
+                    case constants.firstsession:
+                        return returnedUser.FirstSession.ToString();
+                    case constants.lastsession:
+                        return returnedUser.LastSession.ToString();
+                    case constants.sessionlastupdated:
+                        return returnedUser.SessionLastUpdated.ToString();
+                    case constants.start:
+                        return returnedUser.Start.ToString();
+                    case constants.end:
+                        return returnedUser.End.ToString();
+                    case constants.minutes:
+                        return returnedUser.SessionTimeMin.ToString();
+                    case constants.seconds:
+                        return returnedUser.SessionTimeSec.ToString();
+                    case constants.isTutorial:
+                        return returnedUser.isAskForTutorial.ToString();
+                    default:
+                        break;
+                }
+            }
+        }*/
+
+
+
         //------------------------------------------------------DB SEARCH METHODS-----------------------------------------------------------------------------------------------
         //check if user already exist in table by name
         public bool CheckUserexist(string username)
@@ -258,7 +348,7 @@ namespace App1.Helpers
         //get first user on user table
         public User GetFirstUser()
         {
-            return newConnection.Table<User>().First();
+            return newConnection.Table<User>().FirstOrDefault();
         }
 
         //get Userobj of current logged User
@@ -266,15 +356,14 @@ namespace App1.Helpers
         {
             try
             {
-                foreach (User item in newConnection.Table<User>())
+                if (Preferences.Get(constants.loginUser, "false") != "false")
                 {
-                    if (item.Username == Preferences.Get(constants.loginUser, "false"))
-                    {
-                        return item;
-                    }
+                    return GetUserByName(Preferences.Get(constants.loginUser, "false"));
                 }
-                return null;
-
+                else
+                {
+                    return null;
+                }
             }
             catch (Exception e)
             {
@@ -342,8 +431,7 @@ namespace App1.Helpers
         //get all User as a List of User Objects
         public List<User> GetAllUserToList()
         {
-            var userList = newConnection.Table<User>().ToList();
-            return userList;
+            return newConnection.Table<User>().ToList();
         }
 
         //get all user as Collection
@@ -476,6 +564,7 @@ namespace App1.Helpers
 
 
         // Get the loggedin user property
+        //maybe redudant because you can always return the user object and return its value
         public string getLoggedinUserProperty(string property)
         {
             if (!Preferences.Get(constants.loginUser, "false").Equals("false"))
@@ -548,7 +637,8 @@ namespace App1.Helpers
             return string.Empty;
         }
 
-        // Get the  user property vy Username
+        // Get the  user property by Username
+        //maybe redudant because you can always return the user object and return its value
         public string getUserProperty(string property,string username)
         {
                 var data = newConnection.Table<User>();

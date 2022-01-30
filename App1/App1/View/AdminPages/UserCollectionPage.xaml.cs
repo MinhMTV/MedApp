@@ -24,12 +24,41 @@ namespace App1.View.AdminPages
 
         private UserCollectionViewModel _uvm;
         private UserDBHelper userDBHelper = new UserDBHelper();
+        private TrainingSessionDBHelper trainingSession = new TrainingSessionDBHelper();
 
         private bool isAdmin = true;
         public UserCollectionPage()
         {
+            var userList = userDBHelper.GetAllUserToList();
+            foreach (var user in userList)
+            {
+                if (trainingSession.getLastTrainingSessionbyUser(user) != null)
+                {
+                    user.LastSession = trainingSession.getLastTrainingSessionbyUser(user).SessionDate;
+                    userDBHelper.UpdateUser(user);
+                }
+                else
+                {
+                    user.LastSession = DateTime.MaxValue; // assigns default value 01/01/0001 00:00:00
+                    userDBHelper.UpdateUser(user);
+                }
+
+                if (trainingSession.getFirstTrainingSessionbyUser(user) != null)
+                {
+                    user.FirstSession = trainingSession.getFirstTrainingSessionbyUser(user).SessionDate;
+                    userDBHelper.UpdateUser(user);
+                }
+                else
+                {
+                    user.FirstSession = DateTime.MinValue; // assigns default value 31/12/9999  11:59:59
+                    userDBHelper.UpdateUser(user);
+                }
+            }
+            
+
             BindingContext = _uvm = new UserCollectionViewModel();
             InitializeComponent();
+            
 
             MessagingCenter.Subscribe<App, string>(App.Current, "PopUpOrder", (snd, arg) =>
             {
@@ -94,7 +123,7 @@ namespace App1.View.AdminPages
                     var userlist = UserCV.SelectedItems.ToList();
                     foreach (var item in userlist)
                     {
-                        userDBHelper.DeleteUser(item);
+                        userDBHelper.DeleteUser((User)item);
                         _uvm.User.Remove((User)item);
                     }
                     _uvm.SelectionMode = SelectionMode.None;

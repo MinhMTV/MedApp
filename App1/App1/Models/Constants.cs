@@ -2,6 +2,10 @@
 {
     public static class constants
     {
+        //App Status
+        public const string isTrainingPage = "isTrainingPage"; //check if trainingpage or not
+
+
         /*Shared Preferences
          * String Value means key name 
          */

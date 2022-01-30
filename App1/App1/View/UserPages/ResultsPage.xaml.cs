@@ -51,11 +51,10 @@ namespace App1.View.UserPages
                                                 TotalPictures),
                                                 2);
 
-            trainingSession.PatientId = Convert.ToInt32(userDBHelper.getLoggedinUserProperty("userid"));
+            trainingSession.UserID =  userDBHelper.GetLoggedUser().UserID;
 
             // Image infromations are already added
             trainingSession.ElapsedTime = ElapsedTime;
-            trainingSession.AverageReactionTime = AverageReactionTime;
             trainingSession.IsTrainingCompleted = isTrainingCompleted;
             trainingSession.IsDataSent = false;
             trainingSession.SessionDate = DateTime.Now.Date;

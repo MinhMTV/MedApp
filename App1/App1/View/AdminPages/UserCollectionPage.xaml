@@ -161,7 +161,7 @@
                                             <StackLayout Style="{StaticResource imageLableStackLayout}">
                                                 <Image Source="https://img.icons8.com/material-two-tone/24/000000/time-machine.png" Style="{StaticResource imageStyle}"></Image>
                                                 <Label Text="lastSession:" Style="{StaticResource LabelStyle}"></Label>
-                                                <Label Text="{Binding SessionLastUpdatedshort}" Style="{StaticResource LabelStyle}" />
+                                                <Label Text="{Binding LastSession}" Style="{StaticResource LabelStyle}" />
                                             </StackLayout>
                                         </StackLayout>
                                         <StackLayout Orientation="Horizontal" HorizontalOptions="End">

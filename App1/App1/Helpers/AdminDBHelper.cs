@@ -234,7 +234,8 @@ namespace App1.Helpers
             return UserCollection;
         }
 
-        // Get the amdmin property
+        // Get the admin property 
+        //maybe redudant because you can always return the admin object and return its value
         public string getUserProperty(string property, string username)
         {
                 var data = newConnection.Table<Admin>();
@@ -276,6 +277,7 @@ namespace App1.Helpers
         }
 
         // Get the loggedin user property
+        //maybe redudant because you can always return the admin object and return its value
         public string getLoggedinUserProperty(string property)
         {
             if (!Preferences.Get(constants.loginUser, "false").Equals("false"))

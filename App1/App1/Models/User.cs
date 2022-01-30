@@ -20,6 +20,7 @@ namespace App1.Models
         public bool IsUserAskedForDataProtection { get; set; }
         public bool IsDataProtectionAccepted { get; set; }
         public bool IsToDataAutoSend { get; set; }
+
         public DateTime FirstSession { get; set; } //first trainingsession
         public DateTime LastSession { get; set; } //last Trainingsession
         public DateTime SessionLastUpdated { get; set; } //time, where session was last send to database online
@@ -29,7 +30,6 @@ namespace App1.Models
         public int SessionTimeMin { get; set; } //Time for Session in min for User (adjust by admin) //therapyend/start = time of therapy, where user can login 
         public int SessionTimeSec { get; set; } //Time for Session sec for User(adjust by admin) 
         public bool isAskForTutorial { get; set; } //if User already did Tutorial
-
 
         public User()
         {

@@ -15,6 +15,8 @@ namespace App1.Models
         public static int PicturesRight { get; set; }
         public static int PicturesWrong { get; set; }
 
+        public static bool isNavigation { get; set; } = false;
+
         public static int NroOfAvailablePics
         {
             get { return 55; }

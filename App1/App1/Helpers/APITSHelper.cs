@@ -22,7 +22,7 @@ namespace App1.Helpers
             trainingSessionDB = new Dictionary<string, string>
             {
                 { "SessionDate",trainingSession.SessionDate.Date.ToString() } ,
-                { "PatientId", trainingSession.PatientId.ToString()},
+                { "UserID", trainingSession.UserID.ToString()},
                 { "NrOfGoodCorrectImages", trainingSession.NrOfGoodCorrectImages.ToString() },
                 { "NrOfGoodWrongImages", trainingSession.NrOfGoodWrongImages.ToString() },
                 { "NrOfBadCorrectImages", trainingSession.NrOfBadCorrectImages.ToString() },

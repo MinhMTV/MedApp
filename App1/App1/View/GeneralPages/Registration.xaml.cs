@@ -141,6 +141,8 @@ namespace App1.View.GeneralPages
                 user.IsUserAskedForDataProtection = false;
                 user.IsDataProtectionAccepted = true;
                 user.IsToDataAutoSend = true;
+                user.FirstSession = DateTime.MinValue;
+                user.LastSession = DateTime.MaxValue;
                 user.CreatedAt = DateTime.Now;
                 user.Start = DateTime.Now;
                 user.End = DateTime.MaxValue; //therapyEnd will be maximum value

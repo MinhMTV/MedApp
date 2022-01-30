@@ -98,7 +98,7 @@ namespace App1.View.UserPages
                 {
                     TrainingSessionDBHelper trainingSessionDBHelper = new TrainingSessionDBHelper();
                     APITSHelper apiTSHelper = new APITSHelper();
-                    List<TrainingSession> trainingSessions = trainingSessionDBHelper.GetUnsentTrainingSessions();
+                    List<TrainingSession> trainingSessions = trainingSessionDBHelper.GetAllUnsentTrainingSessions();
 
                     if (trainingSessions.Count != 0)
                     {

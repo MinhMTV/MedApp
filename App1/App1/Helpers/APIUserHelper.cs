@@ -58,7 +58,7 @@ namespace App1.Helpers
                     var message = await httpClient.PostAsync(serverName, content);
                     var response = await message.Content.ReadAsStringAsync();
                     Dictionary<string, string> htmlAttributes = JsonConvert.DeserializeObject<Dictionary<string, string>>(response);
-                    return Convert.ToInt32(htmlAttributes["PatientId"]);
+                    return Convert.ToInt32(htmlAttributes["UserID"]);
                 }
                 catch (Exception ex)
                 {
@@ -79,7 +79,7 @@ namespace App1.Helpers
             string serverName = GlobalVariables.ServerName + "get_id.php?Email=" + userEmail;
             var respone = await httpClient.GetStringAsync(serverName);
             Dictionary<string, string> htmlAttributes = JsonConvert.DeserializeObject<Dictionary<string, string>>(respone);
-            int returnedId = Convert.ToInt32(htmlAttributes["PatientId"]);
+            int returnedId = Convert.ToInt32(htmlAttributes["UserID"]);
             return returnedId;
         }
 

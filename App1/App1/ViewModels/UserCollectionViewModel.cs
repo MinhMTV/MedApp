@@ -37,6 +37,8 @@ namespace App1.ViewModels
 
         public bool IsAscending { get; set; } = true;
 
+        
+
         public Command<User> LongPressCommand { get; private set; }
         
         public Command OrderByCommand { get; set; }
@@ -160,14 +162,6 @@ namespace App1.ViewModels
 
             NrofSelectedUser = SelectedUser.Count();
         }
-
-        private void OnShare()
-        {
-            
-        }
-
-
-
         private void InitData()
         {
             _selectedUser = new ObservableCollection<object>();
