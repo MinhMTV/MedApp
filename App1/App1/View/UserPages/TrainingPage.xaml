@@ -7,12 +7,20 @@
              NavigationPage.HasNavigationBar="false"
              Padding="20"
              BackgroundColor="SlateGray">
-
     <StackLayout HorizontalOptions="Fill" BackgroundColor="Yellow">
-        <AbsoluteLayout>
-            <Button x:Name="exit_button" Image="exit.png" Clicked="Exit_button_Clicked"
-                 AbsoluteLayout.LayoutBounds="1,0,50,50" AbsoluteLayout.LayoutFlags="PositionProportional" />
-        </AbsoluteLayout>
+
+        <StackLayout HorizontalOptions="FillAndExpand" BackgroundColor="red" Orientation="Horizontal">
+            <Image HeightRequest="50" WidthRequest="50" HorizontalOptions="StartAndExpand" x:Name="quit_button" Source="https://img.icons8.com/android/24/000000/logout-rounded-left.png">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                Tapped="OnQuit_Button_Clicked"
+                NumberOfTapsRequired="1" />
+                </Image.GestureRecognizers>
+            </Image>
+
+            <Button HeightRequest="50" WidthRequest="50" HorizontalOptions="EndAndExpand" x:Name="exit_button" Image="exit.png" Clicked="Exit_button_Clicked"
+                 />
+        </StackLayout>
 
         <swipeCardView:SwipeCardView
                 x:Name="SwipeCardView"
@@ -28,14 +36,6 @@
                 SupportedDraggingDirections="{Binding SupportedDraggingDirections}"
                 AnimationLength="{Binding AnimationLength}"
             >
-            <swipeCardView:SwipeCardView.TopItem>
-                <Grid IsVisible="{Binding TopItem , Source={x:Reference SwipeCardView}, TargetNullValue={Binding TopItem}}">
-                    <StackLayout>
-                        <Label Text="Keine Bilder mehr vorhanden" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
-                                FontSize="Large" FontAttributes="Bold" BackgroundColor="AliceBlue"/>
-                    </StackLayout>
-                </Grid>
-            </swipeCardView:SwipeCardView.TopItem>
             <swipeCardView:SwipeCardView.ItemTemplate>
                 <DataTemplate>
                     <Grid ColumnSpacing="0" RowSpacing="0" BackgroundColor="Wheat">

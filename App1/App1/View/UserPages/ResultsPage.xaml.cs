@@ -20,7 +20,7 @@ namespace App1.View.UserPages
 
         public int TotalPictures { get; set; }
         public string ElapsedTime { get; set; }
-        public double AverageReactionTime { get; set; }
+        public string AverageReactionTime { get; set; }
         public string Name { get; set; }
         public int PicturesRight { get; set; }
         public int PicturesWrong { get; set; }
@@ -31,38 +31,25 @@ namespace App1.View.UserPages
 
 
 
-        public ResultsPage(TrainingSession trainingSession, bool isTrainingCompleted)
+        public ResultsPage()
         {
             InitializeComponent();
-            GlobalVariables.TimeSpend = GlobalVariables.Stopwatch.Elapsed;
+            var user = userDBHelper.GetLoggedUser();
+            var trainingSession = trainingSessionDBHelper.getLastTrainingSessionbyUser(user);
 
-            //ElapsedTime = String.Format("{0:00}:{1:00}:{2:00}",
-            //    GlobalVariables.TimeSpend.Minutes, GlobalVariables.TimeSpend.Seconds,
-            //GlobalVariables.TimeSpend.Milliseconds);
-            ElapsedTime = String.Format("{0:00}:{1:00}",
-                GlobalVariables.TimeSpend.Minutes, GlobalVariables.TimeSpend.Seconds);
-            PicturesRight = trainingSession.NrOfGoodCorrectImages + trainingSession.NrOfBadCorrectImages;
-            PicturesWrong = trainingSession.NrOfGoodWrongImages + trainingSession.NrOfBadWrongImages;
-            TotalPictures = PicturesRight + PicturesWrong;
+            ElapsedTime = trainingSession.ElapsedTime;
+            PicturesRight = trainingSession.NrOfCorrectImages;
+            PicturesWrong = trainingSession.NrOfWrongImages;
+            TotalPictures = trainingSession.NrOfAllImages;
 
 
-            AverageReactionTime = Math.Round(((Convert.ToDouble(ElapsedTime.Substring(0, 2)) * 60 +
-                                               Convert.ToDouble(ElapsedTime.Substring(3, 2))) /
-                                                TotalPictures),
-                                                2);
+            AverageReactionTime = trainingSession.AvgT;
 
             trainingSession.UserID =  userDBHelper.GetLoggedUser().UserID;
 
-            // Image infromations are already added
-            trainingSession.ElapsedTime = ElapsedTime;
-            trainingSession.IsTrainingCompleted = isTrainingCompleted;
-            trainingSession.IsDataSent = false;
-            trainingSession.SessionDate = DateTime.Now.Date;
+            // should be added when we implement online function
+            // trainingSession.IsDataSent = false;
 
-            trainingSessionDBHelper.AddTrainingSession(trainingSession);
-
-            GlobalVariables.Stopwatch.Reset();
-            GlobalVariables.Stopwatch.Stop();
 
 
             //Task.Run(async () =>
@@ -77,7 +64,7 @@ namespace App1.View.UserPages
             //}
 
             //Name = Application.Current.Properties["Name"].ToString();
-            Name = userDBHelper.getLoggedinUserProperty("firstname");
+            Name = user.FirstName;
             BindingContext = this;
 
             List<Entry> entries = new List<Entry>

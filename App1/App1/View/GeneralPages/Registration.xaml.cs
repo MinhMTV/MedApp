@@ -146,7 +146,7 @@ namespace App1.View.GeneralPages
                 user.CreatedAt = DateTime.Now;
                 user.Start = DateTime.Now;
                 user.End = DateTime.MaxValue; //therapyEnd will be maximum value
-                user.SessionTimeMin = GlobalVariables.defaultMin; //Session will last 1 min as default
+                user.SessionTimeMin = GlobalVariables.defaultMin; //Session will last 5 min as default
                 user.SessionTimeSec = GlobalVariables.defaultSec; //Session will last 0 additional seconds as default
                 //default time can be changed by admin
 

@@ -23,6 +23,51 @@ namespace App1.Models
 
         public long SessionTimeTicks { get; set; } //Time for finishing TrainingSession as Ticks
         public string ElapsedTime { get; set; } //Time for finishing TrainingSession (conversion from Ticks to string for better reading) min,sec,ms
+
+
+        public long gImageTTicks => (NrOfGoodCorrectImages + NrOfGoodWrongImages) * AvgTGPicTicks ;  //Total Time for all Good Images as Ticks
+
+        public string gImageT { get; set; } //Total Time for all Good Images in min,sec,ms
+
+
+
+        public long bImageTTicks => (NrOfBadCorrectImages + NrOfBadWrongImages) * AvgTBPicTicks; //Total Time for all Bad Images as Ticks
+
+        public string bImageT { get; set; } //Total Time for all Bad Images in min,sec,ms
+
+
+        public long CImageTTicks => (NrOfGoodCorrectImages + NrOfBadCorrectImages) * AvgTCPicTicks; //Total Time for all Correct Images as Ticks
+
+        public string CImageT { get; set; } //Total Time for all Correct Images in min,sec,ms
+
+
+
+        public long WImageTTicks => (NrOfGoodWrongImages + NrOfBadWrongImages) * AvgTWPicTicks; //Total Time for all Wrong Images as Ticks
+
+        public string WImageT { get; set; } //Total Time for all Wrong Images in min,sec,ms
+
+
+
+        public long GAndCTTicks => NrOfGoodCorrectImages * AvgTGAndCPicTicks; //Total Time for all Good and Correct Images as Ticks
+
+        public string GAndCT { get; set; } //Total Time for all Good and Correct Images in min,sec,ms
+
+
+        public long BAndCTTicks => NrOfBadCorrectImages * AvgTBAndCPicTicks; //Total Time for all Wrong and Correct Images as Ticks
+
+        public string BAndCT { get; set; } //Total Time for all Wrong and Correct Images in min,sec,ms
+
+
+        public long GAndWTTicks => NrOfGoodWrongImages * AvgTGAndWPicTicks; //Total Time for all Good and Wrong Images as Ticks
+
+        public string GAndWT { get; set; } //Total Time for all Good and Wrong Images in min,sec,ms
+
+
+        public long BAndWTTicks => NrOfBadWrongImages * AvgTBAndWPicTicks; //Total Time for all Bad and Wrong Images as Ticks
+        public string BAndWT { get; set; } //Total Time for all Bad and Wrong Images in min,sec,ms
+
+
+
         public long AvgTTicks { get; set; }//average time for Pic as Ticks
 
         public string AvgT { get; set; }//average time for Pic in min,sec,ms

@@ -29,7 +29,7 @@
                 </StackLayout>
 
 
-                <Label Text="{Binding AverageReactionTime, StringFormat='Reaktionszeit pro Bilder: {0}s'}"
+                <Label Text="{Binding AverageReactionTime, StringFormat='Reaktionszeit pro Bild: {0}'}"
                     VerticalOptions="Center" 
                     HorizontalOptions="StartAndExpand"
                            FontSize="Large"
