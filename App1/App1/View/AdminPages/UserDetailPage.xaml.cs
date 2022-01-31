@@ -1,4 +1,5 @@
 ﻿using App1.Helpers;
+using App1.Models;
 using App1.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -14,12 +15,14 @@ namespace App1.View.AdminPages
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class UserDetailPage : ContentPage
 	{
-		private UserCollectionViewModel _uvm;
+		private UserDetailViewModel _uvm;
 		private UserDBHelper userDBHelper = new UserDBHelper();
-		public UserDetailPage ()
+		public UserDetailPage (User obj)
 		{
-			BindingContext = _uvm = new UserCollectionViewModel();
+			BindingContext = _uvm = new UserDetailViewModel(obj);
 			InitializeComponent ();
 		}
+
+
 	}
 }

@@ -1,4 +1,4 @@
-﻿using SQLite;
+﻿ using SQLite;
 using System;
 using System.Collections.Generic;
 
@@ -16,10 +16,29 @@ namespace App1.Models
         public int NrOfBadCorrectImages { get; set; }
         public int NrOfBadWrongImages { get; set; }
 
-        public int NrOfAllImages => NrOfGoodCorrectImages + NrOfGoodWrongImages + NrOfBadCorrectImages + NrOfBadWrongImages;
+        public int NrOfAllImages => NrOfGoodCorrectImages + NrOfGoodWrongImages + NrOfBadCorrectImages + NrOfBadWrongImages; // total Images
+         
+        public int NrOfGoodImages => NrOfGoodCorrectImages + NrOfGoodWrongImages; //total good images
 
-        public int NrOfCorrectImages => NrOfGoodCorrectImages + NrOfBadCorrectImages;
-        public int NrOfWrongImages => NrOfGoodWrongImages + NrOfBadWrongImages;
+        public int NrOfBadImages => NrOfBadCorrectImages + NrOfBadWrongImages; //total bad images
+
+        public int NrOfCorrectImages => NrOfGoodCorrectImages + NrOfBadCorrectImages; //total correct images by user
+        public int NrOfWrongImages => NrOfGoodWrongImages + NrOfBadWrongImages; //total wrong images by user
+
+
+        public double PctGoodIm => ((NrOfGoodCorrectImages + NrOfGoodWrongImages) / NrOfAllImages) * 100; // percentage amount of good Images in total Session
+        public double PctBadIm => ((NrOfBadCorrectImages + NrOfBadWrongImages) / NrOfAllImages) * 100; // percentage amount of good Images in total Session
+        public double PctCIm => ((NrOfGoodCorrectImages + NrOfBadCorrectImages) / NrOfAllImages) * 100; //percentage amount of correct Images in total Session
+        public double PctWIm => ((NrOfBadCorrectImages + NrOfBadWrongImages) / NrOfAllImages) * 100; //percentage amount of wrong Images in total Session
+
+        public double PctGandCIm => (NrOfGoodCorrectImages / NrOfGoodImages) * 100;  //percentage amount of good and Correct Images in total Session
+
+        public double PctBandCIm => (NrOfBadImages / NrOfBadImages) * 100; //percentage amount of Bad and Correct Images in total Session
+
+        public double PctGandWIm => (NrOfGoodWrongImages / NrOfGoodImages) * 100; //percentage amount of Good and Wrong Images in total Session
+
+        public double PctBandWIm => (NrOfBadWrongImages / NrOfBadImages) * 100; //percentage amount of Bad and Wrong Images in total Session
+  
 
         public long SessionTimeTicks { get; set; } //Time for finishing TrainingSession as Ticks
         public string ElapsedTime { get; set; } //Time for finishing TrainingSession (conversion from Ticks to string for better reading) min,sec,ms

@@ -124,7 +124,7 @@ namespace App1.ViewModels
             }
             else
             {
-                await App.Current.MainPage.Navigation.PushAsync(new UserDetailPage());
+                await App.Current.MainPage.Navigation.PushAsync(new UserDetailPage(obj));
             }
 
             NrofSelectedUser = SelectedUser.Count();

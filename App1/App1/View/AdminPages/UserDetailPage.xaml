@@ -9,11 +9,28 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="User bearbeiten"
                      Order="Secondary"
+                     Command="{Binding OnEdit}"
                      />
         <ToolbarItem Text="User löschen"
                      Order="Secondary"
+                     Command="{Binding OnDelete}"
                      />
     </ContentPage.ToolbarItems>
+    <NavigationPage.TitleView>
+        <Label 
+               MaxLines="1"
+               FontSize="Large"
+               FontAttributes="Bold"
+               HorizontalOptions="StartAndExpand"
+               VerticalOptions="Center">
+            <Label.Text>
+                <MultiBinding StringFormat="{}{0} {1}">
+                    <Binding Path="FirstName" />
+                    <Binding Path="LastName" />
+                </MultiBinding>
+            </Label.Text>
+        </Label>
+    </NavigationPage.TitleView>
 
     <StackLayout HorizontalOptions="Fill">
         <NavigationPage.TitleView>
@@ -58,7 +75,7 @@
                         <StackLayout  Grid.Column="0" Grid.Row="1">
                             <Label Text="Anzahl" Style="{StaticResource Session_Style}"  />
                             <Label Text="Sessions:" Style="{StaticResource Session_Style}" />
-                            <Label Text="5"  Style="{StaticResource Session_Style}" />
+                            <Label Text="{Binding SessionCount}"  Style="{StaticResource Session_Style}" />
                         </StackLayout>
                     </Grid>
                     <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="10">
@@ -73,33 +90,33 @@
                         </Grid.RowDefinitions>
                         <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="0" Margin="10,0,0,10">
                             <Label  Text="Username"  Style="{StaticResource NameConstant}" />
-                            <Label  Text="Placeholder"  Style="{StaticResource TextBindingDetail}"/>
+                            <Label  Text="{Binding UserName}"  Style="{StaticResource TextBindingDetail}"/>
                             <BoxView Style="{StaticResource Text_Underline}"/>
                         </StackLayout>
 
                         <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="1" Margin="10,0,0,10" >
                             <Label  Text="UserID" Style="{StaticResource NameConstant}"/>
-                            <Label  Text="Placeholder"  Style="{StaticResource TextBindingDetail}"/>
+                            <Label  Text="{Binding UserID}"  Style="{StaticResource TextBindingDetail}"/>
                             <BoxView Style="{StaticResource Text_Underline}"/>
                         </StackLayout>
                         <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0" Margin="10,0,0,10" >
                             <Label  Text="Vorname" Style="{StaticResource NameConstant}"/>
-                            <Label  Text="Placeholder"  Style="{StaticResource TextBindingDetail}"/>
+                            <Label  Text="{Binding FirstName}"  Style="{StaticResource TextBindingDetail}"/>
                             <BoxView Style="{StaticResource Text_Underline}"/>
                         </StackLayout>
                         <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="1"  Margin="10,0,0,10" >
                             <Label  Text="Nachname" Style="{StaticResource NameConstant}"/>
-                            <Label  Text="Placeholder"  Style="{StaticResource TextBindingDetail}"/>
+                            <Label  Text="{Binding LastName}"  Style="{StaticResource TextBindingDetail}"/>
                             <BoxView Style="{StaticResource Text_Underline}"/>
                         </StackLayout>
                         <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="0" Margin="10,0,0,10" >
                             <Label  Text="E-Mail" Style="{StaticResource NameConstant}"/>
-                            <Label  Text="Placeholder"  Style="{StaticResource TextBindingDetail}"/>
+                            <Label  Text="{Binding Email}"  Style="{StaticResource TextBindingDetail}"/>
                             <BoxView Style="{StaticResource Text_Underline}"/>
                         </StackLayout>
                         <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="1" Margin="10,0,0,10">
                             <Label  Text="Alter" Style="{StaticResource NameConstant}"/>
-                            <Label  Text="Placeholder"  Style="{StaticResource TextBindingDetail}"/>
+                            <Label  Text="{Binding Age}"  Style="{StaticResource TextBindingDetail}"/>
                             <BoxView Style="{StaticResource Text_Underline}"/>
                         </StackLayout>
                     </Grid>
@@ -135,14 +152,14 @@
                         <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0">
                             <BoxView Style="{StaticResource Text_Underline}"/>
                             <Label  Text="Created At"  Style="{StaticResource NameConstant}" />
-                            <Label  Text="26.03.1997"  Style="{StaticResource TextBindingDetail}"/>
+                            <Label  Text="{Binding CreatedAt}"  Style="{StaticResource TextBindingDetail}"/>
                             <BoxView Style="{StaticResource Text_Underline}"/>
                         </StackLayout>
 
                         <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="1">
                             <BoxView Style="{StaticResource Text_Underline}"/>
                             <Label  Text="First Session"  Style="{StaticResource NameConstant}" />
-                            <Label  Text="29.01.2022"  Style="{StaticResource TextBindingDetail}"/>
+                            <Label  Text="{Binding FirstSession}" Style="{StaticResource TextBindingDetail}"/>
                             <BoxView Style="{StaticResource Text_Underline}"/>
                         </StackLayout>
 
@@ -165,76 +182,67 @@
                 <Label Text="Last 3 Session" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Grid.Column="0" Style="{StaticResource TextBindingDetail}"/>
                 <Label Text="See All" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Grid.Column="1" Style="{StaticResource TextBindingDetail}"/>
             </Grid>
-            <RefreshView IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"
-             Command="{Binding RefreshCommand}">
-                <CollectionView x:Name="UserCV" SelectionMode="{Binding SelectionMode}" SelectedItems="{Binding SelectedUser}" ItemsSource="{Binding User}"
+            <CollectionView x:Name="TsessionCV" SelectionMode="Single" ItemsSource="{Binding TSession}"
                         >
-                    
-                    <CollectionView.EmptyView>
-                        <Grid>
-                            <StackLayout>
-                                <Label Text="Keine Trainingssession vorhanden" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
-                                FontSize="Large" FontAttributes="Bold"/>
-                            </StackLayout>
-                        </Grid>
-                    </CollectionView.EmptyView>
 
-                    <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <StackLayout Spacing="8" VerticalOptions="Fill" xct:TouchEffect.Command="{Binding PressedCommand,
-                        Source={RelativeSource AncestorType={x:Type pg:UserCollectionViewModel}}}"
+                <CollectionView.EmptyView>
+                    <Grid>
+                        <StackLayout>
+                            <Label Text="Keine Trainingssession vorhanden" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
+                                FontSize="Large" FontAttributes="Bold"/>
+                        </StackLayout>
+                    </Grid>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Spacing="8" VerticalOptions="Fill" xct:TouchEffect.Command="{Binding PressedCommand,
+                        Source={RelativeSource AncestorType={x:Type pg:UserDetailViewModel}}}"
                             xct:TouchEffect.CommandParameter="{Binding .}"
-                            xct:TouchEffect.LongPressCommand="{Binding LongPressCommand,
-                        Source={RelativeSource AncestorType={x:Type pg:UserCollectionViewModel}}}"
-                            xct:TouchEffect.LongPressCommandParameter="{Binding .}"
                             xct:TouchEffect.PressedScale="1.1"
                              xct:TouchEffect.NativeAnimation="True" 
                             >
 
 
-                    <Frame Style="{StaticResource FrameCardViewStyle}">
-                        <StackLayout Style="{StaticResource itemsCardViewStackLayoutStyle}"    >
-                            <StackLayout Style="{StaticResource itemsInsideCardViewStackLayoutStyle}">
-                                <Frame Style="{StaticResource profileImageFrameStyle}">
-                                    <Image Style="{StaticResource profileImageStyle}" Source="https://img.icons8.com/ios-filled/50/000000/face.png" />
-                                </Frame>
-                                            <StackLayout Style="{StaticResource detailsStackLayout}">
-                                                <Label Text="{Binding Fullname}" Style="{StaticResource NameLabel}" />
+                            <Frame Style="{StaticResource FrameCardViewStyle}">
+                                <StackLayout Style="{StaticResource itemsCardViewStackLayoutStyle}"    >
+                                    <StackLayout Style="{StaticResource itemsInsideCardViewStackLayoutStyle}">
+                                        <StackLayout Style="{StaticResource detailsStackLayout}">
+                                            <Label Text="{Binding SessionDate}" Style="{StaticResource NameLabel}" />
+                                            <StackLayout Style="{StaticResource imageLableStackLayout}">
+                                                <Image Source="https://img.icons8.com/material-outlined/24/000000/employee-card.png" Style="{StaticResource imageStyle}"></Image>
+                                                <Label Text="Session ID:" Style="{StaticResource LabelStyle}" />
                                                 <StackLayout Style="{StaticResource imageLableStackLayout}">
-                                                    <Image Source="https://img.icons8.com/material-outlined/24/000000/employee-card.png" Style="{StaticResource imageStyle}"></Image>
-                                                    <Label Text="Username:" Style="{StaticResource LabelStyle}" />
-                                                    <StackLayout Style="{StaticResource imageLableStackLayout}">
-                                                        <Label Text="{Binding Username}" Style="{StaticResource LabelStyle}" />
-                                                    </StackLayout>
-                                                </StackLayout>
-                                                <StackLayout Style="{StaticResource imageLableStackLayout}">
-                                                    <Image Source="https://img.icons8.com/material-outlined/24/000000/age.png" Style="{StaticResource imageStyle}"></Image>
-                                                    <Label Text="Age:" Style="{StaticResource LabelStyle}" />
-                                                    <StackLayout Style="{StaticResource imageLableStackLayout}">
-                                                        <Label Text="{Binding Age}" Style="{StaticResource LabelStyle}" />
-                                                    </StackLayout>
-                                                </StackLayout>
-                                                <StackLayout Style="{StaticResource imageLableStackLayout}">
-                                                    <Image Source="https://img.icons8.com/fluency-systems-regular/48/000000/key.png" Style="{StaticResource imageStyle}"></Image>
-                                                    <Label Text="UserID:" Style="{StaticResource LabelStyle}" />
-                                                    <StackLayout Style="{StaticResource imageLableStackLayout}">
-                                                        <Label Text="{Binding UserID}" Style="{StaticResource LabelStyle}" />
-                                                    </StackLayout>
-                                                </StackLayout>
-                                                <StackLayout Style="{StaticResource imageLableStackLayout}">
-                                                    <Image Source="https://img.icons8.com/material-two-tone/24/000000/time-machine.png" Style="{StaticResource imageStyle}"></Image>
-                                                    <Label Text="lastSession:" Style="{StaticResource LabelStyle}"></Label>
-                                                    <Label Text="{Binding SessionLastUpdatedshort}" Style="{StaticResource LabelStyle}" />
+                                                    <Label Text="{Binding SessionId}" Style="{StaticResource LabelStyle}" />
                                                 </StackLayout>
                                             </StackLayout>
+                                            <StackLayout Style="{StaticResource imageLableStackLayout}">
+                                                <Image Source="https://img.icons8.com/material-outlined/24/000000/age.png" Style="{StaticResource imageStyle}"></Image>
+                                                <Label Text="Age:" Style="{StaticResource LabelStyle}" />
+                                                <StackLayout Style="{StaticResource imageLableStackLayout}">
+                                                    <Label Text="{Binding Age}" Style="{StaticResource LabelStyle}" />
+                                                </StackLayout>
+                                            </StackLayout>
+                                            <StackLayout Style="{StaticResource imageLableStackLayout}">
+                                                <Image Source="https://img.icons8.com/fluency-systems-regular/48/000000/key.png" Style="{StaticResource imageStyle}"></Image>
+                                                <Label Text="UserID:" Style="{StaticResource LabelStyle}" />
+                                                <StackLayout Style="{StaticResource imageLableStackLayout}">
+                                                    <Label Text="{Binding UserID}" Style="{StaticResource LabelStyle}" />
+                                                </StackLayout>
+                                            </StackLayout>
+                                            <StackLayout Style="{StaticResource imageLableStackLayout}">
+                                                <Image Source="https://img.icons8.com/material-two-tone/24/000000/time-machine.png" Style="{StaticResource imageStyle}"></Image>
+                                                <Label Text="lastSession:" Style="{StaticResource LabelStyle}"></Label>
+                                                <Label Text="{Binding SessionLastUpdatedshort}" Style="{StaticResource LabelStyle}" />
+                                            </StackLayout>
                                         </StackLayout>
+                                    </StackLayout>
+                                </StackLayout> 
+                            </Frame>
                         </StackLayout>
-                    </Frame>
-                </StackLayout>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-        </CollectionView>
-            </RefreshView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </StackLayout>
     </StackLayout>
 </ContentPage>
