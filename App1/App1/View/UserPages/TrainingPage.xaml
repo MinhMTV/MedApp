@@ -10,16 +10,7 @@
     <StackLayout HorizontalOptions="Fill" BackgroundColor="Yellow">
 
         <StackLayout HorizontalOptions="FillAndExpand" BackgroundColor="red" Orientation="Horizontal">
-            <Image HeightRequest="50" WidthRequest="50" HorizontalOptions="StartAndExpand" x:Name="quit_button" Source="https://img.icons8.com/android/24/000000/logout-rounded-left.png">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer
-                Tapped="OnQuit_Button_Clicked"
-                NumberOfTapsRequired="1" />
-                </Image.GestureRecognizers>
-            </Image>
-
-            <Button HeightRequest="50" WidthRequest="50" HorizontalOptions="EndAndExpand" x:Name="exit_button" Image="exit.png" Clicked="Exit_button_Clicked"
-                 />
+            <Button HeightRequest="50" WidthRequest="50" HorizontalOptions="EndAndExpand" x:Name="exit_button" Image="exit.png" Clicked="Exit_button_Clicked"       />
         </StackLayout>
 
         <swipeCardView:SwipeCardView

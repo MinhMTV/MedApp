@@ -54,6 +54,14 @@ namespace App1.View.AdminPages
             IsPresented = false;
         }
 
+        void SettingClicked(object sender, System.EventArgs e)
+        {
+            Detail = new NavigationPage(new EditUserInformtionPage());
+            IsPresented = false;
+        }
+
+
+
         async void LogOutClicked(object sender, System.EventArgs e)
         {
             var decision = await DisplayAlert("Achtung", "Möchten Sie sich wirklich ausloggen?", "Ja", "Nein");

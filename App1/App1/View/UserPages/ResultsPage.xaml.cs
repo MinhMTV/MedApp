@@ -26,7 +26,6 @@ namespace App1.View.UserPages
         public int PicturesWrong { get; set; }
         private UserDBHelper userDBHelper = new UserDBHelper();
         private TrainingSessionDBHelper trainingSessionDBHelper = new TrainingSessionDBHelper();
-        private APITSHelper apiTSHelper = new APITSHelper();
         private bool isDone;
 
 
@@ -47,23 +46,6 @@ namespace App1.View.UserPages
 
             trainingSession.UserID =  userDBHelper.GetLoggedUser().UserID;
 
-            // should be added when we implement online function
-            // trainingSession.IsDataSent = false;
-
-
-
-            //Task.Run(async () =>
-            //{
-            //    isDone = await apiTSHelper.SendTrainingSession(trainingSession);
-            //});
-            //apiTSHelper.SendTrainingSession(trainingSession);
-
-            //if (await apiTSHelper.SendTrainingSession(trainingSession))
-            //{
-            //    DisplayAlert("Erfolg", "Die Trainingsdaten wurden geschikt", "Ok");
-            //}
-
-            //Name = Application.Current.Properties["Name"].ToString();
             Name = user.FirstName;
             BindingContext = this;
 
@@ -86,8 +68,6 @@ namespace App1.View.UserPages
             PictureChart.Chart = new DonutChart() { Entries = entries };
             PictureChart.Chart.LabelTextSize = 35;
             PictureChart.BackgroundColor = Color.SlateGray;
-
-            SendTainingSession(trainingSession);
         }
 
 
@@ -110,42 +90,5 @@ namespace App1.View.UserPages
         {
             await Navigation.PushAsync(new TrainingOverviewPage());
         }
-
-        async private void SendTainingSession(TrainingSession trainingSession)
-        {
-            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
-            {
-                await DisplayAlert("Keine Internetverbindung", "Aktivieren Sie WLAN oder mobile Daten, um die Daten automatisch zu senden!", "OK");
-            }
-            else
-            {
-                //Check for whether the server is up, if up try to update the user id
-                // Else inform the user, force to login
-                if (await CrossConnectivity.Current.IsRemoteReachable(GlobalVariables.ServerIP, 443))
-                {
-                    if (await apiTSHelper.SendTrainingSession(trainingSession))
-                    {
-
-                        await DisplayAlert("Erfolg!", "Die Trainingsdaten wurden versendet!", "OK");
-                    }
-                }
-                else
-                {
-                    await DisplayAlert("Fehler!", "Der Server kann nicht erreicht werden!", "OK");
-                }
-
-            }
-        }
-
-        private void CheckInternetConnection(object sender, EventArgs e)
-        {
-            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
-            {
-                DisplayAlert("Keine Internetverbindung", "Aktivieren Sie  WLAN oder mobile Daten, um die Daten automatisch zu senden!", "OK");
-            }
-
-        }
-
-
     }
 }

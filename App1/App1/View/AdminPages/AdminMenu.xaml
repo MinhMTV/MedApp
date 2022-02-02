@@ -16,7 +16,7 @@
                     <Button Text="Patient" Clicked="ListUserView_Clicked" TextColor="White" BackgroundColor="Blue"></Button>
                     <Button Text="PhotoGallery" Clicked="PhotoGalleryClicked" TextColor="White" BackgroundColor="Blue"></Button>
                     <Button Text="Passwort ändern"  Clicked="EditUserInformationClicked" TextColor="White"  BackgroundColor="Blue"></Button>
-                    <Button Text="Einstellung"  Clicked="LocalNotificationClicked" TextColor="White" BackgroundColor="Blue"></Button>
+                    <Button Text="Einstellung"  Clicked="SettingClicked" TextColor="White" BackgroundColor="Blue"></Button>
                     <Button Text="Abmelden" Clicked="LogOutClicked" VerticalOptions="EndAndExpand" TextColor="White" BackgroundColor="Blue"></Button>
                 </StackLayout>
             </ContentPage.Content>
