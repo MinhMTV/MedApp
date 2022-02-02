@@ -33,10 +33,17 @@ namespace App1.Methods
 
         }
 
-
+        /// <summary>
+        /// Return TimeSpan object to String, return null if object is null
+        /// </summary>
+        /// <param name="timespan"></param>
+        /// <returns></returns>
         public string TimeSpanToStringToMin(TimeSpan timespan)
         {
-            return string.Concat(timespan.Minutes, ":", timespan.Seconds, ":", timespan.Milliseconds);
+            if (timespan == null)
+                return null;
+            else
+                return string.Concat(timespan.Minutes, ":", timespan.Seconds, ":", timespan.Milliseconds);
         }
     }
 }

@@ -70,20 +70,12 @@
              Command="{Binding RefreshCommand}">
             <CollectionView x:Name="UserCV" SelectionMode="{Binding SelectionMode}" SelectedItems="{Binding SelectedUser}" ItemsSource="{Binding User}"
                         >
-                <!--SelectionChanged="CollectionViewListSelectionChanged"-->
                 <CollectionView.EmptyView>
                     <Grid>
                         <StackLayout>
                             <Label Text="Keine Patienten vorhanden" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
                                 FontSize="Large" FontAttributes="Bold"/>
                         </StackLayout>
-                        <!--
-                    <ActivityIndicator
-                        Color="#006699"
-                        HorizontalOptions="CenterAndExpand"
-                        VerticalOptions="CenterAndExpand"
-                        IsVisible="True"
-                        IsRunning="True" /> -->
                     </Grid>
                 </CollectionView.EmptyView>
 

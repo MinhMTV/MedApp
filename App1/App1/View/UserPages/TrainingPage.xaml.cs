@@ -12,6 +12,7 @@ using App1.Extensions;
 using App1.Methods;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace App1.View.UserPages
 {
@@ -19,12 +20,15 @@ namespace App1.View.UserPages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TrainingPage : ContentPage
     {
-        public string elapsedTime;
+        
         private bool isUp;
+        private bool isRunning;
         private int totalImages;
         public TrainingSession trainingSession;
         private User user;
-        
+        static int interval = 200; // 200ms interval check for timer
+        static long TotalTime = 0; // Elapsed time in ms
+
         PicType currentPicType;
         ObservableCollection<Pictures> newCollection;
         private PictureDBHelper pictureDBHelper = new PictureDBHelper();
@@ -33,7 +37,9 @@ namespace App1.View.UserPages
         private PicTimeDBHelper picTimeDBHelper = new PicTimeDBHelper();
 
         private Stringmethods stringmethods = new Stringmethods();
-        private Stopwatch stopwatch2;
+        private Stopwatch stopwatch2 = new Stopwatch();
+
+        private static Timer timer;
 
         int indexer = 0;
         public TrainingPage()
@@ -51,47 +57,82 @@ namespace App1.View.UserPages
 
             newCollection = (this.BindingContext as SwipeViewModel).Pictures;
             GlobalVariables.isNavigation = true;
-            
+            isRunning = false;
+
+            TotalTime = (user.SessionTimeSec * 1000) + (user.SessionTimeMin * 60000); //Total time by User in ms
+            Console.WriteLine(TotalTime);
 
 
-            
-            Device.StartTimer(new TimeSpan(0, 10, user.SessionTimeSec), () =>
-            {
-            // Logic for ending the session, when Timer is finished
+            timer = new Timer(interval);
+            timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+            timer.Enabled = true;
 
-            if (GlobalVariables.isNavigation)
-                {
-                    //prepare to perform your data pull here as we have hit the 5 minute mark  Gerade ist 1 Minute eingestellt: s. defaultTimespan 
-                    GlobalVariables.Stopwatch.Stop();
-                    stopwatch2.Stop();
-                    trainingSession.IsTrainingCompleted = true;
-                    getStatistic();
-                    GlobalVariables.Stopwatch.Reset();
-                    stopwatch2.Reset();
-                    Navigation.PushAsync(new ResultsPage());
-                }
-                // end timer if we already push to result Page or outside 
-                return false;
-            });
+            startStopWatches();
         }
 
-        protected override void OnAppearing()
+        private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
-            stopwatch2 = new Stopwatch();
-            if (!GlobalVariables.Stopwatch.IsRunning)
+            
+            timer.Stop();
+            if (GlobalVariables.isNavigation == false)
             {
-                GlobalVariables.Stopwatch.Start();
-                stopwatch2.Start();
+                timer.Enabled = false;
+                Console.WriteLine("Timer wurde gestoppt");
+            } else
+            {
+            stopwatch2.Stop();
+            GlobalVariables.Stopwatch.Stop();
+            Console.WriteLine(GlobalVariables.Stopwatch.Elapsed);
+            
+            if (GlobalVariables.Stopwatch.ElapsedMilliseconds > TotalTime)
+            {
+                trainingSession.IsTrainigQuit = false;
+                trainingSession.IsTrainingCompleted = true;
+                getStatistic();
+                resetStopWatches();
+                Navigation.PushAsync(new ResultsPage());
             }
+            else
+            {
+               
+                timer.Enabled = true; //Or timer.Start();
+                
+            }
+            if(isRunning == true)
+            {
+                startStopWatches();
+            }
+            }
+
         }
+
+        private void startStopWatches()
+        {
+            GlobalVariables.Stopwatch.Start();
+            stopwatch2.Start();
+            isRunning = true;
+        }
+
+        private void stopStopWatches()
+        {
+            GlobalVariables.Stopwatch.Stop();
+            stopwatch2.Stop();
+            isRunning = false;
+        }
+
+        private void resetStopWatches()
+        {
+            GlobalVariables.Stopwatch.Reset();
+            stopwatch2.Reset();
+            isRunning = false;
+        }
+
 
         public void getStatistic()
         {
             trainingSession.UserID = user.UserID;
             trainingSession.ElapsedTime = stringmethods.TimeSpanToStringToMin(GlobalVariables.Stopwatch.Elapsed);
             trainingSession.SessionTimeTicks = GlobalVariables.Stopwatch.ElapsedTicks;
-            trainingSession.AvgTTicks = GlobalVariables.Stopwatch.ElapsedTicks / trainingSession.NrOfAllImages;
-            trainingSession.AvgT = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(GlobalVariables.Stopwatch.ElapsedTicks / trainingSession.NrOfAllImages));
             var piclist = picTimeDBHelper.getAllPictimebyTrainingSession(trainingSession);
             long goodTicks = 0;
             int goodPics = 0;
@@ -136,16 +177,8 @@ namespace App1.View.UserPages
                     }
                 }
             }
-
-            trainingSession.AvgTGPicTicks = goodTicks / goodPics;
-            trainingSession.AvgTGPic = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(goodTicks / goodPics));
-
-            trainingSession.AvgTBPicTicks = badTicks / badPics;
-            trainingSession.AvgTBPic = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(badTicks / badPics));
-
             trainingSession.gImageT = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(goodTicks));
             trainingSession.bImageT = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(badTicks));
-
             trainingSession.CImageT = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(correctPicsTicks));
 
             trainingSession.WImageT = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(wrongPicsTicks));
@@ -158,41 +191,86 @@ namespace App1.View.UserPages
 
             trainingSession.BAndWT = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(wrongAndBadPicTicks));
 
+            // See Explanation of all Statistic in TrainingSession Model
+            try
+            {
+                trainingSession.AvgTTicks = GlobalVariables.Stopwatch.ElapsedTicks / trainingSession.NrOfAllImages;
+                trainingSession.AvgT = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(GlobalVariables.Stopwatch.ElapsedTicks / trainingSession.NrOfAllImages));
+            }
+            catch (DivideByZeroException)
+            {
+                trainingSession.AvgTTicks = 0;
+                trainingSession.AvgT = null;
+            }
+            
 
+            try
+            {
+                trainingSession.AvgTGPicTicks = goodTicks / goodPics;
+                trainingSession.AvgTGPic = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(goodTicks / goodPics));
+
+            }
+            catch (DivideByZeroException)
+            {
+                trainingSession.AvgTGPicTicks = 0;
+                trainingSession.AvgTGPic = null;
+            }
+            
+
+            try
+            {
+                trainingSession.AvgTBPicTicks = badTicks / badPics;
+                trainingSession.AvgTBPic = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(badTicks / badPics));
+
+            }
+            catch (DivideByZeroException)
+            {
+                trainingSession.AvgTGPicTicks = 0;
+                trainingSession.AvgTBPic = null;
+            }
+            
 
             try
             {
                 trainingSession.AvgTCPicTicks = correctPicsTicks / (trainingSession.NrOfGoodCorrectImages + trainingSession.NrOfBadCorrectImages);
                 trainingSession.AvgTCPic = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(correctPicsTicks / (trainingSession.NrOfGoodCorrectImages + trainingSession.NrOfBadCorrectImages)));
+
             }
             catch (DivideByZeroException)
             {
                 trainingSession.AvgTCPicTicks = 0;
-                trainingSession.AvgTCPic = "0:0:0";
+                trainingSession.AvgTCPic = null;
             }
+            
 
             try
             {
                 trainingSession.AvgTWPicTicks = wrongPicsTicks / (trainingSession.NrOfGoodWrongImages + trainingSession.NrOfBadWrongImages);
                 trainingSession.AvgTWPic = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(wrongPicsTicks / (trainingSession.NrOfGoodWrongImages + trainingSession.NrOfBadWrongImages)));
+
             }
             catch (DivideByZeroException)
             {
                 trainingSession.AvgTWPicTicks = 0;
-                trainingSession.AvgTWPic = "0:0:0";
+                trainingSession.AvgTWPic = null;
             }
+            
+
 
             try
             {
                 trainingSession.AvgTGAndCPicTicks = correctAndGoodPicTicks / trainingSession.NrOfGoodCorrectImages;
                 trainingSession.AvgTGAndCPic = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(correctAndGoodPicTicks / trainingSession.NrOfGoodCorrectImages));
 
+
             }
             catch (DivideByZeroException)
             {
                 trainingSession.AvgTGAndCPicTicks = 0;
-                trainingSession.AvgTGAndCPic = "0:0:0";
+                trainingSession.AvgTGAndCPic = null;
             }
+            
+
 
             try
             {
@@ -202,41 +280,51 @@ namespace App1.View.UserPages
             catch (DivideByZeroException)
             {
                 trainingSession.AvgTBAndCPicTicks = 0;
-                trainingSession.AvgTBAndCPic = "0:0:0";
+                trainingSession.AvgTBAndCPic = null;
             }
+            
+
 
             try
             {
                 trainingSession.AvgTGAndWPicTicks = wrongAndGoodPicTicks / trainingSession.NrOfGoodWrongImages;
                 trainingSession.AvgTGAndWPic = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(wrongAndGoodPicTicks / trainingSession.NrOfGoodWrongImages));
+
             }
             catch (DivideByZeroException)
             {
                 trainingSession.AvgTGAndWPicTicks = 0;
-                trainingSession.AvgTGAndWPic = "0:0:0";
+                trainingSession.AvgTGAndWPic = null;
             }
+            
+
 
             try
             {
                 trainingSession.AvgTGAndWPicTicks = wrongAndGoodPicTicks / trainingSession.NrOfGoodWrongImages;
                 trainingSession.AvgTGAndWPic = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(wrongAndGoodPicTicks / trainingSession.NrOfGoodWrongImages));
+
             }
             catch (DivideByZeroException)
             {
                 trainingSession.AvgTGAndWPicTicks = 0;
-                trainingSession.AvgTGAndWPic = "0:0:0";
+                trainingSession.AvgTGAndWPic = null;
             }
+            
 
             try
             {
                 trainingSession.AvgTBAndWPicTicks = wrongAndBadPicTicks / trainingSession.NrOfBadWrongImages;
                 trainingSession.AvgTBAndWPic = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(wrongAndBadPicTicks / trainingSession.NrOfBadWrongImages));
+
             }
             catch (DivideByZeroException)
             {
                 trainingSession.AvgTBAndWPicTicks = 0;
-                trainingSession.AvgTBAndWPic = "0:0:0";
+                trainingSession.AvgTBAndWPic = null;
             }
+            
+
             trainingSessionDBHelper.AddTrainingSession(trainingSession);
 
             //Debug
@@ -364,7 +452,8 @@ namespace App1.View.UserPages
             {
                 GlobalVariables.Stopwatch.Stop();
                 stopwatch2.Stop();
-                trainingSession.IsTrainigQuit = true;
+                trainingSession.IsTrainigQuit = false;
+                trainingSession.IsTrainingCompleted = true;
                 GlobalVariables.isNavigation = false;
                 getStatistic();
                 GlobalVariables.Stopwatch.Reset();
@@ -376,26 +465,25 @@ namespace App1.View.UserPages
 
         public async void OnQuit_Button_Clicked(object sender, EventArgs e)
         {
-            GlobalVariables.Stopwatch.Stop();
-            stopwatch2.Stop();
+            stopStopWatches();
+            isRunning = false;
             var result = await DisplayAlert("Exit", "Do you want to quit the test?", "Yes", "No");
 
             if (result == true) //if yes is true\
             {
                 trainingSession.IsTrainigQuit = true;
-                GlobalVariables.isNavigation = false;
+                trainingSession.IsTrainingCompleted = false;
+                GlobalVariables.isNavigation = false;     
+                getStatistic();
                 GlobalVariables.Stopwatch.Reset();
                 stopwatch2.Reset();
-                getStatistic();
-                
                 await Navigation.PushAsync(new MenuPage());
 
             }
             else
             {
                 //Methode um Timer weiterzufuehren
-                GlobalVariables.Stopwatch.Start();
-                stopwatch2.Start();
+                startStopWatches();
             }
             return;
         }
@@ -407,15 +495,14 @@ namespace App1.View.UserPages
 
         public async void Exit_button_Clicked(object sender, EventArgs e)
         {
-            GlobalVariables.Stopwatch.Stop();
-            stopwatch2.Stop();
+            stopStopWatches();
             var result = await DisplayAlert("Exit", "Do you want to end the test?", "Yes", "No");
 
             if (result == true) //if yes is true\
             {
                 getStatistic();
-                GlobalVariables.Stopwatch.Reset();
                 trainingSession.IsTrainigQuit = false;
+                trainingSession.IsTrainingCompleted = false;
                 GlobalVariables.isNavigation = false;
                 GlobalVariables.Stopwatch.Reset();
                 stopwatch2.Reset();
@@ -425,8 +512,7 @@ namespace App1.View.UserPages
             else
             {
                 //Methode um Timer weiterzufuehren
-                GlobalVariables.Stopwatch.Start();
-                stopwatch2.Start();
+                startStopWatches();
             }
             return;
         }

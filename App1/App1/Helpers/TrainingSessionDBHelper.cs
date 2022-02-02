@@ -142,7 +142,7 @@ namespace App1.Helpers
             }
             else
             {
-                return newConnection.Table<TrainingSession>().OrderByDescending(x => x.SessionId).ToList();
+                return newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).OrderByDescending(x => x.SessionId).ToList();
             }
         }
 
@@ -155,6 +155,20 @@ namespace App1.Helpers
                 tCollection.Add(item);
             }
             return tCollection;
+        }
+
+        public List<TrainingSession> getCompletedTrainingSessionListbyUserAndOrder(User user, bool isAscending)
+        {
+            if (isAscending == true)
+            {
+                var list =  newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).OrderBy(x => x.SessionId).ToList();
+                return list.FindAll(x => x.IsTrainingCompleted = true);
+            }
+            else
+            {
+                var list = newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).OrderByDescending(x => x.SessionId).ToList();
+                return list.FindAll(x => x.IsTrainingCompleted = true);
+            }
         }
 
 
