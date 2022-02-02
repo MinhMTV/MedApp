@@ -12,6 +12,7 @@ namespace App1.View.UserPages
     public partial class DataProtectionPage : ContentPage
     {
         public UserDBHelper userDBHelper = new UserDBHelper();
+        bool isAccepted = false;
         public DataProtectionPage()
         {
             InitializeComponent();
@@ -25,15 +26,23 @@ namespace App1.View.UserPages
             {
                 await DisplayAlert("Status", "Sie haben die Datenschutzerkärung akzeptiert!", "OK");
                 //Update information
+                isAccepted = true;
 
             }
-            else await DisplayAlert("Status", "Sie haben die Datenschutzerkärung nicht akzeptiert!", "OK");
+            else
+            {
+                await DisplayAlert("Status", "Sie haben die Datenschutzerkärung nicht akzeptiert!", "OK");
+                isAccepted = false;
+            }
+            
         }
 
         async void Continue_Clicked(object sender, System.EventArgs e)
         {
-            userDBHelper.UpdateDataPrptectionInformation(CheckBox_IsDataProtectionAccepted.IsChecked);
-            await Navigation.PushAsync(new DataSendingPermissionPage());
+            if(isAccepted)
+                await Navigation.PushAsync(new DataSendingPermissionPage());
+            else
+                await DisplayAlert("Achtung", "Bitte die Datenschutzerklärung akzeptieren", "OK");
         }
 
         // This prevents a user from being able to hit the back button and leave the Dataprot page to login

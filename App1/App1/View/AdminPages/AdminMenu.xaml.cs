@@ -21,7 +21,6 @@ namespace App1.View.AdminPages
             IsPresented = false;
             var loguser = Preferences.Get(constants.loginUser, "false");
             name.Text = "Hello Admin " + loguser;
-            SendTrainingSessions();
             Console.WriteLine(Preferences.Get(constants.loginUser, "false"));
         }
 
@@ -54,17 +53,6 @@ namespace App1.View.AdminPages
             Detail = new NavigationPage(new EditUserInformtionPage());
             IsPresented = false;
         }
-        void EditDataProtectionClicked(object sender, System.EventArgs e)
-        {
-            Detail = new NavigationPage(new EditDataProtectionPage());
-            IsPresented = false;
-        }
-
-        void LocalNotificationClicked(object sender, System.EventArgs e)
-        {
-            Detail = new NavigationPage(new LocalNotificationPage());
-            IsPresented = false;
-        }
 
         async void LogOutClicked(object sender, System.EventArgs e)
         {
@@ -77,41 +65,5 @@ namespace App1.View.AdminPages
             }
             IsPresented = false;
         }
-
-        async void SendTrainingSessions()
-        {
-            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
-            {
-                await DisplayAlert("Kein Internet", "Bitte schalten Sie das Internet an, um die Daten automatisch zu senden", "OK");
-            }
-            else
-            {
-                //Check for whether the server is up, if up try to update the user id
-                // Else inform the user, force to login
-                if (await CrossConnectivity.Current.IsRemoteReachable(GlobalVariables.ServerIP, 443))
-                {
-                    TrainingSessionDBHelper trainingSessionDBHelper = new TrainingSessionDBHelper();
-                    APITSHelper apiTSHelper = new APITSHelper();
-                    List<TrainingSession> trainingSessions = trainingSessionDBHelper.GetAllUnsentTrainingSessions();
-
-                    if (trainingSessions.Count != 0)
-                    {
-                        foreach (TrainingSession ts in trainingSessions)
-                        {
-                            if (await apiTSHelper.SendTrainingSession(ts))
-                            {
-                                trainingSessionDBHelper.setDataSent(ts.SessionId);
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    await DisplayAlert("Fehler!", "Der Server kann nicht erreicht werden!", "OK");
-                }
-
-            }
-        }
-
     }
 }

@@ -51,7 +51,6 @@ namespace App1.View.UserPages
             user = userDBHelper.GetLoggedUser();
             trainingSession.SessionId = trainingSessionDBHelper.GetAllTrainingsSessionToList().Count + 1;
             trainingSession.SessionDate = DateTime.Now;
-            trainingSession.IsTrainigQuit = false;
             trainingSession.IsTrainingCompleted = false;
             totalImages = pictureDBHelper.GetAllImagesToList().Count;
 
@@ -86,7 +85,6 @@ namespace App1.View.UserPages
             
             if (GlobalVariables.Stopwatch.ElapsedMilliseconds > TotalTime)
             {
-                trainingSession.IsTrainigQuit = false;
                 trainingSession.IsTrainingCompleted = true;
                 getStatistic();
                 resetStopWatches();
@@ -452,7 +450,6 @@ namespace App1.View.UserPages
             {
                 GlobalVariables.Stopwatch.Stop();
                 stopwatch2.Stop();
-                trainingSession.IsTrainigQuit = false;
                 trainingSession.IsTrainingCompleted = true;
                 GlobalVariables.isNavigation = false;
                 getStatistic();
@@ -463,18 +460,17 @@ namespace App1.View.UserPages
             }
         }
 
-        public async void OnQuit_Button_Clicked(object sender, EventArgs e)
+
+        public async void Exit_button_Clicked(object sender, EventArgs e)
         {
             stopStopWatches();
-            isRunning = false;
-            var result = await DisplayAlert("Exit", "Do you want to quit the test?", "Yes", "No");
+            var result = await DisplayAlert("Exit", "Do you want to end the test?", "Yes", "No");
 
             if (result == true) //if yes is true\
             {
-                trainingSession.IsTrainigQuit = true;
-                trainingSession.IsTrainingCompleted = false;
-                GlobalVariables.isNavigation = false;     
                 getStatistic();
+                trainingSession.IsTrainingCompleted = false;
+                GlobalVariables.isNavigation = false;
                 GlobalVariables.Stopwatch.Reset();
                 stopwatch2.Reset();
                 await Navigation.PushAsync(new MenuPage());
@@ -486,42 +482,6 @@ namespace App1.View.UserPages
                 startStopWatches();
             }
             return;
-        }
-       
-
-
-
-
-
-        public async void Exit_button_Clicked(object sender, EventArgs e)
-        {
-            stopStopWatches();
-            var result = await DisplayAlert("Exit", "Do you want to end the test?", "Yes", "No");
-
-            if (result == true) //if yes is true\
-            {
-                getStatistic();
-                trainingSession.IsTrainigQuit = false;
-                trainingSession.IsTrainingCompleted = false;
-                GlobalVariables.isNavigation = false;
-                GlobalVariables.Stopwatch.Reset();
-                stopwatch2.Reset();
-                await Navigation.PushAsync(new ResultsPage());
-
-            }
-            else
-            {
-                //Methode um Timer weiterzufuehren
-                startStopWatches();
-            }
-            return;
-        }
-        public async void CheckInternetConnection()
-        {
-            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
-            {
-                await DisplayAlert("Kein Internet", "Bitte schalten Sie das Internet an, um die Daten automatisch zu senden", "OK");
-            }
         }
     }
 }

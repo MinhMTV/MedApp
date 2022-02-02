@@ -19,7 +19,6 @@ namespace App1.View.GeneralPages
         private Stringmethods stringmethods = new Stringmethods();
         public User user;
         private String username = "";
-        private bool isAdmin = false;
 
         public Registration()
         {
@@ -30,21 +29,6 @@ namespace App1.View.GeneralPages
             Entry_Email.ReturnCommand = new Command(() => Entry_Password.Focus());
             Entry_Password.ReturnCommand = new Command(() => Entry_Repeatedpassword.Focus());
             age = (int)slider_age.Value;
-        }
-
-        public Registration(bool passingData)
-        {
-            InitializeComponent();
-            Entry_Username.ReturnCommand = new Command(() => Entry_Firstname.Focus());
-            Entry_Firstname.ReturnCommand = new Command(() => Entry_Lastname.Focus());
-            Entry_Lastname.ReturnCommand = new Command(() => Entry_Email.Focus());
-            Entry_Email.ReturnCommand = new Command(() => Entry_Password.Focus());
-            Entry_Password.ReturnCommand = new Command(() => Entry_Repeatedpassword.Focus());
-            age = (int)slider_age.Value;
-            if(passingData)
-            {
-                isAdmin = true;
-            }
         }
 
         private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
@@ -164,13 +148,6 @@ namespace App1.View.GeneralPages
                     else
                     {
                         await DisplayAlert("Achtung!", "Sie sind bereits registriert. Sie können sich einloggen.", "OK");
-                    }
-                    if(isAdmin)
-                    {
-                        await Navigation.PopModalAsync();
-                    } else
-                    {
-                        await Navigation.PushAsync(new LoginPage());
                     }
                     
                 }

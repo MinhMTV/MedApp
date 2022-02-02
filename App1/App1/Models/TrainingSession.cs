@@ -9,6 +9,8 @@ namespace App1.Models
         [PrimaryKey, AutoIncrement]
         public int SessionId { get; set; }
         public DateTime SessionDate { get; set; }
+
+        public int completeSessionID { get; set; }
         [Indexed]
         public int UserID { get; set; }  //UserID From User
         public int NrOfGoodCorrectImages { get; set; }
@@ -137,19 +139,8 @@ namespace App1.Models
 
         public string AvgTBAndWPic { get; set; } //average time for bad pics and wrong pics in min,sec,ms
 
+        public bool IsTrainingCompleted { get; set; } // true, if training was completed or not! 
 
-
-        public bool IsTrainigQuit { get; set; } //true, if training was quitted and user went back to menu, false he completed the training and end the training before Time! 
-
-        public bool IsTrainingCompleted { get; set; } // true, if training was completet, false if he quit the Training before time End! 
-
-        //We got 3 (4 but, one status should always be false) scopes
-        //1. IsTrainigQuit true , IsTrainingCompleted true - Scope cant be true, because user cant quit session and complet the training
-        //2. IsTrainigQuit true , IsTrainingCompleted false - Scope is, User quitted the Session without seing the results
-        //3. IsTrainigQuit false , IsTrainingCompleted false - Scope is, User didnt quit and didnt completed the session, he ended it before time!
-        //4. IsTrainigQuit false , IsTrainingCompleted true - Scope is, User completed the Session in Time and didnt quit the Session!
-
-        public bool IsDataSent { get; set; }
 
         public TrainingSession() { }
         public TrainingSession(DateTime dateTime)

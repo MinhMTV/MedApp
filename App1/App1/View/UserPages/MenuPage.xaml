@@ -16,9 +16,6 @@
                     <Button Text="Erklärung" Clicked="Demo_Clicked" TextColor="White" BackgroundColor="Blue"></Button>
                     <Button Text="Wochenübersicht" Clicked="WeeklyOverviewClicked" TextColor="White" BackgroundColor="Blue"></Button>
                     <Button Text="Passwort ändern"  Clicked="EditUserInformationClicked" TextColor="White"  BackgroundColor="Blue"></Button>
-                    <Button Text="Datenschutzerkärung"  Clicked="EditDataProtectionClicked" TextColor="White" BackgroundColor="Blue"></Button>
-                    <Button Text="Notifikation erstellen"  Clicked="LocalNotificationClicked" TextColor="White" BackgroundColor="Blue"></Button>
-                    <Button Text="Testing"   TextColor="White" BackgroundColor="Blue"></Button>
                     <Button Text="Abmelden" Clicked="LogOutClicked" VerticalOptions="EndAndExpand" TextColor="White" BackgroundColor="Blue"></Button>
                 </StackLayout>
             </ContentPage.Content>

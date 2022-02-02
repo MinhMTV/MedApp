@@ -229,24 +229,6 @@ namespace App1.Helpers
             }
         }
 
-        //------------------------------------------------------Other GET-----------------------------------------------------------------------------------------------
-
-        //GetAllUnsentTrainingSession for all User
-        public List<TrainingSession> GetAllUnsentTrainingSessions()
-        {
-            return newConnection.Table<TrainingSession>().Where(x => x.IsDataSent == false).ToList();
-        }
-
-        //GetAllUnsentTrainingSession for by specific User
-        public List<TrainingSession> GetUnsentTrainingSessionsbyUser(User user)
-        {
-            return newConnection.Table<TrainingSession>().Where(x=>x.UserID == user.UserID && x.IsDataSent == false).ToList();
-        }
-
-
-
-
-
         //------------------------------------------------------Not My Methods-----------------------------------------------------------------------------------------------
         public List<TrainingSession> GetTrainingSessions()
         {
@@ -312,24 +294,6 @@ namespace App1.Helpers
             newConnection.Update(ts);
         }
 
-        public void setDataSent(int id)
-        {
-            var returnedTrainingSession = (from tSession in newConnection.Table<TrainingSession>()
-                                           where tSession.SessionId == id
-                                           select tSession).Single();
-            try
-            {
-                if (returnedTrainingSession != null)
-                {
-                    returnedTrainingSession.IsDataSent = true;
-                    newConnection.Update(returnedTrainingSession);
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
         //------------------------------------------------------Not My Methods-----------------------------------------------------------------------------------------------
 
 
@@ -350,7 +314,6 @@ namespace App1.Helpers
             Console.WriteLine(trainingSession.NrOfBadWrongImages);
             Console.WriteLine(trainingSession.ElapsedTime);
             Console.WriteLine(trainingSession.IsTrainingCompleted);
-            Console.WriteLine(trainingSession.IsDataSent);
         }
         public int DeleteAllTSession()
         {

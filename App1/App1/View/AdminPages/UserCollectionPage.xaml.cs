@@ -39,7 +39,7 @@ namespace App1.View.AdminPages
                 }
                 else
                 {
-                    user.LastSession = DateTime.MaxValue; // assigns default value 01/01/0001 00:00:00
+                    user.LastSession = DateTime.MinValue; // assigns default value 01/01/0001 00:00:00 let it convert back to No Session yet in converter
                     userDBHelper.UpdateUser(user);
                 }
 
@@ -50,66 +50,24 @@ namespace App1.View.AdminPages
                 }
                 else
                 {
-                    user.FirstSession = DateTime.MinValue; // assigns default value 31/12/9999  11:59:59
+                    user.FirstSession = DateTime.MinValue; // assigns default value 01/01/0001 00:00:00
                     userDBHelper.UpdateUser(user);
                 }
             }
             
-
             BindingContext = _uvm = new UserCollectionViewModel();
             InitializeComponent();
-            
-
-            MessagingCenter.Subscribe<App, string>(App.Current, "PopUpOrder", (snd, arg) =>
-            {
-                _uvm.SelectionMode = SelectionMode.None;
-                _uvm.SelectedUser.Clear();
-                _uvm.SelectedUser_IsVisible = false;
-                _uvm.User.Clear();
-                var user = userDBHelper.GetAllUserToListByOrder(arg.ToString(), bool.Parse(Preferences.Get(constants.isAscending,"true")));
-                foreach(var item in user)
-                {
-                    _uvm.User.Add(item);
-
-                }
-               _uvm.UserOrderBy = arg.ToString();
-                _uvm.IsAscending = bool.Parse(Preferences.Get(constants.isAscending, "true"));
-            });
-
-            MessagingCenter.Subscribe<App, string>(App.Current, constants.userPopup, (snd, arg) =>
-            {
-                _uvm.SelectionMode = SelectionMode.None;
-                _uvm.SelectedUser.Clear();
-                _uvm.SelectedUser_IsVisible = false;
-                _uvm.User.Clear();
-                var user = userDBHelper.GetAllUserToListByOrder(Preferences.Get(constants.OrderBy, "createdat"), bool.Parse(arg));
-                foreach (var item in user)
-                {
-                    _uvm.User.Add(item);
-
-                }
-                _uvm.UserOrderBy = arg.ToString();
-                _uvm.IsAscending = bool.Parse(Preferences.Get(constants.isAscending, "true"));
-            });
-
 
         }
             async void AddUser_Clicked(System.Object sender, System.EventArgs e)
         {
-            await Navigation.PushModalAsync(new Registration(isAdmin), false);
+            if (userDBHelper.checkNoUser())
+                await Navigation.PushModalAsync(new Registration());
+            else
+                await DisplayAlert("Achtung", "Ein Nutzer ist schon registriert. Bitte Benutzer löschen", "OK");
+
+            
              
-        }
-
-        async void OrderBy_Clicked(System.Object sender, System.EventArgs e)
-        {
-            await Navigation.PushModalAsync(new OrderUserPopUp());
-
-        }
-
-        async void Sortby_Clicked(System.Object sender, System.EventArgs e)
-        {
-            await Navigation.PushModalAsync(new AscendingPopUp(constants.userPopup)); //set isImage to false, because we want User sort
-
         }
 
         async void OnTrashTapped(object sender, EventArgs args)

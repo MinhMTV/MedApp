@@ -9,6 +9,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:IntToString x:Key="IntToString" />
+            <converters:DateTimeToMsg x:Key="DTToMSG" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <NavigationPage.TitleView>
@@ -27,7 +28,7 @@
 
             <Label Grid.Column="0"
                MaxLines="1"
-               Text="Patienten"
+               Text="Patient"
                FontSize="Medium"
                HorizontalOptions="StartAndExpand"
                VerticalOptions="Center"/>
@@ -56,13 +57,7 @@
                      Order="Secondary"
                      Clicked="ClearSelect_Clicked"
                      Command="{Binding ClearCommand}"/>
-        <ToolbarItem Text="Reihenfolge ändern"
-                     Order="Secondary"
-                     Clicked="Sortby_Clicked" />
-        <ToolbarItem Text="Sortieren nach"
-                     Order="Secondary"
-                     Clicked="OrderBy_Clicked"/>
-        
+
     </ContentPage.ToolbarItems>
     
     <StackLayout>
@@ -153,7 +148,7 @@
                                             <StackLayout Style="{StaticResource imageLableStackLayout}">
                                                 <Image Source="https://img.icons8.com/material-two-tone/24/000000/time-machine.png" Style="{StaticResource imageStyle}"></Image>
                                                 <Label Text="lastSession:" Style="{StaticResource LabelStyle}"></Label>
-                                                <Label Text="{Binding LastSession}" Style="{StaticResource LabelStyle}" />
+                                                <Label Text="{Binding LastSession,Converter={StaticResource DTToMSG}}" Style="{StaticResource LabelStyle}" />
                                             </StackLayout>
                                         </StackLayout>
                                         <StackLayout Orientation="Horizontal" HorizontalOptions="End">

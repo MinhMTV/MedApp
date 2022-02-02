@@ -20,8 +20,8 @@
         <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout Grid.Column="0" Grid.Row="0" Orientation="Vertical" VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="Red" >
                 <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="20" Padding="20" BackgroundColor="AliceBlue">
-                    <Button Text="See All" Font="Large" HorizontalOptions="StartAndExpand" Clicked="AllGoodTapped"/>
-                    <Label Text="Good Pictures" FontSize="Large" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+                    <Button Text="Alle" Font="Large" HorizontalOptions="StartAndExpand" Clicked="AllGoodTapped"/>
+                    <Label Text="Substanzabhängige Bilder" FontSize="Large" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
                     <Image x:Name="AddGood" Source="https://img.icons8.com/ios-glyphs/120/000000/plus.png" HorizontalOptions="EndAndExpand" HeightRequest="50" WidthRequest="50">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnAddImageGoodTapped" NumberOfTapsRequired="1" />
@@ -61,8 +61,8 @@
 
             <StackLayout Grid.Column="0" Grid.Row="1" Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Red">
                 <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="20" Padding="20" BackgroundColor="AliceBlue">
-                    <Button Text="See All" Font="Large" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Clicked="AllBadTapped"/>
-                    <Label Text="Bad Pictures" FontSize="Large" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+                    <Button Text="Alle" Font="Large" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Clicked="AllBadTapped"/>
+                    <Label Text="Substanzunabhängige Bilder" FontSize="Large" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
                     <Image x:Name="AddBad" Source="https://img.icons8.com/ios-glyphs/120/000000/plus.png" HorizontalOptions="EndAndExpand" HeightRequest="50" WidthRequest="50">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnAddImageBadTapped" NumberOfTapsRequired="1" />

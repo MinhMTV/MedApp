@@ -264,6 +264,15 @@ namespace App1.Helpers
 
 
         //------------------------------------------------------DB SEARCH METHODS-----------------------------------------------------------------------------------------------
+
+        //check if only one user is in the database, because of data protection only one user can be safed there
+        public bool checkNoUser()
+        {
+            if (newConnection.Table<User>().Count() == 0) //check if only one user or no user in table
+                return true;
+            else return false;
+        }
+
         //check if user already exist in table by name
         public bool CheckUserexist(string username)
         {
