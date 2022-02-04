@@ -28,6 +28,7 @@ namespace App1.Helpers
             newConnection.Insert(trainingSession);
         }
 
+        //Delete Trainingssession without PicTime
         public bool DeleteOnlyTrainingSession(TrainingSession tsession)
         { 
             if (newConnection.Delete(tsession) != 0)
@@ -36,6 +37,7 @@ namespace App1.Helpers
         }
 
 
+        //Delete Trainingssession with all PicTimes
         public bool DeleteTrainingSession(TrainingSession tsession)
         {
             picTimeDBHelper.DeleteAllPicTimesbyTrainingSession(tsession);
@@ -44,6 +46,7 @@ namespace App1.Helpers
             else return false;
         }
 
+        //Delete Trainingssession and PicTimes by User
         public bool DeleteAllTrainingSessionbyUser(User user)
         {
 
@@ -51,7 +54,11 @@ namespace App1.Helpers
             try
             {
                 if (data.Delete(x => x.UserID == user.UserID) != 0)
+                {
+                    picTimeDBHelper.DeleteAllPicTimesbyUser(user);
                     return true;
+                }
+                    
                 else
                     return false;
             }
@@ -62,8 +69,12 @@ namespace App1.Helpers
             }
         }
 
+        //Delete Trainingssession and PicTimes and Reset Table (Delete every RECORD)
         public int DeleteAllTrainingSessions()
         {
+            newConnection.DeleteAll<PicTime>();
+            newConnection.DeleteAll<TrainingSession>();
+            newConnection.DropTable<PicTime>();
             return newConnection.DeleteAll<TrainingSession>();
         }
 
@@ -92,7 +103,7 @@ namespace App1.Helpers
         /// <param name="sessions">Number of Session you wanna get</param>
         /// <param name="isAscending">Order of Session (Asceding = old to new)(Descending = new to old) </param>
         /// <returns></returns>
-        public List<TrainingSession> getListNumberOfTrainingSessionByUserANDOrder(User user, int sessions, bool isAscending)
+        public List<TrainingSession> getListNrSessionByUserANDOrder(User user, int sessions, bool isAscending)
         {
             if (isAscending)
             {
@@ -104,34 +115,26 @@ namespace App1.Helpers
             }
         }
 
-/*        public TrainingSession getLastTrainingSessionbyUser(User user)
+        /// <summary>
+        /// Get a specic List of Trainingsession by User,by Order, List length is session count
+        /// </summary>
+        /// <param name="user">User Object</param>
+        /// <param name="sessions">Number of Session you wanna get</param>
+        /// <param name="isAscending">Order of Session (Asceding = old to new)(Descending = new to old) </param>
+        /// <returns></returns>
+        public List<TrainingSession> getListNrCmplSessionByUserANDOrder(User user, int sessions, bool isAscending)
         {
-            return newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).LastOrDefault();
+            if (isAscending)
+            {
+                var list = newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).OrderBy(x => x.SessionId).ToList();
+                return list.FindAll(x => x.IsTrainingCompleted == true).Take(3).ToList();
+            }
+            else
+            {
+                var list = newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).OrderByDescending(x => x.SessionId).ToList();
+                return list.FindAll(x => x.IsTrainingCompleted == true).Take(3).ToList();
+            }
         }
-
-        public List<TrainingSession> GetLastTwoTrainingSessions(User user)
-        {
-            return newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).OrderByDescending(x => x.SessionId).Take(2).ToList();
-        }
-        public List<TrainingSession> getLastThreeTrainingSessionbyUser(User user)
-        {
-            return newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).OrderByDescending(x => x.SessionId).Take(3).ToList();
-        }
-
-        public List<TrainingSession> getLastSevenTrainingSessionbyUser(User user)
-        {
-            return newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).OrderByDescending(x => x.SessionId).Take(7).ToList();
-        }
-
-        public List<TrainingSession> getFirstThreeTrainingSessionbyUser(User user)
-        {
-            return newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).OrderBy(x => x.SessionId).Take(3).ToList();
-        }
-
-        public List<TrainingSession> getFirstSevenTrainingSessionbyUser(User user)
-        {
-            return newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).OrderByDescending(x => x.SessionId).Take(7).ToList();
-        }*/
 
         //
         public List<TrainingSession> getAllTrainingSessionListbyUserAndOrder(User user, bool isAscending)
@@ -162,12 +165,27 @@ namespace App1.Helpers
             if (isAscending == true)
             {
                 var list =  newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).OrderBy(x => x.SessionId).ToList();
-                return list.FindAll(x => x.IsTrainingCompleted = true);
+                return list.FindAll(x => x.IsTrainingCompleted == true);
             }
             else
             {
                 var list = newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).OrderByDescending(x => x.SessionId).ToList();
-                return list.FindAll(x => x.IsTrainingCompleted = true);
+                
+                return list.FindAll(x => x.IsTrainingCompleted == true);
+            }
+        }
+
+        public List<TrainingSession> getInCompletedTrainingSessionListbyUserAndOrder(User user, bool isAscending)
+        {
+            if (isAscending == true)
+            {
+                var list = newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).OrderBy(x => x.SessionId).ToList();
+                return list.FindAll(x => x.IsTrainingCompleted == false);
+            }
+            else
+            {
+                var list = newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).OrderByDescending(x => x.SessionId).ToList();
+                return list.FindAll(x => x.IsTrainingCompleted == false);
             }
         }
 
@@ -230,24 +248,6 @@ namespace App1.Helpers
         }
 
         //------------------------------------------------------Not My Methods-----------------------------------------------------------------------------------------------
-        public List<TrainingSession> GetTrainingSessions()
-        {
-            //int i = 0;
-            //DateTime dateTime = DateTime.Today.Date;
-
-            //var list = from tSession in newConnection.Table<TrainingSession>()
-            //           orderby tSession.SessionDate descending
-            //           select tSession;
-            //foreach(TrainingSession trainingSession in list)
-            //{
-
-            //}
-            //return list;
-
-            return (from tSession in newConnection.Table<TrainingSession>()
-                    orderby tSession.SessionDate descending
-                    select tSession).ToList();
-        }
 
 
         public List<TrainingSession> GetLastTrainingSessions()
@@ -295,14 +295,6 @@ namespace App1.Helpers
         }
 
         //------------------------------------------------------Not My Methods-----------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
         public void PrintTrainingSession(TrainingSession trainingSession)
         {
             Console.WriteLine(trainingSession.SessionId);

@@ -64,14 +64,7 @@ namespace App1.View.GeneralPages
                     Preferences.Set(constants.loginUser, username);  // set login User to Username of user
                     var user = userDBHelper.GetLoggedUser();
                     userDBHelper.debugUser(user);
-
-
-                    // Check whether IsDataProtection accepted
-                    if (userDBHelper.IsUserAskedForDataProtection(Preferences.Get(constants.loginUser,"false")))
-                    {
-                        await Navigation.PushAsync(new MenuPage());
-                    }
-                    else await Navigation.PushAsync(new DataProtectionPage());
+                    await Navigation.PushAsync(new MenuPage());
 
                 }
                 else
@@ -86,23 +79,13 @@ namespace App1.View.GeneralPages
 
         }
 
-        private async void CheckInternetConnectionAvailability()
-        {
-            // Force user to get connected to the internet to complete the registration process
-            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
-            {
-                await DisplayAlert("Kein Internet", "Bitte schalten Sie das Internet an!", "OK");
-            }
-        }
 
-        async void StartRegistraion(object sender, EventArgs e)
+        async void StartRegistration(object sender, EventArgs e)
         {
             if (userDBHelper.checkNoUser())
                 await Navigation.PushModalAsync(new Registration(), false);
             else
                 await DisplayAlert("Achtung", "Ein Nutzer ist schon registriert. Bitte Therapeut um Löschung des Users anfragen", "OK");
-
-            await Navigation.PushAsync(new Registration());
         }
     }
 }

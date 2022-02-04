@@ -26,7 +26,7 @@ namespace App1.View.GeneralPages
 
             if (Settings.FirstRun)
             {
-                // Perform an action such as a "Pop-Up".
+                // init Pictures just at first start of the App Run.
                 pictureDBHelper.initGivenPictures();
                 Settings.FirstRun = false;
             }

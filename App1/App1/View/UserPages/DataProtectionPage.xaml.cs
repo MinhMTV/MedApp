@@ -40,7 +40,7 @@ namespace App1.View.UserPages
         async void Continue_Clicked(object sender, System.EventArgs e)
         {
             if(isAccepted)
-                await Navigation.PushAsync(new DataSendingPermissionPage());
+                await Navigation.PushAsync(new MenuPage());
             else
                 await DisplayAlert("Achtung", "Bitte die Datenschutzerklärung akzeptieren", "OK");
         }

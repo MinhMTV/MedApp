@@ -34,7 +34,6 @@ namespace App1.View.UserPages
             //    trainingSessionDBHelper.AddTrainingSession(trainingSession);
             //}
             List<TrainingSession> trainingSessions = new List<TrainingSession>();
-            trainingSessions = trainingSessionDBHelper.GetTrainingSessions();
 
             List<Entry> listToShow = new List<Entry>();
 

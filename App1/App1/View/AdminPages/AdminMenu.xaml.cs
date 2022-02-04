@@ -20,7 +20,7 @@ namespace App1.View.AdminPages
             Detail = new NavigationPage(new UserCollectionPage());
             IsPresented = false;
             var loguser = Preferences.Get(constants.loginUser, "false");
-            name.Text = "Hello Admin " + loguser;
+            name.Text = "Hallo Therapeut " + loguser;
             Console.WriteLine(Preferences.Get(constants.loginUser, "false"));
         }
 
@@ -40,24 +40,29 @@ namespace App1.View.AdminPages
         {
             Detail = new NavigationPage(new UserCollectionPage());
             IsPresented = false;
+            GlobalVariables.isGallery = false;
+
         }
 
         void PhotoGalleryClicked(object sender, System.EventArgs e)
         {
             Detail = new NavigationPage(new PhotoGalleryOverView());
             IsPresented = false;
+            GlobalVariables.isGallery = true;
         }
 
         void EditUserInformationClicked(object sender, System.EventArgs e)
         {
             Detail = new NavigationPage(new EditUserInformtionPage());
             IsPresented = false;
+            GlobalVariables.isGallery = false;
         }
 
         void SettingClicked(object sender, System.EventArgs e)
         {
             Detail = new NavigationPage(new EditUserInformtionPage());
             IsPresented = false;
+            GlobalVariables.isGallery = false;
         }
 
 
@@ -72,6 +77,7 @@ namespace App1.View.AdminPages
                 await Navigation.PushAsync(new LoginPage());
             }
             IsPresented = false;
+            GlobalVariables.isGallery = false;
         }
     }
 }

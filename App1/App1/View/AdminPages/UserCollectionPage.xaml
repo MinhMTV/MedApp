@@ -68,7 +68,7 @@
                 <CollectionView.EmptyView>
                     <Grid>
                         <StackLayout>
-                            <Label Text="Keine Patienten vorhanden" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
+                            <Label Text="Kein Patient vorhanden" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
                                 FontSize="Large" FontAttributes="Bold"/>
                         </StackLayout>
                     </Grid>
@@ -133,7 +133,7 @@
                                             </StackLayout>
                                             <StackLayout Style="{StaticResource imageLableStackLayout}">
                                                 <Image Source="https://img.icons8.com/material-outlined/24/000000/age.png" Style="{StaticResource imageStyle}"></Image>
-                                                <Label Text="Age:" Style="{StaticResource LabelStyle}" />
+                                                <Label Text="Alter:" Style="{StaticResource LabelStyle}" />
                                                 <StackLayout Style="{StaticResource imageLableStackLayout}">
                                                     <Label Text="{Binding Age}" Style="{StaticResource LabelStyle}" />
                                                 </StackLayout>
@@ -147,7 +147,7 @@
                                             </StackLayout>
                                             <StackLayout Style="{StaticResource imageLableStackLayout}">
                                                 <Image Source="https://img.icons8.com/material-two-tone/24/000000/time-machine.png" Style="{StaticResource imageStyle}"></Image>
-                                                <Label Text="lastSession:" Style="{StaticResource LabelStyle}"></Label>
+                                                <Label Text="Letztes Training:" Style="{StaticResource LabelStyle}"></Label>
                                                 <Label Text="{Binding LastSession,Converter={StaticResource DTToMSG}}" Style="{StaticResource LabelStyle}" />
                                             </StackLayout>
                                         </StackLayout>

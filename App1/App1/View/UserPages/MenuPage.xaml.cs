@@ -45,6 +45,7 @@ namespace App1.View.UserPages
         {
             Detail = new NavigationPage(new WeeklyOverviewPage());
             IsPresented = false;
+            
         }
 
         void EditUserInformationClicked(object sender, System.EventArgs e)

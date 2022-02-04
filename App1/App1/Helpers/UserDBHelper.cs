@@ -86,12 +86,17 @@ namespace App1.Helpers
         }
 
         /// <summary>
-        /// delete all User in User Table
+        /// delete all User in User Table, delete all Trainingssessions, delete all PicTimes
         /// </summary>
         /// <returns></returns>
         public int DeleteAllUser()
         {
-            return newConnection.DeleteAll<User>();
+            newConnection.DeleteAll<PicTime>();
+            newConnection.DeleteAll<TrainingSession>();
+            newConnection.DropTable<TrainingSession>();
+            newConnection.DropTable<TrainingSession>();
+            newConnection.DeleteAll<User>();
+            return newConnection.DropTable<User>();
         }
 
         public int UpdateUser(User user)
@@ -99,8 +104,6 @@ namespace App1.Helpers
            return newConnection.Update(user);
             
         }
-
-
 
         /// <summary>
         /// change password of user by username
@@ -122,144 +125,6 @@ namespace App1.Helpers
             }
             return false;
         }
-
-        public bool UpdateUserID(int uID)
-        {
-            var data = newConnection.Table<User>();
-            var updatableUser = (from values in data
-                                 where values.UserID == 0
-                                 select values).Single();
-            try
-            {
-                if (uID > 1)
-                {
-                    updatableUser.UserID = uID;
-                    updatableUser.IsUserIdUpdated = true;
-                    newConnection.Update(updatableUser);
-                    return true;
-                }
-            }
-            catch (Exception exp)
-            {
-                Debug.WriteLine(exp);
-            }
-
-            return false;
-        }
-
-        public void UpdateDataAutoSend(bool decison)
-        {
-            var username = Preferences.Get(constants.loginUser, "false");
-            var data = newConnection.Table<User>();
-            var updatableUser = (from values in data
-                                 where values.Username == username
-                                 select values).Single();
-            try
-            {
-                if (updatableUser != null)
-                {
-                    updatableUser.IsToDataAutoSend = decison;
-                    newConnection.Update(updatableUser);
-                }
-            }
-            catch (Exception exp)
-            {
-                Debug.WriteLine(exp);
-            }
-        }
-
-        //update Information wheter user accepted data protection or not
-        public bool UpdateDataPrptectionInformation(bool isAccepted)
-        {
-            var data = newConnection.Table<User>();
-            var username = Preferences.Get(constants.loginUser, "false");
-            if (username != "false")
-            {
-                var updatableUser = (from values in data
-                                     where values.Username == username
-                                     select values).Single();
-
-                if (updatableUser != null)
-                {
-                    updatableUser.IsDataProtectionAccepted = isAccepted;
-                    updatableUser.IsUserAskedForDataProtection = true;
-                    if (newConnection.Update(updatableUser) == 1)
-                    {
-                        return true;
-                    }
-                    else return false;
-                }
-                else return false;
-            }
-            else return false;
-        }
-
-
-
-
-
-
-
-     /*   public bool UpdateUserbyProperty(User user, string property, string updateData)
-        {
-            var data = newConnection.Table<User>();
-            if (user != null)
-            {
-                switch (property.Trim().ToLower())
-                {
-                    case constants.userdbid:
-
-                        var singleData = data.Where(x => x.UserID == user.UserID).Single();
-                        if (singleData != null)
-                        {
-                            singleData.UserID = Convert.ToInt32(updateData);
-
-                        }
-
-
-                    case constants.username:
-                        return returnedUser.Username;
-                    case constants.email:
-                        return returnedUser.Email;
-                    case constants.userid:
-                        return returnedUser.UserID.ToString();
-                    case constants.firstname:
-                        return returnedUser.FirstName;
-                    case constants.lastname:
-                        return returnedUser.LastName;
-                    case constants.password:
-                        return returnedUser.Password;
-                    case constants.IsUserIdUpdated:
-                        return returnedUser.IsUserIdUpdated.ToString();
-                    case constants.age:
-                        return returnedUser.Age.ToString();
-                    case constants.createdat:
-                        return returnedUser.CreatedAt.ToString();
-                    case constants.IsDataProtectionAccepted:
-                        return returnedUser.IsDataProtectionAccepted.ToString();
-                    case constants.IsToDataAutoSend:
-                        return returnedUser.IsToDataAutoSend.ToString();
-                    case constants.firstsession:
-                        return returnedUser.FirstSession.ToString();
-                    case constants.lastsession:
-                        return returnedUser.LastSession.ToString();
-                    case constants.sessionlastupdated:
-                        return returnedUser.SessionLastUpdated.ToString();
-                    case constants.start:
-                        return returnedUser.Start.ToString();
-                    case constants.end:
-                        return returnedUser.End.ToString();
-                    case constants.minutes:
-                        return returnedUser.SessionTimeMin.ToString();
-                    case constants.seconds:
-                        return returnedUser.SessionTimeSec.ToString();
-                    case constants.isTutorial:
-                        return returnedUser.isAskForTutorial.ToString();
-                    default:
-                        break;
-                }
-            }
-        }*/
 
 
 
@@ -298,29 +163,6 @@ namespace App1.Helpers
             return false;     
         }
 
-        /* 
-         Check, if the a user by username alreay accepted the dataprotection
-        */
-        public bool IsDataProtectionAccepted(string username)
-        {
-            var data = newConnection.Table<User>();
-            var user = (from values in data
-                        where values.Username == username
-                        select values).Single();
-            return user.IsDataProtectionAccepted;
-        }
-
-        /* 
-         Check, if the a user by username was already asked for data protection
-        */
-        public bool IsUserAskedForDataProtection(string username)
-        {
-            var data = newConnection.Table<User>();
-            var user = (from values in data
-                        where values.Username == username
-                        select values).Single();
-            return user.IsUserAskedForDataProtection;
-        }
         //check if userid is unique and return true if so
         public bool IsUserIDUnique(int userid)
         {
@@ -334,23 +176,7 @@ namespace App1.Helpers
             {
                 return false;
             }
-        }
-
-        public bool IsUserIdUpdated()
-        {
-            try
-            {
-                var data = newConnection.Table<User>();
-                var user = (from values in data
-                            select values).Single();
-                return user.IsUserIdUpdated;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.StackTrace);
-            }
-            return false;
-        }
+        }  
 
         //------------------------------------------------------DB GET METHODS-----------------------------------------------------------------------------------------------
 
@@ -501,26 +327,11 @@ namespace App1.Helpers
                         return data.OrderBy(x => x.Age).ToList();
                     case constants.createdat:
                         return data.OrderBy(x => x.CreatedAt).ToList();
-                    case constants.IsDataProtectionAccepted:
-                        return data.OrderBy(x => x.IsDataProtectionAccepted).ToList();
-                    case constants.IsToDataAutoSend:
-                        return data.OrderBy(x => x.IsToDataAutoSend).ToList();
                     case constants.firstsession:
                         return data.OrderBy(x => x.FirstSession).ToList();
                     case constants.lastsession:
                         return data.OrderBy(x => x.LastSession).ToList();
-                    case constants.sessionlastupdated:
-                        return data.OrderBy(x => x.SessionLastUpdated).ToList();
                     case constants.start:
-                        return data.OrderBy(x => x.Start).ToList();
-                    case constants.end:
-                        return data.OrderBy(x => x.End).ToList();
-                    case constants.minutes:
-                        return data.OrderBy(x => x.SessionTimeMin).ToList();
-                    case constants.seconds:
-                        return data.OrderBy(x => x.SessionTimeSec).ToList();
-                    case constants.isTutorial:
-                        return data.OrderBy(x => x.isAskForTutorial).ToList();
                     default:
                         return data.OrderBy(x => x.UserDBID).ToList(); ;
 
@@ -544,174 +355,15 @@ namespace App1.Helpers
                         return data.OrderByDescending(x => x.Age).ToList();
                     case constants.createdat:
                         return data.OrderByDescending(x => x.CreatedAt).ToList();
-                    case constants.IsDataProtectionAccepted:
-                        return data.OrderByDescending(x => x.IsDataProtectionAccepted).ToList();
-                    case constants.IsToDataAutoSend:
-                        return data.OrderByDescending(x => x.IsToDataAutoSend).ToList();
                     case constants.firstsession:
                         return data.OrderByDescending(x => x.FirstSession).ToList();
                     case constants.lastsession:
                         return data.OrderByDescending(x => x.LastSession).ToList();
-                    case constants.sessionlastupdated:
-                        return data.OrderByDescending(x => x.SessionLastUpdated).ToList();
-                    case constants.start:
-                        return data.OrderByDescending(x => x.Start).ToList();
-                    case constants.end:
-                        return data.OrderByDescending(x => x.End).ToList();
-                    case constants.minutes:
-                        return data.OrderByDescending(x => x.SessionTimeMin).ToList();
-                    case constants.seconds:
-                        return data.OrderByDescending(x => x.SessionTimeSec).ToList();
-                    case constants.isTutorial:
-                        return data.OrderByDescending(x => x.isAskForTutorial).ToList();
                     default:
                         return data.OrderByDescending(x => x.UserDBID).ToList(); ;
 
                 }
             }     
-        }
-
-
-        // Get the loggedin user property
-        //maybe redudant because you can always return the user object and return its value
-        public string getLoggedinUserProperty(string property)
-        {
-            if (!Preferences.Get(constants.loginUser, "false").Equals("false"))
-            {
-                Console.WriteLine(Preferences.Get(constants.loginUser, "false"));
-
-                var username = Preferences.Get(constants.loginUser, "false");
-                var data = newConnection.Table<User>();
-                try
-                {
-                    var returnedUser = (from values in data
-                                        where values.Username == username
-                                        select values).Single();
-
-                    if (returnedUser != null)
-                    {
-                        switch (property.Trim().ToLower())
-                        {
-                            case constants.userdbid:
-                                return returnedUser.UserDBID.ToString();
-                            case constants.username:
-                                return returnedUser.Username;
-                            case constants.email:
-                                return returnedUser.Email;
-                            case constants.userid:
-                                return returnedUser.UserID.ToString();
-                            case constants.firstname:
-                                return returnedUser.FirstName;
-                            case constants.lastname:
-                                return returnedUser.LastName;
-                            case constants.password:
-                                return returnedUser.Password;
-                            case constants.IsUserIdUpdated:
-                                return returnedUser.IsUserIdUpdated.ToString();
-                            case constants.age:
-                                return returnedUser.Age.ToString();
-                            case constants.createdat:
-                                return returnedUser.CreatedAt.ToString();
-                            case constants.IsDataProtectionAccepted:
-                                return returnedUser.IsDataProtectionAccepted.ToString();
-                            case constants.IsToDataAutoSend:
-                                return returnedUser.IsToDataAutoSend.ToString();
-                            case constants.firstsession:
-                                return returnedUser.FirstSession.ToString();
-                            case constants.lastsession:
-                                return returnedUser.LastSession.ToString();
-                            case constants.sessionlastupdated:
-                                return returnedUser.SessionLastUpdated.ToString();
-                            case constants.start:
-                                return returnedUser.Start.ToString();
-                            case constants.end:
-                                return returnedUser.End.ToString();
-                            case constants.minutes:
-                                return returnedUser.SessionTimeMin.ToString();
-                            case constants.seconds:
-                                return returnedUser.SessionTimeSec.ToString();
-                            case constants.isTutorial:
-                                return returnedUser.isAskForTutorial.ToString();
-                            default:
-                                break;
-                        }
-                    }
-
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
-            }
-            return string.Empty;
-        }
-
-        // Get the  user property by Username
-        //maybe redudant because you can always return the user object and return its value
-        public string getUserProperty(string property,string username)
-        {
-                var data = newConnection.Table<User>();
-                try
-                {
-                    var returnedUser = (from values in data
-                                        where values.Username == username
-                                        select values).Single();
-
-                    if (returnedUser != null)
-                    {
-                        switch (property.Trim().ToLower())
-                        {
-                            case constants.userdbid:
-                                return returnedUser.UserDBID.ToString();
-                            case constants.username:
-                                return returnedUser.Username;
-                            case constants.email:
-                                return returnedUser.Email;
-                            case constants.userid:
-                                return returnedUser.UserID.ToString();
-                            case constants.firstname:
-                                return returnedUser.FirstName;
-                            case constants.lastname:
-                                return returnedUser.LastName;
-                            case constants.password:
-                                return returnedUser.Password;
-                            case constants.IsUserIdUpdated:
-                                return returnedUser.IsUserIdUpdated.ToString();
-                            case constants.age:
-                                return returnedUser.Age.ToString();
-                            case constants.createdat:
-                                return returnedUser.CreatedAt.ToString();
-                            case constants.IsDataProtectionAccepted:
-                                return returnedUser.IsDataProtectionAccepted.ToString();
-                            case constants.IsToDataAutoSend:
-                                return returnedUser.IsToDataAutoSend.ToString();
-                            case constants.firstsession:
-                                return returnedUser.FirstSession.ToString();
-                            case constants.lastsession:
-                                return returnedUser.LastSession.ToString();
-                            case constants.sessionlastupdated:
-                                return returnedUser.SessionLastUpdated.ToString();
-                            case constants.start:
-                                return returnedUser.Start.ToString();
-                            case constants.end:
-                                return returnedUser.End.ToString();
-                            case constants.minutes:
-                                return returnedUser.SessionTimeMin.ToString();
-                            case constants.seconds:
-                                return returnedUser.SessionTimeSec.ToString();
-                            case constants.isTutorial:
-                                return returnedUser.isAskForTutorial.ToString();
-                        default:
-                                break;
-                        }
-                    }
-
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
-            return string.Empty;
         }
 
         //------------------------------------------------------DB COMPARE METHODS-----------------------------------------------------------------------------------------------
@@ -812,11 +464,7 @@ namespace App1.Helpers
                 "\nFirstname " + user.FirstName +
                 "\nLastname " + user.LastName +
                 "\nPassword " + user.Password +
-                "\nUserID " + user.UserID +
-                "\nisUseridupdated " + user.IsUserIdUpdated +
-                "\nisUserAskedforDataprotection " + user.IsUserAskedForDataProtection +
-                "\nisDataAutoSend " + user.IsToDataAutoSend +
-                "\nsessionlastupdated " + user.SessionLastUpdated;
+                "\nUserID " + user.UserID;
             Console.WriteLine(message);
         }
 
@@ -832,11 +480,7 @@ namespace App1.Helpers
                 "\nFirstname " + user.FirstName +
                 "\nLastname " + user.LastName +
                 "\nPassword " + user.Password +
-                "\nUserID " + user.UserID +
-                "\nisUseridupdated " + user.IsUserIdUpdated +
-                "\nisUserAskedforDataprotection " + user.IsUserAskedForDataProtection +
-                "\nisDataAutoSend " + user.IsToDataAutoSend +
-                "\nsessionlastupdated " + user.SessionLastUpdated;
+                "\nUserID " + user.UserID;
                 Console.WriteLine(message);
             }
         }
@@ -851,9 +495,6 @@ namespace App1.Helpers
                 "\nLastname " + user.LastName +
                 "\nPassword " + user.Password +
                 "\nUserID " + user.UserID +
-                "\nisUseridupdated " + user.IsUserIdUpdated +
-                "\nisUserAskedforDataprotection " + user.IsUserAskedForDataProtection +
-                "\nisDataAutoSend " + user.IsToDataAutoSend +
                 "\nCreated " + user.CreatedAt;
             await App.Current.MainPage.DisplayAlert("Debug", message, "OK");
 

@@ -23,15 +23,17 @@ namespace App1.View.AdminPages
     {
         DeviceMetricHelper deviceMetricHelper = new DeviceMetricHelper();
         PictureDBHelper picturesDBHelper = new PictureDBHelper();
-
+        
 
         public PhotoGalleryOverView()
         {
+            GlobalVariables.isGallery = true;
             InitializeComponent();
         }
 
         async void AllGoodTapped(object sender, EventArgs e)
         {
+
             await Application.Current.MainPage.Navigation.PushAsync(new GoodPhotoGalleryPage());
         }
 
@@ -43,36 +45,6 @@ namespace App1.View.AdminPages
         async void ShowAll_Clicked(object sender, EventArgs e)
         {
             await Application.Current.MainPage.Navigation.PushAsync(new PhotoGalleryPage());
-        }
-
-        async void OnAddImageGoodTapped1(object sender, EventArgs args)
-        {
-            try
-            {
-                var results = await MediaGallery.PickAsync(3, MediaFileType.Image);
-
-
-
-                if (results.Files == null)
-                {
-                    return;
-                }
-                foreach (var media in results.Files)
-                {
-                    var fileName = media.NameWithoutExtension;
-                    var extension = media.Extension;
-                    var contenType = media.ContentType;
-                    var imagepath = media.ToString();
-                    var stream  = media.OpenReadAsync();
-
-                    await DisplayAlert(fileName, $"Extension: {extension} Content-type: {contenType}, imagepath:{imagepath}, stream: {stream}", "OK");
-                }
-
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
         }
 
         async void OnAddImageGoodTapped(object sender, EventArgs args)
@@ -97,7 +69,6 @@ namespace App1.View.AdminPages
                     var imagestream = await media.OpenReadAsync();
                     var imageSource = ImageSource.FromStream((() => imagestream));
 
-                    //               testimage.Source = imageSource;
                     var imagearray = ImageHelper.ConvertStreamToByteArray(imagestream);
                     Console.WriteLine(imagearray);
 
@@ -106,8 +77,8 @@ namespace App1.View.AdminPages
                     var screenwidth = deviceMetricHelper.getWidth();
                     var screenheight = deviceMetricHelper.getHeight();
 
-                    screenwidth = screenwidth * 0.1;
-                    screenheight = screenheight * 0.1;
+                    screenwidth = screenwidth * 0.5;
+                    screenheight = screenheight * 0.5;
 
                     if (ImageResizer != null)
                     {
@@ -143,7 +114,7 @@ namespace App1.View.AdminPages
                         */
 
                     }
-                    await DisplayAlert("Test", $"screenwidth: {screenwidth} , screenheigth {screenheight}" , "OK");
+                    // Debug await DisplayAlert("Test", $"screenwidth: {screenwidth} , screenheigth {screenheight}" , "OK");
                     
                 }
 
@@ -164,6 +135,7 @@ namespace App1.View.AdminPages
 
             try
             {
+                GlobalVariables.isGallery = true;
                 var results = await MediaGallery.PickAsync(3, MediaFileType.Image);
 
                 if (results.Files == null)
@@ -176,7 +148,6 @@ namespace App1.View.AdminPages
                     var imagestream = await media.OpenReadAsync();
                     var imageSource = ImageSource.FromStream((() => imagestream));
 
-                    //               testimage.Source = imageSource;
                     var imagearray = ImageHelper.ConvertStreamToByteArray(imagestream);
                     Console.WriteLine(imagearray);
 
@@ -222,7 +193,7 @@ namespace App1.View.AdminPages
                         */
 
                     }
-                    await DisplayAlert("Test", $"screenwidth: {screenwidth} , screenheigth {screenheight}", "OK");
+                    // Debug await DisplayAlert("Test", $"screenwidth: {screenwidth} , screenheigth {screenheight}" , "OK");
 
                 }
 

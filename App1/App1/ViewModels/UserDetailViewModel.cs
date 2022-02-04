@@ -80,7 +80,7 @@ namespace App1.ViewModels
             var result = await App.Current.MainPage.DisplayAlert("Achtung", "Möchten Sie den User wirklich löschen?", "Ja", "Nein");
             if(result)
             {
-                userDBHelper.DeleteUser(obj);
+                userDBHelper.DeleteAllUser(); 
                 await App.Current.MainPage.Navigation.PopAsync();
             }
         }
@@ -89,7 +89,7 @@ namespace App1.ViewModels
         private void InitData(User obj)
         {
             _tsession = new ObservableCollection<TrainingSession>();
-            var templist = trainingSession.getListNumberOfTrainingSessionByUserANDOrder(obj, 3, false); //get last 3 user session order from new to old
+            var templist = trainingSession.getListNrCmplSessionByUserANDOrder(obj, 3, false); //get last 3 user session order from new to old
             foreach(var temp in templist)
             {
                 TSession.Add(temp);
@@ -100,9 +100,7 @@ namespace App1.ViewModels
             LastName = obj.LastName;
             Email = obj.Email;
             Age = obj.Age;
-            SessionCount = trainingSession.getAllTrainingSessionListbyUserAndOrder(obj, false).Count;
-            isDataProtection = obj.IsDataProtectionAccepted;
-            isAutoSend = obj.IsToDataAutoSend;
+            SessionCount = trainingSession.getCompletedTrainingSessionListbyUserAndOrder(obj, false).Count;
             CreatedAt = obj.CreatedAt;
             FirstSession = obj.FirstSession;
     }

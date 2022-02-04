@@ -158,9 +158,6 @@
     <Compile Update="LoginPage3.xaml.cs">
       <DependentUpon>LoginPage3.xaml</DependentUpon>
     </Compile>
-    <Compile Update="PopUpViews\OrderUserPopUp.xaml.cs">
-      <DependentUpon>OrderUserPopUp.xaml</DependentUpon>
-    </Compile>
     <Compile Update="View\AdminPages\AdminMenu.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>%(Filename)</DependentUpon>
@@ -202,9 +199,6 @@
     <EmbeddedResource Update="PopUpViews\AscendingPopUp.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="PopUpViews\OrderUserPopUp.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="PopUpViews\PhotoPopUp.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -237,16 +231,7 @@
     <EmbeddedResource Update="View\AdminPages\UserDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="View\GeneralPages\APITest.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="View\UserPages\DataSendingPermissionPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="View\UserPages\EditUserInformtionPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="View\GeneralPages\LocalNotificationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="View\UserPages\MenuPage.xaml">

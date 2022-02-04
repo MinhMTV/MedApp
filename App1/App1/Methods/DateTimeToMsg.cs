@@ -11,14 +11,13 @@ namespace App1.Methods
         {
             if (value != null)
             {
-                DateTime test = (DateTime)value;
-                if(test == DateTime.MinValue)
+                DateTime time = (DateTime)value;
+                if(time == DateTime.MinValue)
                 {
                     return "Kein Training bisher";
                 } else
                 {
-                    string date = test.ToString("d/M/yyyy");
-                    return (date);
+                    return (time);
                 }
             }
             return string.Empty;

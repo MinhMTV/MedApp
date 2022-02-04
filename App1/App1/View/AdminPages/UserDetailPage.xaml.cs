@@ -23,6 +23,16 @@ namespace App1.View.AdminPages
 			InitializeComponent ();
 		}
 
+		public void OnDelete(System.Object sender, System.EventArgs e)
+        {
+
+        }
+
+		public void OnEdit(System.Object sender, System.EventArgs e)
+        {
+
+        }
+
 
 	}
 }

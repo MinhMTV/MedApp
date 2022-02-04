@@ -26,7 +26,7 @@ namespace App1.View.AdminPages
         private UserDBHelper userDBHelper = new UserDBHelper();
         private TrainingSessionDBHelper trainingSession = new TrainingSessionDBHelper();
 
-        private bool isAdmin = true;
+
         public UserCollectionPage()
         {
             var userList = userDBHelper.GetAllUserToList();
@@ -81,7 +81,7 @@ namespace App1.View.AdminPages
                     var userlist = UserCV.SelectedItems.ToList();
                     foreach (var item in userlist)
                     {
-                        userDBHelper.DeleteUser((User)item);
+                        userDBHelper.DeleteAllUser();
                         _uvm.User.Remove((User)item);
                     }
                     _uvm.SelectionMode = SelectionMode.None;

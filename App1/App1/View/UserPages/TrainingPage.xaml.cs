@@ -58,13 +58,15 @@ namespace App1.View.UserPages
             GlobalVariables.isNavigation = true;
             isRunning = false;
 
-            TotalTime = (user.SessionTimeSec * 1000) + (user.SessionTimeMin * 60000); //Total time by User in ms
-            Console.WriteLine(TotalTime);
-
-
-            timer = new Timer(interval);
-            timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-            timer.Enabled = true;
+            if (GlobalVariables.isTimer)
+            {
+                TotalTime = (GlobalVariables.defaultSec * 1000) + (GlobalVariables.defaultMin * 60000); //Total time by User in ms
+                Console.WriteLine(TotalTime);
+                timer = new Timer(interval);
+                timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+                timer.Enabled = true;
+            }
+            
 
             startStopWatches();
         }
@@ -77,29 +79,30 @@ namespace App1.View.UserPages
             {
                 timer.Enabled = false;
                 Console.WriteLine("Timer wurde gestoppt");
-            } else
-            {
-            stopwatch2.Stop();
-            GlobalVariables.Stopwatch.Stop();
-            Console.WriteLine(GlobalVariables.Stopwatch.Elapsed);
-            
-            if (GlobalVariables.Stopwatch.ElapsedMilliseconds > TotalTime)
-            {
-                trainingSession.IsTrainingCompleted = true;
-                getStatistic();
-                resetStopWatches();
-                Navigation.PushAsync(new ResultsPage());
-            }
+            } 
             else
             {
+                stopwatch2.Stop();
+                GlobalVariables.Stopwatch.Stop();
+                Console.WriteLine(GlobalVariables.Stopwatch.Elapsed);
+            
+                if (GlobalVariables.Stopwatch.ElapsedMilliseconds > TotalTime)
+                {
+                    trainingSession.IsTrainingCompleted = true;
+                    getStatistic();
+                    resetStopWatches();
+                    Navigation.PushAsync(new ResultsPage());
+                }
+                else
+                {
                
-                timer.Enabled = true; //Or timer.Start();
+                    timer.Enabled = true; //Or timer.Start();
                 
-            }
-            if(isRunning == true)
-            {
-                startStopWatches();
-            }
+                }
+                if(isRunning == true)
+                {
+                    startStopWatches();
+                }
             }
 
         }
@@ -337,7 +340,7 @@ namespace App1.View.UserPages
 
         private async void OnDragging(object sender, DraggingCardEventArgs e)
         {
-            if(indexer == totalImages)
+            if (indexer == totalImages)
             {
                 indexer += 1;
             }
@@ -377,7 +380,7 @@ namespace App1.View.UserPages
                     indexer += 1;
                     Console.WriteLine("currentPictype" + currentPicType.ToString());
                     Console.WriteLine("indexer" + indexer.ToString());
-                        
+
                     if (isUp)
                     {
                         // Picture was moved up and the type is also bad
@@ -390,12 +393,12 @@ namespace App1.View.UserPages
                             picTime.Time = stringmethods.TimeSpanToStringToMin(stopwatch2.Elapsed);
                             picTime.Type = PicType.Bad;
                             picTime.CorrectImage = true;
-                            picTimeDBHelper.AddPicTime(picTime);                      
+                            picTimeDBHelper.AddPicTime(picTime);
                             trainingSession.NrOfBadCorrectImages += 1;
                             stopwatch2.Restart();
                         }
                         // Picture was moved up but the type was good
-                        else 
+                        else
                         {
                             stopwatch2.Stop();
                             PicTime picTime = new PicTime();
@@ -446,15 +449,14 @@ namespace App1.View.UserPages
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            if (indexer == totalImages && GlobalVariables.isNavigation == true)
+            if (indexer == totalImages && GlobalVariables.isNavigation == true || indexer == GlobalVariables.defaultPicCount && GlobalVariables.isNavigation == true)
             {
-                GlobalVariables.Stopwatch.Stop();
-                stopwatch2.Stop();
+                indexer = 0;
+                stopStopWatches();
                 trainingSession.IsTrainingCompleted = true;
                 GlobalVariables.isNavigation = false;
                 getStatistic();
-                GlobalVariables.Stopwatch.Reset();
-                stopwatch2.Reset();
+                resetStopWatches();
                 await Task.Delay(500);
                 await Navigation.PushAsync(new ResultsPage());
             }
@@ -468,9 +470,10 @@ namespace App1.View.UserPages
 
             if (result == true) //if yes is true\
             {
-                getStatistic();
+                indexer = 0;
                 trainingSession.IsTrainingCompleted = false;
                 GlobalVariables.isNavigation = false;
+                getStatistic();
                 GlobalVariables.Stopwatch.Reset();
                 stopwatch2.Reset();
                 await Navigation.PushAsync(new MenuPage());

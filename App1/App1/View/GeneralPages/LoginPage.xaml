@@ -42,7 +42,7 @@
                     Text="Registrieren" 
                     TextColor="White"
                     BackgroundColor="Blue"
-                    Clicked="StartRegistraion"
+                    Clicked="StartRegistration"
                     FontSize="Large"
                     HorizontalOptions="CenterAndExpand"/>
             </StackLayout>

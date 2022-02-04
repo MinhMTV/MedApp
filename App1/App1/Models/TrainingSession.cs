@@ -10,7 +10,6 @@ namespace App1.Models
         public int SessionId { get; set; }
         public DateTime SessionDate { get; set; }
 
-        public int completeSessionID { get; set; }
         [Indexed]
         public int UserID { get; set; }  //UserID From User
         public int NrOfGoodCorrectImages { get; set; }

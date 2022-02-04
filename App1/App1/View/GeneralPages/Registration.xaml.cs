@@ -121,17 +121,9 @@ namespace App1.View.GeneralPages
                 user.LastName = Entry_Lastname.Text;
                 user.Password = Entry_Password.Text;
                 user.Age = age;
-                user.IsUserIdUpdated = false;
-                user.IsUserAskedForDataProtection = false;
-                user.IsDataProtectionAccepted = true;
-                user.IsToDataAutoSend = true;
                 user.FirstSession = DateTime.MinValue;
-                user.LastSession = DateTime.MaxValue;
-                user.CreatedAt = DateTime.Now;
-                user.Start = DateTime.Now;
-                user.End = DateTime.MaxValue; //therapyEnd will be maximum value
-                user.SessionTimeMin = GlobalVariables.defaultMin; //Session will last 5 min as default
-                user.SessionTimeSec = GlobalVariables.defaultSec; //Session will last 0 additional seconds as default
+                user.LastSession = DateTime.MinValue;
+                user.CreatedAt = DateTime.Now; 
                 //default time can be changed by admin
 
                 userDBHelper.PrintUser(user);

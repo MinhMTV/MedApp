@@ -91,7 +91,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Database\SQLiteiOS.cs" />
-    <Compile Include="DependencyServices\LocalNotificationService.cs" />
     <Compile Include="ImageResizer.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />

@@ -26,7 +26,6 @@ namespace App1.View.UserPages
         public int PicturesWrong { get; set; }
         private UserDBHelper userDBHelper = new UserDBHelper();
         private TrainingSessionDBHelper trainingSessionDBHelper = new TrainingSessionDBHelper();
-        private bool isDone;
 
 
 

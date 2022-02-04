@@ -24,7 +24,7 @@ namespace App1.View.UserPages
             {
                
                 //If right old password entered
-                if (userDBHelper.getLoggedinUserProperty("password").Equals(Entry_OldPassword.Text))
+                if (userDBHelper.GetLoggedUser().Password.Equals(Entry_OldPassword.Text))
                 {
                     if(Entry_NewPassword.Text.Equals(Entry_OldPassword.Text))
                     {

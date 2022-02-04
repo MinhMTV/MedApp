@@ -17,6 +17,8 @@ namespace App1.Models
 
         public static bool isNavigation { get; set; } = false;
 
+        public static bool isGallery { get; set; } = false;
+
         public static int NroOfAvailablePics
         {
             get { return 55; }
@@ -42,8 +44,11 @@ namespace App1.Models
             }
         }
 
-        public static int defaultMin { get { return 5; } } //Session default min are 5
+        public static bool isTimer { get; set; } = false; //Session has Timer adjust by Admin  default: no Timer
+        public static int defaultMin { get; set; } = 0; //Session default min are like infinity can be adjust by admin
 
-        public static int defaultSec { get { return 0; } } //Session default sec are 0
+        public static int defaultSec { get; set; } = 0;//Session default sec are 0
+
+        public static int defaultPicCount { get; set; } = 55; // Session default Number of Pics for one Training
     }
 }

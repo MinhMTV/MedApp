@@ -56,6 +56,10 @@ namespace App1
                     await App.Current.MainPage.Navigation.PushAsync(new MenuPage());
                 }
             }
+            else if (GlobalVariables.isGallery)
+            {
+                return;
+            }
             else
             {
                 if (adminDBHelper.IsRegisteredUserExists())  //check if there is a admin already
