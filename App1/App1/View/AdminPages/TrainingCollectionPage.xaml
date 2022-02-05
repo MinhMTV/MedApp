@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App1.View.AdminPages.TrainingCollectionPage"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:pg="clr-namespace:App1.ViewModels"
+             x:Name="TrainingCollectionView">
+    <NavigationPage.TitleView>
+        <Label 
+               Text="Alle Trainingssessions"
+               MaxLines="1"
+               FontSize="Large"
+               FontAttributes="Bold"
+               HorizontalOptions="StartAndExpand"
+               VerticalOptions="Center"/>
+    </NavigationPage.TitleView>
+
+    <CollectionView x:Name="TsessionCV" SelectionMode="Single" ItemsSource="{Binding TSession}"
+                        >
+
+        <CollectionView.EmptyView>
+            <Grid>
+                <StackLayout>
+                    <Label Text="Keine Trainingssession vorhanden" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
+                                FontSize="Large" FontAttributes="Bold"/>
+                </StackLayout>
+            </Grid>
+        </CollectionView.EmptyView>
+
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <StackLayout Spacing="8" VerticalOptions="Fill" xct:TouchEffect.Command="{Binding PressedCommand,
+                        Source={RelativeSource AncestorType={x:Type pg:SessionCollectionViewModel}}}"
+                            xct:TouchEffect.CommandParameter="{Binding .}"
+                            xct:TouchEffect.PressedScale="1.1"
+                             xct:TouchEffect.NativeAnimation="True" 
+                            >
+
+
+                    <Frame Style="{StaticResource FrameCardViewStyle}">
+                        <StackLayout Style="{StaticResource itemsCardViewStackLayoutStyle}"    >
+                            <StackLayout Style="{StaticResource itemsInsideCardViewStackLayoutStyle}" Margin="10,0,10,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout Grid.Column="0" HorizontalOptions="Center" >
+                                        <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
+                                            <Label Text="Training ID:" Style="{StaticResource LabelStyle}" />
+                                            <Label Text="{Binding cmplSession}" Style="{StaticResource LabelStyle}" />
+                                        </StackLayout>
+                                        <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
+                                            <Label Text="Zeit:" Style="{StaticResource LabelStyle}" />
+                                            <Label Text="{Binding ElapsedTime}" Style="{StaticResource LabelStyle}" HorizontalOptions="End"/>
+                                        </StackLayout>
+                                        <StackLayout Style="{StaticResource imageLableStackLayout}">
+                                            <Label Text="Datum:" />
+                                            <Label Text="{Binding SessionDate,StringFormat='{0:d}'}"/>
+                                        </StackLayout>
+                                    </StackLayout>
+                                    <BoxView  Grid.Column="1" VerticalOptions="Fill" HorizontalOptions="Start" WidthRequest="1" Color="Gray"/>
+
+                                    <StackLayout Grid.Column="2" VerticalOptions="Center"  HorizontalOptions="FillAndExpand" >
+                                        <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
+                                            <Label Text="ø pro Bild" Style="{StaticResource LabelStyle}" />
+                                            <Label Text="{Binding AvgT}" Style="{StaticResource LabelStyle}" HorizontalOptions="End"/>
+                                        </StackLayout>
+                                        <StackLayout Style="{StaticResource imageLableStackLayout}">
+                                            <Label Text="ø pro richtig" Style="{StaticResource LabelStyle}" />
+                                            <Label Text="{Binding AvgTCPic}" Style="{StaticResource LabelStyle}" />
+                                        </StackLayout>
+                                        <StackLayout Style="{StaticResource imageLableStackLayout}">
+                                            <Label Text="ø pro falsch" Style="{StaticResource LabelStyle}" />
+                                            <Label Text="{Binding AvgTWPic}" Style="{StaticResource LabelStyle}" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                    <BoxView  Grid.Column="3" VerticalOptions="Fill" HorizontalOptions="Start" WidthRequest="1" Color="Gray"/>
+
+                                    <StackLayout Grid.Column="4" VerticalOptions="Center"  HorizontalOptions="Fill">
+                                        <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal" >
+                                            <Label Text="Total: "  />
+                                            <Label Text="{Binding NrOfAllImages}" Style="{StaticResource LabelStyle}" HorizontalOptions="CenterAndExpand" />
+                                        </StackLayout>
+                                        <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
+                                            <Label Text="Richtig:"  />
+                                            <Label Text="{Binding PctCIm, StringFormat='{}{0:.##}%'}" Style="{StaticResource LabelStyle}" HorizontalOptions="CenterAndExpand" />
+                                        </StackLayout>
+                                        <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
+                                            <Label Text="Falsch:" />
+                                            <Label Text="{Binding PctWIm, StringFormat='{}{0:#.##}%'}" Style="{StaticResource LabelStyle}" HorizontalOptions="CenterAndExpand"/>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </Grid>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentPage>

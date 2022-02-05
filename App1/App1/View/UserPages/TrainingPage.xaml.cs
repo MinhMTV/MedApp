@@ -324,6 +324,12 @@ namespace App1.View.UserPages
                 trainingSession.AvgTBAndWPicTicks = 0;
                 trainingSession.AvgTBAndWPic = null;
             }
+
+            if(trainingSession.IsTrainingCompleted == true)
+            {
+                GlobalVariables.SessionCount += 1;
+                trainingSession.cmplSession = GlobalVariables.SessionCount;
+            }
             
 
             trainingSessionDBHelper.AddTrainingSession(trainingSession);

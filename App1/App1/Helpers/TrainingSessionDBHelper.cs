@@ -96,6 +96,18 @@ namespace App1.Helpers
             return newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).LastOrDefault();
         }
 
+        public TrainingSession getFirstCmplTrainingSessionbyUser(User user)
+        {
+            var list = newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).ToList();
+            return list.FindAll(x => x.IsTrainingCompleted == true).FirstOrDefault();
+        }
+
+        public TrainingSession getLastCmpTrainingSessionbyUser(User user)
+        {
+            var list = newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).ToList();
+            return list.FindAll(x => x.IsTrainingCompleted == true).LastOrDefault();
+        }
+
         /// <summary>
         /// Get a specic List of Trainingsession by User,by Order, List length is session count
         /// </summary>

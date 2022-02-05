@@ -19,6 +19,8 @@ namespace App1.Models
 
         public static bool isGallery { get; set; } = false;
 
+        public static int SessionCount { get; set; } = 0; // we setting Sessioncount to zero, will update after every Session, and will be reset new User get addedd
+
         public static int NroOfAvailablePics
         {
             get { return 55; }
@@ -30,18 +32,6 @@ namespace App1.Models
         public static int NrOfAvailableBadPics
         {
             get { return 22; }
-        }
-        public static string ServerName
-        {
-            get { return "https://ti.uni-due.de/Rest_API/api/"; }
-        }
-
-        public static string ServerIP
-        {
-            get
-            {
-                return "ti.uni-due.de";
-            }
         }
 
         public static bool isTimer { get; set; } = false; //Session has Timer adjust by Admin  default: no Timer

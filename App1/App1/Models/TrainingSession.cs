@@ -7,8 +7,10 @@ namespace App1.Models
     public class TrainingSession
     {
         [PrimaryKey, AutoIncrement]
-        public int SessionId { get; set; }
+        public int SessionId { get; set; } //internal Primary Key DB number, but not seen as user or admin
         public DateTime SessionDate { get; set; }
+
+        public int cmplSession { get; set; } // Sessions which will be seen by admin and will be reseted by Admin when deleted - referenz to Global Variable
 
         [Indexed]
         public int UserID { get; set; }  //UserID From User

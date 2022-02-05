@@ -17,22 +17,24 @@ namespace App1.View.AdminPages
 	{
 		private UserDetailViewModel _uvm;
 		private UserDBHelper userDBHelper = new UserDBHelper();
+        private User user;
 		public UserDetailPage (User obj)
 		{
-			BindingContext = _uvm = new UserDetailViewModel(obj);
+            user = obj;
+            BindingContext = _uvm = new UserDetailViewModel(obj);
 			InitializeComponent ();
 		}
 
-		public void OnDelete(System.Object sender, System.EventArgs e)
+        private async void OnAlleTapped(object sender, EventArgs e)
         {
-
+            await Navigation.PushAsync(new TrainingCollectionPage(user));
         }
 
-		public void OnEdit(System.Object sender, System.EventArgs e)
+        protected override void OnAppearing()
         {
-
+            base.OnAppearing();
+            BindingContext = _uvm = new UserDetailViewModel(user);
         }
 
-
-	}
+    }
 }

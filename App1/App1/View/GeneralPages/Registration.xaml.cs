@@ -2,6 +2,7 @@
 using App1.Methods;
 using App1.Models;
 using App1.View;
+using App1.View.UserPages;
 using System;
 using System.Diagnostics;
 using Xamarin.Forms;
@@ -19,8 +20,9 @@ namespace App1.View.GeneralPages
         private Stringmethods stringmethods = new Stringmethods();
         public User user;
         private String username = "";
+        bool IsAdmin;
 
-        public Registration()
+        public Registration(bool admin)
         {
             InitializeComponent();
             Entry_Username.ReturnCommand = new Command(() => Entry_Firstname.Focus());
@@ -29,6 +31,10 @@ namespace App1.View.GeneralPages
             Entry_Email.ReturnCommand = new Command(() => Entry_Password.Focus());
             Entry_Password.ReturnCommand = new Command(() => Entry_Repeatedpassword.Focus());
             age = (int)slider_age.Value;
+            if (admin)
+                IsAdmin = true;
+            else
+                IsAdmin = false;
         }
 
         private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
@@ -121,6 +127,7 @@ namespace App1.View.GeneralPages
                 user.LastName = Entry_Lastname.Text;
                 user.Password = Entry_Password.Text;
                 user.Age = age;
+                user.isAskDataProtec = false;
                 user.FirstSession = DateTime.MinValue;
                 user.LastSession = DateTime.MinValue;
                 user.CreatedAt = DateTime.Now; 
@@ -134,8 +141,15 @@ namespace App1.View.GeneralPages
                     userDBHelper.PrintUser(user);
 
                     if (userAddingStatus)
-                    {
+                    {                       
                         await DisplayAlert("Glückwunsch!", "Sie haben sich erfolgreich registriert", "OK");
+                        if (IsAdmin)
+                        {
+                            await Navigation.PopModalAsync();
+                        } else
+                        {
+                            await Navigation.PushAsync(new DataProtectionPage());
+                        }
                     }
                     else
                     {

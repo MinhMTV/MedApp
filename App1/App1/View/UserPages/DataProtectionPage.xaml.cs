@@ -20,18 +20,16 @@ namespace App1.View.UserPages
 
 
         // Perform required operation after examining e.Value
-        async void OnCheckBoxCheckedChanged(object sender, CheckedChangedEventArgs e)
+        void OnCheckBoxCheckedChanged(object sender, CheckedChangedEventArgs e)
         {
             if (e.Value)
             {
-                await DisplayAlert("Status", "Sie haben die Datenschutzerkärung akzeptiert!", "OK");
                 //Update information
                 isAccepted = true;
 
             }
-            else
+            else 
             {
-                await DisplayAlert("Status", "Sie haben die Datenschutzerkärung nicht akzeptiert!", "OK");
                 isAccepted = false;
             }
             
@@ -39,8 +37,13 @@ namespace App1.View.UserPages
 
         async void Continue_Clicked(object sender, System.EventArgs e)
         {
-            if(isAccepted)
+            if (isAccepted)
+            {
+                var user = userDBHelper.GetLoggedUser();
+                user.isAskDataProtec = true;
+                userDBHelper.UpdateUser(user);
                 await Navigation.PushAsync(new MenuPage());
+            }  
             else
                 await DisplayAlert("Achtung", "Bitte die Datenschutzerklärung akzeptieren", "OK");
         }

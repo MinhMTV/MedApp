@@ -33,10 +33,11 @@ namespace App1.Helpers
         {
             if (CheckUserexist(user.Username))
             {
-                    return false;
+                return false;
             }
             else
             {
+                GlobalVariables.SessionCount = 0;
                 newConnection.Insert(user);
                 return true;
             }
@@ -88,15 +89,13 @@ namespace App1.Helpers
         /// <summary>
         /// delete all User in User Table, delete all Trainingssessions, delete all PicTimes
         /// </summary>
-        /// <returns></returns>
+        /// <returns>number of all deletedTables</returns>
         public int DeleteAllUser()
         {
             newConnection.DeleteAll<PicTime>();
             newConnection.DeleteAll<TrainingSession>();
-            newConnection.DropTable<TrainingSession>();
-            newConnection.DropTable<TrainingSession>();
-            newConnection.DeleteAll<User>();
-            return newConnection.DropTable<User>();
+            return newConnection.DeleteAll<User>();
+
         }
 
         public int UpdateUser(User user)

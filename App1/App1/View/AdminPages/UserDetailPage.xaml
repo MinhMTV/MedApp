@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App1.View.AdminPages.UserDetailPage" 
-              xmlns:pg="clr-namespace:App1.ViewModels"
+             xmlns:pg="clr-namespace:App1.ViewModels"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit" 
              xmlns:converters="clr-namespace:App1.Methods">
     <ContentPage.Resources>
@@ -14,13 +14,13 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="User bearbeiten"
                      Order="Secondary"
-                     Command="{Binding OnEdit}"
-                     Clicked="OnEdit"
+                     Command="{Binding EditCommand}"
+                     CommandParameter="{Binding user}"
                      />
         <ToolbarItem Text="User löschen"
                      Order="Secondary"
-                     Command="{Binding OnDelete}"
-                     Clicked="OnDelete"
+                     Command="{Binding DeleteCommand}"
+                     CommandParameter="{Binding user}"
                      />
     </ContentPage.ToolbarItems>
     <NavigationPage.TitleView>
@@ -152,7 +152,11 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Label Text="Letzten 3 Training" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Grid.Column="0" Style="{StaticResource TextBindingDetail}"/>
-                <Label Text="Alle" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Grid.Column="1" Style="{StaticResource TextBindingDetail}"/>
+                <Label Text="Alle" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Grid.Column="1" Style="{StaticResource TextBindingDetail}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnAlleTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
             </Grid>
             <CollectionView x:Name="TsessionCV" SelectionMode="Single" ItemsSource="{Binding TSession}"
                         >
@@ -178,36 +182,63 @@
 
                             <Frame Style="{StaticResource FrameCardViewStyle}">
                                 <StackLayout Style="{StaticResource itemsCardViewStackLayoutStyle}"    >
-                                    <StackLayout Style="{StaticResource itemsInsideCardViewStackLayoutStyle}">
-                                        <StackLayout Style="{StaticResource detailsStackLayout}">
-                                            <Label Text="{Binding SessionDate}" Style="{StaticResource NameLabel}" />
-                                            <StackLayout Style="{StaticResource imageLableStackLayout}">
-                                                <Image Source="https://img.icons8.com/material-outlined/24/000000/employee-card.png" Style="{StaticResource imageStyle}"></Image>
-                                                <Label Text="Session ID:" Style="{StaticResource LabelStyle}" />
+                                    <StackLayout Style="{StaticResource itemsInsideCardViewStackLayoutStyle}" Margin="10,0,10,0">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <StackLayout Grid.Column="0" HorizontalOptions="Center" >
+                                                <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
+                                                    <Label Text="Training ID:" Style="{StaticResource LabelStyle}" />
+                                                    <Label Text="{Binding cmplSession}" Style="{StaticResource LabelStyle}" />
+                                                    </StackLayout>
+                                                <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
+                                                    <Label Text="Zeit:" Style="{StaticResource LabelStyle}" />
+                                                    <Label Text="{Binding ElapsedTime}" Style="{StaticResource LabelStyle}" HorizontalOptions="End"/>
+                                                    </StackLayout>
                                                 <StackLayout Style="{StaticResource imageLableStackLayout}">
-                                                    <Label Text="{Binding SessionId}" Style="{StaticResource LabelStyle}" />
+                                                    <Label Text="Datum:" />
+                                                    <Label Text="{Binding SessionDate,StringFormat='{0:d}'}"/>
                                                 </StackLayout>
                                             </StackLayout>
-                                            <StackLayout Style="{StaticResource imageLableStackLayout}">
-                                                <Image Source="https://img.icons8.com/material-outlined/24/000000/age.png" Style="{StaticResource imageStyle}"></Image>
-                                                <Label Text="Age:" Style="{StaticResource LabelStyle}" />
+                                            <BoxView  Grid.Column="1" VerticalOptions="Fill" HorizontalOptions="Start" WidthRequest="1" Color="Gray"/>
+                                            
+                                            <StackLayout Grid.Column="2" VerticalOptions="Center"  HorizontalOptions="FillAndExpand" >
+                                                <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
+                                                    <Label Text="ø pro Bild" Style="{StaticResource LabelStyle}" />
+                                                    <Label Text="{Binding AvgT}" Style="{StaticResource LabelStyle}" HorizontalOptions="End"/>
+                                                </StackLayout>
                                                 <StackLayout Style="{StaticResource imageLableStackLayout}">
-                                                    <Label Text="{Binding Age}" Style="{StaticResource LabelStyle}" />
+                                                    <Label Text="ø pro richtig" Style="{StaticResource LabelStyle}" />
+                                                    <Label Text="{Binding AvgTCPic}" Style="{StaticResource LabelStyle}" />
+                                                </StackLayout>
+                                                <StackLayout Style="{StaticResource imageLableStackLayout}">
+                                                    <Label Text="ø pro falsch" Style="{StaticResource LabelStyle}" />
+                                                    <Label Text="{Binding AvgTWPic}" Style="{StaticResource LabelStyle}" />
                                                 </StackLayout>
                                             </StackLayout>
-                                            <StackLayout Style="{StaticResource imageLableStackLayout}">
-                                                <Image Source="https://img.icons8.com/fluency-systems-regular/48/000000/key.png" Style="{StaticResource imageStyle}"></Image>
-                                                <Label Text="UserID:" Style="{StaticResource LabelStyle}" />
-                                                <StackLayout Style="{StaticResource imageLableStackLayout}">
-                                                    <Label Text="{Binding UserID}" Style="{StaticResource LabelStyle}" />
+                                            <BoxView  Grid.Column="3" VerticalOptions="Fill" HorizontalOptions="Start" WidthRequest="1" Color="Gray"/>
+
+                                            <StackLayout Grid.Column="4" VerticalOptions="Center"  HorizontalOptions="Fill">
+                                                <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal" >
+                                                    <Label Text="Total: "  />
+                                                    <Label Text="{Binding NrOfAllImages}" Style="{StaticResource LabelStyle}" HorizontalOptions="CenterAndExpand" />
+                                                </StackLayout>
+                                                <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
+                                                    <Label Text="Richtig:"  />
+                                                    <Label Text="{Binding PctCIm, StringFormat='{}{0:.##}%'}" Style="{StaticResource LabelStyle}" HorizontalOptions="CenterAndExpand" />
+                                                </StackLayout>
+                                                <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
+                                                    <Label Text="Falsch:" />
+                                                    <Label Text="{Binding PctWIm, StringFormat='{}{0:#.##}%'}" Style="{StaticResource LabelStyle}" HorizontalOptions="CenterAndExpand"/>
                                                 </StackLayout>
                                             </StackLayout>
-                                            <StackLayout Style="{StaticResource imageLableStackLayout}">
-                                                <Image Source="https://img.icons8.com/material-two-tone/24/000000/time-machine.png" Style="{StaticResource imageStyle}"></Image>
-                                                <Label Text="lastSession:" Style="{StaticResource LabelStyle}"></Label>
-                                                <Label Text="{Binding SessionLastUpdatedshort}" Style="{StaticResource LabelStyle}" />
-                                            </StackLayout>
-                                        </StackLayout>
+                                        </Grid>
                                     </StackLayout>
                                 </StackLayout> 
                             </Frame>

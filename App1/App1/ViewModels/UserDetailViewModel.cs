@@ -14,7 +14,6 @@ using Xamarin.Forms.Xaml;
 
 namespace App1.ViewModels
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public class UserDetailViewModel : BaseViewModel
     {
 
@@ -32,6 +31,8 @@ namespace App1.ViewModels
         public UserDBHelper userDBHelper = new UserDBHelper();
 
         //User Properties
+
+        public User user { get; set; }
         public string UserName { get; set; }
 
         public int UserID { get; set; }
@@ -56,9 +57,10 @@ namespace App1.ViewModels
 
         public UserDetailViewModel(User obj)
         {
-            InitData(obj);
-            EditCommand = new Command<User>(OnEdit);
-            DeleteCommand = new Command<User>(OnDelete);
+            user = obj;
+            InitData(user);
+            EditCommand = new Command<User>(x=> OnEdit(user));
+            DeleteCommand = new Command<User>(x => OnDelete(user));
             PressedCommand = new Command<TrainingSession>(OnPressed);
         }
 
@@ -71,17 +73,27 @@ namespace App1.ViewModels
 
         private async void OnEdit(User obj)
         {
-            await App.Current.MainPage.DisplayToastAsync("Navigiere zu UserEdit");
-
-            //          await App.Current.MainPage.Navigation.PushAsync(new TrainingSessionDetail(obj));
+            await App.Current.MainPage.Navigation.PushAsync(new EditUserData(user));
         }
         private async void OnDelete(User obj)
         {
-            var result = await App.Current.MainPage.DisplayAlert("Achtung", "Möchten Sie den User wirklich löschen?", "Ja", "Nein");
-            if(result)
+            var result = await App.Current.MainPage.DisplayAlert("Achtung!", "Wollen Sie den User wirklich löschen?", "Ja", "Nein");
+
+            if (result)
             {
-                userDBHelper.DeleteAllUser(); 
-                await App.Current.MainPage.Navigation.PopAsync();
+                try
+                {
+                    userDBHelper.DeleteAllUser();
+                    await App.Current.MainPage.Navigation.PopAsync();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            else
+            {
+                //do nothing
             }
         }
 
@@ -103,6 +115,6 @@ namespace App1.ViewModels
             SessionCount = trainingSession.getCompletedTrainingSessionListbyUserAndOrder(obj, false).Count;
             CreatedAt = obj.CreatedAt;
             FirstSession = obj.FirstSession;
-    }
+     }
     }
 }

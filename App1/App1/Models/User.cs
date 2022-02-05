@@ -17,6 +17,8 @@ namespace App1.Models
         public string Password { get; set; }
         public int Age { get; set; }
 
+        public bool isAskDataProtec { get; set; }
+
         public DateTime FirstSession { get; set; } //first trainingsession
         public DateTime LastSession { get; set; } //last Trainingsession
         public DateTime CreatedAt { get; set; } //when user was created

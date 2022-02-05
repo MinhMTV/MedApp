@@ -63,8 +63,15 @@ namespace App1.View.GeneralPages
                     await DisplayAlert("Login", "Login erfolgreich", "Okay");
                     Preferences.Set(constants.loginUser, username);  // set login User to Username of user
                     var user = userDBHelper.GetLoggedUser();
-                    userDBHelper.debugUser(user);
-                    await Navigation.PushAsync(new MenuPage());
+
+                    if (user.isAskDataProtec)
+                    {
+                        await Navigation.PushAsync(new MenuPage());
+                    } 
+                    else
+                    {
+                        await Navigation.PushAsync(new DataProtectionPage());
+                    }
 
                 }
                 else
@@ -83,7 +90,7 @@ namespace App1.View.GeneralPages
         async void StartRegistration(object sender, EventArgs e)
         {
             if (userDBHelper.checkNoUser())
-                await Navigation.PushModalAsync(new Registration(), false);
+                await Navigation.PushModalAsync(new Registration(false));
             else
                 await DisplayAlert("Achtung", "Ein Nutzer ist schon registriert. Bitte Therapeut um Löschung des Users anfragen", "OK");
         }

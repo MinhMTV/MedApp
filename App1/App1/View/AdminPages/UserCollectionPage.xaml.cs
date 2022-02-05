@@ -32,9 +32,9 @@ namespace App1.View.AdminPages
             var userList = userDBHelper.GetAllUserToList();
             foreach (var user in userList)
             {
-                if (trainingSession.getLastTrainingSessionbyUser(user) != null)
+                if (trainingSession.getLastCmpTrainingSessionbyUser(user) != null)
                 {
-                    user.LastSession = trainingSession.getLastTrainingSessionbyUser(user).SessionDate;
+                    user.LastSession = trainingSession.getLastCmpTrainingSessionbyUser(user).SessionDate;
                     userDBHelper.UpdateUser(user);
                 }
                 else
@@ -43,9 +43,9 @@ namespace App1.View.AdminPages
                     userDBHelper.UpdateUser(user);
                 }
 
-                if (trainingSession.getFirstTrainingSessionbyUser(user) != null)
+                if (trainingSession.getFirstCmplTrainingSessionbyUser(user) != null)
                 {
-                    user.FirstSession = trainingSession.getFirstTrainingSessionbyUser(user).SessionDate;
+                    user.FirstSession = trainingSession.getFirstCmplTrainingSessionbyUser(user).SessionDate;
                     userDBHelper.UpdateUser(user);
                 }
                 else
@@ -59,10 +59,16 @@ namespace App1.View.AdminPages
             InitializeComponent();
 
         }
-            async void AddUser_Clicked(System.Object sender, System.EventArgs e)
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            BindingContext = _uvm = new UserCollectionViewModel();
+        }
+        async void AddUser_Clicked(System.Object sender, System.EventArgs e)
         {
             if (userDBHelper.checkNoUser())
-                await Navigation.PushModalAsync(new Registration());
+                await Navigation.PushModalAsync(new Registration(true));
             else
                 await DisplayAlert("Achtung", "Ein Nutzer ist schon registriert. Bitte Benutzer löschen", "OK");
 

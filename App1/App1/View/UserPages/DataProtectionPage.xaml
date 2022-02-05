@@ -25,19 +25,6 @@
                 </Label>
             </ScrollView>
 
-            <!--Button Text="Ablehnen"
-                    Clicked="Cancel_Clicked"
-                    TextColor="White"
-                    BackgroundColor="Blue"
-                    HorizontalOptions="CenterAndExpand"/>
-
-                <Button Text="Einverstanden"
-                    Clicked="Accept_Clicked"
-                    TextColor="White"
-                    BackgroundColor="Blue"
-                    HorizontalOptions="CenterAndExpand"/-->
-         
-
             <Grid Margin="10,15,0,15">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -47,7 +34,7 @@
                 <CheckBox
                     Color="Blue"
                     Grid.Column="0"
-                    IsChecked="True"
+                    IsChecked="False"
                     x:Name="CheckBox_IsDataProtectionAccepted"
                     Scale="1.5"
                     CheckedChanged="OnCheckBoxCheckedChanged"/>
