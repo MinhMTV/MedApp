@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit" 
+             xmlns:pg="clr-namespace:App1.ViewModels"
+             x:Class="App1.View.AdminPages.TrainingDetailPage">
+    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+    <StackLayout BackgroundColor="Red">
+        <Image HeightRequest="200" Source="https://img.icons8.com/external-xnimrodx-lineal-gradient-xnimrodx/64/000000/external-graph-design-thinking-xnimrodx-lineal-gradient-xnimrodx.png"/>
+    </StackLayout>
+        
+        <!--Total Number-->
+        <Grid Padding="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="0" >
+                <Label  Text="Insgesamt:"  Style="{StaticResource NameConstant}" />
+                <Label Text="{Binding NrOfAllImages}" Style="{StaticResource NameConstant}"  HorizontalOptions="EndAndExpand" FontAttributes="Bold"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="0" >
+                <Label  Text="Subst. unabh. Bilder:" Style="{StaticResource NameConstant}"/>
+                <Label  Text="{Binding NrOfGoodImages}" Style="{StaticResource NameConstant}" HorizontalOptions="EndAndExpand" FontAttributes="Bold"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" Grid.Row="2" Grid.Column="0" >
+                <Label  Text="Subst. abh. Bilder:" Style="{StaticResource NameConstant}"/>
+                <Label  Text="{Binding NrOfBadImages}" Style="{StaticResource NameConstant}" HorizontalOptions="EndAndExpand" FontAttributes="Bold"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="1" >
+                <Label  Text="TrainingsID:" Style="{StaticResource NameConstant}" />
+                <Label  Text="{Binding cmplSession}" Style="{StaticResource NameConstant}"  FontAttributes="Bold" HorizontalOptions="EndAndExpand"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="1" >
+                <Label  Text="Insg. richtig:" Style="{StaticResource NameConstant}" />
+                <Label  Style="{StaticResource NameConstant}" FontAttributes="Bold" HorizontalOptions="EndAndExpand">
+                    <Label.Text>
+                        <MultiBinding StringFormat="{}{0}/{1:#.#}%">
+                            <Binding Path="NrOfCorrectImages" />
+                            <Binding Path="PctCIm" />
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" Grid.Row="2" Grid.Column="1" >
+                <Label  Text="Insg. falsch:" Style="{StaticResource NameConstant}" />
+                <Label  Style="{StaticResource NameConstant}" FontAttributes="Bold" HorizontalOptions="EndAndExpand">
+                    <Label.Text>
+                        <MultiBinding StringFormat="{}{0}/{1:#.#}%">
+                            <Binding Path="NrOfWrongImages" />
+                            <Binding Path="PctWIm" />
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+            </StackLayout>
+        </Grid>
+        <BoxView Style="{StaticResource Horizontal_Line}"/>
+
+        <!--Detail Number-->
+        <StackLayout  Margin="10,0,10,0">
+        <StackLayout Orientation="Horizontal"  >
+                <Label  Text="korrect &amp; subst. unabh. Bilder:"  Style="{StaticResource NameConstant}" />
+                <Label Text="{Binding NrOfGoodCorrectImages}" Style="{StaticResource NameConstant}"  HorizontalOptions="EndAndExpand" FontAttributes="Bold"/>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal"  >
+                <Label  Text="falsch &amp; subst. unabh. Bilder:"  Style="{StaticResource NameConstant}"/>
+                <Label  Text="{Binding NrOfGoodWrongImages}" Style="{StaticResource NameConstant}" HorizontalOptions="EndAndExpand" FontAttributes="Bold"/>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" >
+                <Label  Text="korrect &amp; subst. abh. Bilder:" Style="{StaticResource NameConstant}"/>
+                <Label  Text="{Binding NrOfBadCorrectImages}" Style="{StaticResource NameConstant}" HorizontalOptions="EndAndExpand" FontAttributes="Bold"/>
+        </StackLayout>
+            <StackLayout Orientation="Horizontal" >
+                <Label  Text="falsch &amp; subst. abh. Bilder:" Style="{StaticResource NameConstant}" />
+                <Label  Text="{Binding NrOfBadWrongImages}" Style="{StaticResource NameConstant}"  FontAttributes="Bold" HorizontalOptions="EndAndExpand"/>
+            </StackLayout>
+        </StackLayout>
+        <BoxView Style="{StaticResource Horizontal_Line}"/>
+        <StackLayout Margin="10,0,10,0"  Orientation="Horizontal" HorizontalOptions="Center">
+            <Label  Text="Trainingszeit:"  Style="{StaticResource NameConstant}" HorizontalOptions="Center" FontAttributes="Bold" />
+            <Label Text="{Binding ElapsedTime}" Style="{StaticResource NameConstant}"  HorizontalOptions="Center" FontAttributes="Bold"/>
+        </StackLayout>
+        <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
+            <Label Text="ø pro Bild" Style="{StaticResource LabelStyle}" />
+            <Label Text="{Binding AvgT}" Style="{StaticResource LabelStyle}"/>
+        </StackLayout>
+        <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
+            <Label Text="ø pro richtig" Style="{StaticResource LabelStyle}" />
+            <Label Text="{Binding AvgTCPic}" Style="{StaticResource LabelStyle}" />
+        </StackLayout>
+        <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
+            <Label Text="ø pro falsch" Style="{StaticResource LabelStyle}" />
+            <Label Text="{Binding AvgTWPic}" Style="{StaticResource LabelStyle}" />
+        </StackLayout>
+        <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
+            <Label Text="ø pro subst. unabh." Style="{StaticResource LabelStyle}" />
+            <Label Text="{Binding AvgTGPic}" Style="{StaticResource LabelStyle}" />
+        </StackLayout>
+        <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
+            <Label Text="ø pro subst. abh." Style="{StaticResource LabelStyle}" />
+            <Label Text="{Binding AvgTBPic}" Style="{StaticResource LabelStyle}" />
+        </StackLayout>
+
+
+
+    </StackLayout>
+</ContentPage>

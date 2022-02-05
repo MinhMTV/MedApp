@@ -102,4 +102,18 @@
         <Setter Property="FontAttributes" Value="Bold"/>
     </Style>
 
+    <!--  TrainigDetailPage -->
+    <Style x:Key="Horizontal_Line" TargetType="BoxView">
+        <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+        <Setter Property="HeightRequest" Value="1"/>
+        <Setter Property="Color" Value="Black"/>
+    </Style>
+
+    <Style x:Key="Vertical_Line" TargetType="BoxView">
+        <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+        <Setter Property="WidthRequest" Value="1"/>
+        <Setter Property="Color" Value="Black"/>
+    </Style>
+
+
 </ResourceDictionary>

@@ -66,7 +66,7 @@ namespace App1.ViewModels
 
         private async void OnPressed(TrainingSession obj)
         {
-            await App.Current.MainPage.DisplayToastAsync("Navigiere zu Trainingssession");
+            await App.Current.MainPage.Navigation.PushAsync(new TrainingDetailPage(obj));
 
  //          await App.Current.MainPage.Navigation.PushAsync(new TrainingSessionDetail(obj));
         }
