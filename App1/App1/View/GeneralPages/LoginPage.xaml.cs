@@ -90,7 +90,7 @@ namespace App1.View.GeneralPages
         async void StartRegistration(object sender, EventArgs e)
         {
             if (userDBHelper.checkNoUser())
-                await Navigation.PushModalAsync(new Registration(false));
+                await Navigation.PushAsync(new Registration(false));
             else
                 await DisplayAlert("Achtung", "Ein Nutzer ist schon registriert. Bitte Therapeut um Löschung des Users anfragen", "OK");
         }

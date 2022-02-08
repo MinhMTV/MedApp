@@ -5,6 +5,7 @@ using App1.View;
 using App1.View.UserPages;
 using System;
 using System.Diagnostics;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -148,6 +149,7 @@ namespace App1.View.GeneralPages
                             await Navigation.PopModalAsync();
                         } else
                         {
+                            Preferences.Set(constants.loginUser, username);  // set login User to Username of user
                             await Navigation.PushAsync(new DataProtectionPage());
                         }
                     }
