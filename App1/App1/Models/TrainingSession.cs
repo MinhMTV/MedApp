@@ -36,7 +36,7 @@ namespace App1.Models
 
         public double PctGandCIm =>  ((double)NrOfGoodCorrectImages / (double)NrOfGoodImages) * 100;  //percentage amount of good and Correct Images in total Session
 
-        public double PctBandCIm =>  ((double)NrOfBadImages / (double)NrOfBadImages) * 100; //percentage amount of Bad and Correct Images in total Session
+        public double PctBandCIm =>  ((double)NrOfBadCorrectImages / (double)NrOfBadImages) * 100; //percentage amount of Bad and Correct Images in total Session
 
         public double PctGandWIm => ((double)NrOfGoodWrongImages / (double)NrOfGoodImages) * 100; //percentage amount of Good and Wrong Images in total Session
 

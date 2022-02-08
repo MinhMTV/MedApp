@@ -30,7 +30,7 @@ namespace App1.View.UserPages
         static long TotalTime = 0; // Elapsed time in ms
 
         PicType currentPicType;
-        ObservableCollection<Pictures> newCollection;
+        private ObservableCollection<Pictures> newCollection;
         private PictureDBHelper pictureDBHelper = new PictureDBHelper();
         private TrainingSessionDBHelper trainingSessionDBHelper = new TrainingSessionDBHelper();
         private UserDBHelper userDBHelper = new UserDBHelper();
@@ -48,9 +48,18 @@ namespace App1.View.UserPages
             this.BindingContext = new SwipeViewModel();
             SwipeCardView.Dragging += OnDragging;
             trainingSession = new TrainingSession();
+
+            var lastTraining = trainingSessionDBHelper.GetLastTrainingSession();
+            if (lastTraining != null)
+            {
+                trainingSession.SessionId = lastTraining.SessionId + 1;
+                Console.WriteLine(lastTraining.SessionId);
+            }     
+            else
+                trainingSession.SessionId = 1;
+            Console.WriteLine(trainingSession.SessionId);
             user = userDBHelper.GetLoggedUser();
-            trainingSession.SessionId = trainingSessionDBHelper.GetAllTrainingsSessionToList().Count + 1;
-            trainingSession.SessionDate = DateTime.Now;
+            trainingSession.SessionDate = DateTime.Now.AddDays(-4);
             trainingSession.IsTrainingCompleted = false;
             totalImages = pictureDBHelper.GetAllImagesToList().Count;
 
@@ -132,9 +141,10 @@ namespace App1.View.UserPages
         public void getStatistic()
         {
             trainingSession.UserID = user.UserID;
-            trainingSession.ElapsedTime = stringmethods.TimeSpanToStringToMin(GlobalVariables.Stopwatch.Elapsed);
+            trainingSession.ElapsedTime = stringmethods.TimeSpanToStringToMinExt(GlobalVariables.Stopwatch.Elapsed);
             trainingSession.SessionTimeTicks = GlobalVariables.Stopwatch.ElapsedTicks;
             var piclist = picTimeDBHelper.getAllPictimebyTrainingSession(trainingSession);
+            Console.WriteLine("Count" + piclist.Count);
             long goodTicks = 0;
             int goodPics = 0;
             int badPics = 0;
@@ -178,25 +188,25 @@ namespace App1.View.UserPages
                     }
                 }
             }
-            trainingSession.gImageT = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(goodTicks));
-            trainingSession.bImageT = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(badTicks));
-            trainingSession.CImageT = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(correctPicsTicks));
+            trainingSession.gImageT = stringmethods.TimeSpanToStringToMinExt(TimeSpan.FromTicks(goodTicks));
+            trainingSession.bImageT = stringmethods.TimeSpanToStringToMinExt(TimeSpan.FromTicks(badTicks));
+            trainingSession.CImageT = stringmethods.TimeSpanToStringToMinExt(TimeSpan.FromTicks(correctPicsTicks));
 
-            trainingSession.WImageT = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(wrongPicsTicks));
+            trainingSession.WImageT = stringmethods.TimeSpanToStringToMinExt(TimeSpan.FromTicks(wrongPicsTicks));
 
-            trainingSession.GAndCT = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(correctAndGoodPicTicks));
+            trainingSession.GAndCT = stringmethods.TimeSpanToStringToMinExt(TimeSpan.FromTicks(correctAndGoodPicTicks));
 
-            trainingSession.BAndCT = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(correctAndBadPicTicks));
+            trainingSession.BAndCT = stringmethods.TimeSpanToStringToMinExt(TimeSpan.FromTicks(correctAndBadPicTicks));
 
-            trainingSession.GAndWT = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(wrongAndGoodPicTicks));
+            trainingSession.GAndWT = stringmethods.TimeSpanToStringToMinExt(TimeSpan.FromTicks(wrongAndGoodPicTicks));
 
-            trainingSession.BAndWT = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(wrongAndBadPicTicks));
+            trainingSession.BAndWT = stringmethods.TimeSpanToStringToMinExt(TimeSpan.FromTicks(wrongAndBadPicTicks));
 
             // See Explanation of all Statistic in TrainingSession Model
             try
             {
                 trainingSession.AvgTTicks = GlobalVariables.Stopwatch.ElapsedTicks / trainingSession.NrOfAllImages;
-                trainingSession.AvgT = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(GlobalVariables.Stopwatch.ElapsedTicks / trainingSession.NrOfAllImages));
+                trainingSession.AvgT = stringmethods.TimeSpanToStringToMinExt(TimeSpan.FromTicks(GlobalVariables.Stopwatch.ElapsedTicks / trainingSession.NrOfAllImages));
             }
             catch (DivideByZeroException)
             {
@@ -208,7 +218,7 @@ namespace App1.View.UserPages
             try
             {
                 trainingSession.AvgTGPicTicks = goodTicks / goodPics;
-                trainingSession.AvgTGPic = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(goodTicks / goodPics));
+                trainingSession.AvgTGPic = stringmethods.TimeSpanToStringToMinExt(TimeSpan.FromTicks(goodTicks / goodPics));
 
             }
             catch (DivideByZeroException)
@@ -221,7 +231,7 @@ namespace App1.View.UserPages
             try
             {
                 trainingSession.AvgTBPicTicks = badTicks / badPics;
-                trainingSession.AvgTBPic = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(badTicks / badPics));
+                trainingSession.AvgTBPic = stringmethods.TimeSpanToStringToMinExt(TimeSpan.FromTicks(badTicks / badPics));
 
             }
             catch (DivideByZeroException)
@@ -234,7 +244,7 @@ namespace App1.View.UserPages
             try
             {
                 trainingSession.AvgTCPicTicks = correctPicsTicks / (trainingSession.NrOfGoodCorrectImages + trainingSession.NrOfBadCorrectImages);
-                trainingSession.AvgTCPic = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(correctPicsTicks / (trainingSession.NrOfGoodCorrectImages + trainingSession.NrOfBadCorrectImages)));
+                trainingSession.AvgTCPic = stringmethods.TimeSpanToStringToMinExt(TimeSpan.FromTicks(correctPicsTicks / (trainingSession.NrOfGoodCorrectImages + trainingSession.NrOfBadCorrectImages)));
 
             }
             catch (DivideByZeroException)
@@ -247,7 +257,7 @@ namespace App1.View.UserPages
             try
             {
                 trainingSession.AvgTWPicTicks = wrongPicsTicks / (trainingSession.NrOfGoodWrongImages + trainingSession.NrOfBadWrongImages);
-                trainingSession.AvgTWPic = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(wrongPicsTicks / (trainingSession.NrOfGoodWrongImages + trainingSession.NrOfBadWrongImages)));
+                trainingSession.AvgTWPic = stringmethods.TimeSpanToStringToMinExt(TimeSpan.FromTicks(wrongPicsTicks / (trainingSession.NrOfGoodWrongImages + trainingSession.NrOfBadWrongImages)));
 
             }
             catch (DivideByZeroException)
@@ -261,7 +271,7 @@ namespace App1.View.UserPages
             try
             {
                 trainingSession.AvgTGAndCPicTicks = correctAndGoodPicTicks / trainingSession.NrOfGoodCorrectImages;
-                trainingSession.AvgTGAndCPic = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(correctAndGoodPicTicks / trainingSession.NrOfGoodCorrectImages));
+                trainingSession.AvgTGAndCPic = stringmethods.TimeSpanToStringToMinExt(TimeSpan.FromTicks(correctAndGoodPicTicks / trainingSession.NrOfGoodCorrectImages));
 
 
             }
@@ -276,7 +286,7 @@ namespace App1.View.UserPages
             try
             {
                 trainingSession.AvgTBAndCPicTicks = correctAndBadPicTicks / trainingSession.NrOfBadCorrectImages;
-                trainingSession.AvgTBAndCPic = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(correctAndBadPicTicks / trainingSession.NrOfBadCorrectImages));
+                trainingSession.AvgTBAndCPic = stringmethods.TimeSpanToStringToMinExt(TimeSpan.FromTicks(correctAndBadPicTicks / trainingSession.NrOfBadCorrectImages));
             }
             catch (DivideByZeroException)
             {
@@ -289,7 +299,7 @@ namespace App1.View.UserPages
             try
             {
                 trainingSession.AvgTGAndWPicTicks = wrongAndGoodPicTicks / trainingSession.NrOfGoodWrongImages;
-                trainingSession.AvgTGAndWPic = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(wrongAndGoodPicTicks / trainingSession.NrOfGoodWrongImages));
+                trainingSession.AvgTGAndWPic = stringmethods.TimeSpanToStringToMinExt(TimeSpan.FromTicks(wrongAndGoodPicTicks / trainingSession.NrOfGoodWrongImages));
 
             }
             catch (DivideByZeroException)
@@ -303,7 +313,7 @@ namespace App1.View.UserPages
             try
             {
                 trainingSession.AvgTGAndWPicTicks = wrongAndGoodPicTicks / trainingSession.NrOfGoodWrongImages;
-                trainingSession.AvgTGAndWPic = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(wrongAndGoodPicTicks / trainingSession.NrOfGoodWrongImages));
+                trainingSession.AvgTGAndWPic = stringmethods.TimeSpanToStringToMinExt(TimeSpan.FromTicks(wrongAndGoodPicTicks / trainingSession.NrOfGoodWrongImages));
 
             }
             catch (DivideByZeroException)
@@ -316,7 +326,7 @@ namespace App1.View.UserPages
             try
             {
                 trainingSession.AvgTBAndWPicTicks = wrongAndBadPicTicks / trainingSession.NrOfBadWrongImages;
-                trainingSession.AvgTBAndWPic = stringmethods.TimeSpanToStringToMin(TimeSpan.FromTicks(wrongAndBadPicTicks / trainingSession.NrOfBadWrongImages));
+                trainingSession.AvgTBAndWPic = stringmethods.TimeSpanToStringToMinExt(TimeSpan.FromTicks(wrongAndBadPicTicks / trainingSession.NrOfBadWrongImages));
 
             }
             catch (DivideByZeroException)
@@ -325,17 +335,19 @@ namespace App1.View.UserPages
                 trainingSession.AvgTBAndWPic = null;
             }
 
-            if(trainingSession.IsTrainingCompleted == true)
+            if (trainingSession.IsTrainingCompleted == true)
             {
-                GlobalVariables.SessionCount += 1;
-                trainingSession.cmplSession = GlobalVariables.SessionCount;
+                try
+                {
+                    trainingSession.cmplSession = trainingSessionDBHelper.getCompletedTrainingSessionListbyUserAndOrder(user, false).Count + 1;
+                }
+                catch 
+                {
+                    trainingSession.cmplSession = 1;
+                }
+                
             }
-            
-
             trainingSessionDBHelper.AddTrainingSession(trainingSession);
-
-            //Debug
-            var debugTraining = trainingSessionDBHelper.getLastTrainingSessionbyUser(user);
         }
 
 
@@ -396,7 +408,7 @@ namespace App1.View.UserPages
                             PicTime picTime = new PicTime();
                             picTime.SessionID = trainingSession.SessionId;
                             picTime.TimeTicks = stopwatch2.ElapsedTicks;
-                            picTime.Time = stringmethods.TimeSpanToStringToMin(stopwatch2.Elapsed);
+                            picTime.Time = stringmethods.TimeSpanToStringToMinExt(stopwatch2.Elapsed);
                             picTime.Type = PicType.Bad;
                             picTime.CorrectImage = true;
                             picTimeDBHelper.AddPicTime(picTime);
@@ -410,7 +422,7 @@ namespace App1.View.UserPages
                             PicTime picTime = new PicTime();
                             picTime.SessionID = trainingSession.SessionId;
                             picTime.TimeTicks = stopwatch2.ElapsedTicks;
-                            picTime.Time = stringmethods.TimeSpanToStringToMin(stopwatch2.Elapsed);
+                            picTime.Time = stringmethods.TimeSpanToStringToMinExt(stopwatch2.Elapsed);
                             picTime.Type = PicType.Good;
                             picTime.CorrectImage = false;
                             picTimeDBHelper.AddPicTime(picTime);
@@ -428,7 +440,7 @@ namespace App1.View.UserPages
                             PicTime picTime = new PicTime();
                             picTime.SessionID = trainingSession.SessionId;
                             picTime.TimeTicks = stopwatch2.ElapsedTicks;
-                            picTime.Time = stringmethods.TimeSpanToStringToMin(stopwatch2.Elapsed);
+                            picTime.Time = stringmethods.TimeSpanToStringToMinExt(stopwatch2.Elapsed);
                             picTime.Type = PicType.Good;
                             picTime.CorrectImage = true;
                             picTimeDBHelper.AddPicTime(picTime);
@@ -442,7 +454,7 @@ namespace App1.View.UserPages
                             PicTime picTime = new PicTime();
                             picTime.SessionID = trainingSession.SessionId;
                             picTime.TimeTicks = stopwatch2.ElapsedTicks;
-                            picTime.Time = stringmethods.TimeSpanToStringToMin(stopwatch2.Elapsed);
+                            picTime.Time = stringmethods.TimeSpanToStringToMinExt(stopwatch2.Elapsed);
                             picTime.Type = PicType.Bad;
                             picTime.CorrectImage = false;
                             picTimeDBHelper.AddPicTime(picTime);

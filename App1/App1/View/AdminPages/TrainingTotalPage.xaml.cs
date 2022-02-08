@@ -12,13 +12,14 @@ using Xamarin.Forms.Xaml;
 namespace App1.View.AdminPages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class TrainingCollectionPage : ContentPage
+    public partial class TrainingTotalPage : ContentPage
     {
-        private TrainingCollectionViewModel _svm;
-        public TrainingCollectionPage(User user)
+        TrainingTotalViewModel _tvm;
+        public TrainingTotalPage(User user)
         {
             InitializeComponent();
-            BindingContext = _svm = new TrainingCollectionViewModel(user);
+            BindingContext = _tvm = new TrainingTotalViewModel(user);
+
         }
     }
 }

@@ -14,8 +14,8 @@ namespace App1
     {
         public static double ScreenHeight;
         public static double ScreenWidth;
-        AdminDBHelper adminDBHelper = new AdminDBHelper();
-        UserDBHelper userDBHelper = new UserDBHelper();
+        private AdminDBHelper adminDBHelper = new AdminDBHelper();
+        private UserDBHelper userDBHelper = new UserDBHelper();
 
 
 
@@ -81,9 +81,19 @@ namespace App1
                         }
                         else if (userDBHelper.CheckUserexist(logginUser)) // check if user was login
                         {
-                            userDBHelper.LogInUser(logginUser);           //login user automatically
-                            GlobalVariables.isNavigation = false;
-                            await App.Current.MainPage.Navigation.PushAsync(new MenuPage());
+                            
+                                userDBHelper.LogInUser(logginUser);           //login user automatically
+                                GlobalVariables.isNavigation = false;
+                            if (userDBHelper.GetLoggedUser().isAskDataProtec == false)
+                            {
+                                await App.Current.MainPage.Navigation.PushAsync(new DataProtectionPage());
+                            }
+                            else
+                            {
+                                await App.Current.MainPage.Navigation.PushAsync(new MenuPage());
+                            }
+
+                            
                         }
                         else
                         {

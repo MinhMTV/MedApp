@@ -16,7 +16,6 @@ namespace App1.View.AdminPages
 	public partial class UserDetailPage : ContentPage
 	{
 		private UserDetailViewModel _uvm;
-		private UserDBHelper userDBHelper = new UserDBHelper();
         private User user;
 		public UserDetailPage (User obj)
 		{

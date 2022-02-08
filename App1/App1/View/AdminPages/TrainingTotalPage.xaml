@@ -3,35 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit" 
              xmlns:pg="clr-namespace:App1.ViewModels" xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
-             x:Class="App1.View.AdminPages.TrainingDetailPage">
+             x:Class="App1.View.AdminPages.TrainingTotalPage">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Wochenstatistik"
                      Order="Secondary"
                      Command="{Binding WeekTSessionCommand}"
-                     CommandParameter="{Binding user}"
-                     />
-        <ToolbarItem Text="Gesamtstatistik"
-                     Order="Secondary"
-                     Command="{Binding TotalTSessionCommand}"
-                     CommandParameter="{Binding user}"
+                     CommandParameter="{Binding _user}"
                      />
     </ContentPage.ToolbarItems>
     
-    
-    
     <NavigationPage.TitleView>
         <Label 
-               Text="{Binding SessionDate,StringFormat='{}Training: {0}'}"
+               Text="Gesamtstatistik"
                MaxLines="1"
-               FontSize="Medium"
+               FontSize="Large"
                FontAttributes="Bold"
                HorizontalOptions="StartAndExpand"
                VerticalOptions="Center">
         </Label>
     </NavigationPage.TitleView>
-    
+
     <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-    <StackLayout>
+        <StackLayout>
             <microcharts:ChartView Chart="{Binding Chart}" HeightRequest="{Binding Chart_Height}">
                 <microcharts:ChartView.GestureRecognizers>
                     <SwipeGestureRecognizer Direction="Left" Command="{Binding SwipeCommand}" CommandParameter="left"/>
@@ -39,7 +32,7 @@
                 </microcharts:ChartView.GestureRecognizers>
             </microcharts:ChartView>
         </StackLayout>
-        
+
         <!--Total Number-->
         <Grid Padding="10">
             <Grid.ColumnDefinitions>
@@ -64,7 +57,7 @@
                 <Label  Text="{Binding NrOfBadImages}" Style="{StaticResource NameConstant}" HorizontalOptions="EndAndExpand" FontAttributes="Bold"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="1" >
-                <Label  Text="TrainingsID:" Style="{StaticResource NameConstant}" />
+                <Label  Text="Anzahl Training:" Style="{StaticResource NameConstant}" />
                 <Label  Text="{Binding cmplSession}" Style="{StaticResource NameConstant}"  FontAttributes="Bold" HorizontalOptions="EndAndExpand"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="1" >
@@ -94,8 +87,8 @@
 
         <!--Detail Number-->
         <StackLayout  Margin="10,0,10,0">
-        <StackLayout Orientation="Horizontal"  >
-                <Label  Text="richtig &amp; subst. unabh. Bilder:"  Style="{StaticResource NameConstant}" />
+            <StackLayout Orientation="Horizontal"  >
+                <Label  Text="korrect &amp; subst. unabh. Bilder:"  Style="{StaticResource NameConstant}" />
                 <Label  Style="{StaticResource NameConstant}" FontAttributes="Bold" HorizontalOptions="EndAndExpand">
                     <Label.Text>
                         <MultiBinding StringFormat="{}{0}/{1:#.#}%">
@@ -104,8 +97,8 @@
                         </MultiBinding>
                     </Label.Text>
                 </Label>
-        </StackLayout>
-        <StackLayout Orientation="Horizontal"  >
+            </StackLayout>
+            <StackLayout Orientation="Horizontal"  >
                 <Label  Text="falsch &amp; subst. unabh. Bilder:"  Style="{StaticResource NameConstant}"/>
                 <Label  Style="{StaticResource NameConstant}" FontAttributes="Bold" HorizontalOptions="EndAndExpand">
                     <Label.Text>
@@ -115,9 +108,9 @@
                         </MultiBinding>
                     </Label.Text>
                 </Label>
-        </StackLayout>
-        <StackLayout Orientation="Horizontal" >
-                <Label  Text="richtig &amp; subst. abh. Bilder:" Style="{StaticResource NameConstant}"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" >
+                <Label  Text="korrect &amp; subst. abh. Bilder:" Style="{StaticResource NameConstant}"/>
                 <Label  Style="{StaticResource NameConstant}" FontAttributes="Bold" HorizontalOptions="EndAndExpand">
                     <Label.Text>
                         <MultiBinding StringFormat="{}{0}/{1:#.#}%">
@@ -126,7 +119,7 @@
                         </MultiBinding>
                     </Label.Text>
                 </Label>
-        </StackLayout>
+            </StackLayout>
             <StackLayout Orientation="Horizontal" >
                 <Label  Text="falsch &amp; subst. abh. Bilder:" Style="{StaticResource NameConstant}" />
                 <Label  Style="{StaticResource NameConstant}" FontAttributes="Bold" HorizontalOptions="EndAndExpand">
@@ -140,6 +133,10 @@
             </StackLayout>
         </StackLayout>
         <BoxView Style="{StaticResource Horizontal_Line}"/>
+        <StackLayout  Orientation="Horizontal" HorizontalOptions="Center">
+            <Label  Text="Insgesamt Trainingszeit" FontSize="Medium" TextDecorations="Underline" FontAttributes="Bold" FontFamily="Italic"/>
+            <Label Text="{Binding ElapsedTime}"  FontSize="Medium" FontAttributes="Bold" FontFamily="Italic"/>
+        </StackLayout>
         <Grid Margin="10,0,10,0" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -151,8 +148,8 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <StackLayout  HorizontalOptions="FillAndExpand" Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
-                <Label  Text="Trainingszeit:"  Style="{StaticResource Time_Label_Description}" TextDecorations="Underline"/>
-                <Label Text="{Binding ElapsedTime}" Style="{StaticResource Time_Label_Value}"  />
+                <Label  Text="ø pro Training"  Style="{StaticResource Time_Label_Description}" />
+                <Label Text="{Binding AvgElapsedTime}" Style="{StaticResource Time_Label_Value}"  />
             </StackLayout>
             <StackLayout  VerticalOptions="FillAndExpand"  Orientation="Horizontal" Grid.Column="1" Grid.Row="0" >
                 <Label Text="ø pro Bild" Style="{StaticResource Time_Label_Description}" />
@@ -164,7 +161,7 @@
             </StackLayout>
             <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
                 <Label Text="ø pro falsch" Style="{StaticResource Time_Label_Description}" />
-                <Label Text="{Binding AvgTWPic}" Style="{StaticResource Time_Label_Value}"  /> 
+                <Label Text="{Binding AvgTWPic}" Style="{StaticResource Time_Label_Value}"  />
             </StackLayout>
             <StackLayout  VerticalOptions="FillAndExpand"  Orientation="Horizontal" Grid.Column="0" Grid.Row="2">
                 <Label Text="ø pro subst. unabh." Style="{StaticResource Time_Label_Description}"  />
@@ -176,10 +173,6 @@
             </StackLayout>
         </Grid>
 
-        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Margin="0,0,0,10">
-            <Button Text="Letztes" HorizontalOptions="Center"   Command="{Binding LastCommand}"/>
-            <Button Text="Nächstes" HorizontalOptions="Center"  Command="{Binding NextCommand}"/>
-        </StackLayout>
 
     </StackLayout>
 </ContentPage>

@@ -44,8 +44,13 @@ namespace App1.View.AdminPages
 
         }
 
-        void PhotoGalleryClicked(object sender, System.EventArgs e)
+        async void PhotoGalleryClicked(object sender, System.EventArgs e)
         {
+            if (Device.RuntimePlatform == Device.UWP)
+            {
+                await DisplayAlert("Achtung", "Diese Funktion wird derzeit nicht unterstützt", "OK");
+                return;
+            }
             Detail = new NavigationPage(new PhotoGalleryOverView());
             IsPresented = false;
             GlobalVariables.isGallery = true;

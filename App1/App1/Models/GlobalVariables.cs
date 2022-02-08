@@ -19,8 +19,6 @@ namespace App1.Models
 
         public static bool isGallery { get; set; } = false;
 
-        public static int SessionCount { get; set; } = 0; // we setting Sessioncount to zero, will update after every Session, and will be reset new User get addedd
-
         public static int NroOfAvailablePics
         {
             get { return 55; }

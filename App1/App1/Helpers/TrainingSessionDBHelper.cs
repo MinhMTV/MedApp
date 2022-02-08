@@ -1,4 +1,5 @@
 ﻿using App1.Database;
+using App1.Extensions;
 using App1.Models;
 using SQLite;
 using System;
@@ -102,6 +103,26 @@ namespace App1.Helpers
             return list.FindAll(x => x.IsTrainingCompleted == true).FirstOrDefault();
         }
 
+        public TrainingSession getNextCmplTrainingbyUserANDSession(User user, TrainingSession tsession)
+        {
+            var list = newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).ToList();
+            list = list.FindAll(x => x.IsTrainingCompleted == true);
+            return list.FindAll(x => x.cmplSession == tsession.cmplSession + 1).SingleOrDefault();
+        }
+
+        public TrainingSession getBeforeCmplTrainingbyUserANDSession(User user, TrainingSession tsession)
+        {
+            var list = newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).ToList();
+            list = list.FindAll(x => x.IsTrainingCompleted == true);
+            return list.FindAll(x => x.cmplSession == tsession.cmplSession - 1).SingleOrDefault();
+        }
+
+
+        /// <summary>
+        /// get Last TrainingSessionBy User
+        /// </summary>
+        /// <param name="user">insert user</param>
+        /// <returns></returns>
         public TrainingSession getLastCmpTrainingSessionbyUser(User user)
         {
             var list = newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).ToList();
@@ -187,6 +208,21 @@ namespace App1.Helpers
             }
         }
 
+        public List<TrainingSession> getCompletedTrainingSessionListbyUserIDAndOrder(int userid, bool isAscending)
+        {
+            if (isAscending == true)
+            {
+                var list = newConnection.Table<TrainingSession>().Where(x => x.UserID == userid).OrderBy(x => x.SessionId).ToList();
+                return list.FindAll(x => x.IsTrainingCompleted == true);
+            }
+            else
+            {
+                var list = newConnection.Table<TrainingSession>().Where(x => x.UserID == userid).OrderByDescending(x => x.SessionId).ToList();
+
+                return list.FindAll(x => x.IsTrainingCompleted == true);
+            }
+        }
+
         public List<TrainingSession> getInCompletedTrainingSessionListbyUserAndOrder(User user, bool isAscending)
         {
             if (isAscending == true)
@@ -201,6 +237,113 @@ namespace App1.Helpers
             }
         }
 
+        public List<TrainingSession> GetCompletedWeekListbyUserAndOrder(User user, bool isAscending)
+        {
+            Console.WriteLine(DateTime.Now.StartOfWeek(DayOfWeek.Monday));
+            if (isAscending == true)
+            {
+                var list = newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).OrderBy(x => x.SessionId).ToList();
+                list = list.FindAll(x => x.IsTrainingCompleted == true);
+                
+                return list.FindAll(x =>x.SessionDate >= DateTime.Now.StartOfWeek(DayOfWeek.Monday));
+            }
+            else
+            {
+                var list = newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).OrderByDescending(x => x.SessionId).ToList();
+                list = list.FindAll(x => x.IsTrainingCompleted == true);
+                return list.FindAll(x => x.SessionDate >= DateTime.Now.StartOfWeek(DayOfWeek.Monday));
+
+            }
+        }
+
+        /// <summary>
+        /// get actual Completed Week of Training and Sort by Day, key 0 for Monday to 6 for sunday
+        /// </summary>
+        /// <param name="user">user </param>
+        /// <param name="isAscending"></param>
+        /// <returns>List with Key and Value pair, and empty list if no values </returns>
+        public List<KeyValuePair<int, TrainingSession>> GetthisCompletedWeekbyUserAndOrderSortByDay(User user, bool isAscending)
+        {
+            Console.WriteLine(DateTime.Now.StartOfWeek(DayOfWeek.Monday));
+            List<KeyValuePair<int,TrainingSession>> ListDay = new List<KeyValuePair<int, TrainingSession>>();
+            if (isAscending == true)
+            {
+                var list = newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).OrderBy(x => x.SessionId).ToList();
+                list = list.FindAll(x => x.IsTrainingCompleted == true);
+                var startDay = DateTime.Now.StartOfWeek(DayOfWeek.Monday).Day; //set startday to last Monday as int for day
+                for (int x = 0; x < 7; x++)
+                {
+                    var day = startDay + x;
+                    var daylist = list.FindAll(x => x.SessionDate.Day == day);
+                    foreach(var tsession in daylist)
+                    {
+                        ListDay.Add(new KeyValuePair<int, TrainingSession>(x, tsession));
+                    }
+                }
+            }
+            else
+            {
+                var list = newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).OrderBy(x => x.SessionId).ToList();
+                list = list.FindAll(x => x.IsTrainingCompleted == true);
+                var startDay = DateTime.Now.StartOfWeek(DayOfWeek.Monday).Day; //set startday to last Monday as int for day
+                for (int x = 0; x < 7; x++)
+                {
+                    var day = startDay + x;
+                    var daylist = list.FindAll(x => x.SessionDate.Day == day);
+                    foreach (var tsession in daylist)
+                    {
+                        ListDay.Add(new KeyValuePair<int, TrainingSession>(x, tsession));
+                    }
+                }
+
+            }
+            return ListDay;
+        }
+
+        /// <summary>
+        /// get actual Completed Week of Training and Sort by Day,  key 0 for Monday to 6 for sunday
+        /// </summary>
+        /// <param name="user">user </param>
+        /// <param name="isAscending"></param>
+        /// <param name="day">WeekStart</param>
+        /// <returns>List with Key and Value pair, and empty list if no values </returns>
+        public List<KeyValuePair<int, TrainingSession>> GetCmplWeekbyUserOrderANDWeekSortByDay(User user, bool isAscending,DateTime Weekday)
+        {
+            List<KeyValuePair<int, TrainingSession>> ListDay = new List<KeyValuePair<int, TrainingSession>>();
+            if (isAscending == true)
+            {
+                var list = newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).OrderBy(x => x.SessionId).ToList();
+                list = list.FindAll(x => x.IsTrainingCompleted == true);
+                var startDay = Weekday.Date; //set startday given startday Monday
+                for (int x = 0; x < 7; x++)
+                {
+                    var day = startDay.AddDays(x);
+                    var daylist = list.FindAll(x => x.SessionDate.Date == day);
+                    foreach (var tsession in daylist)
+                    {
+                        ListDay.Add(new KeyValuePair<int, TrainingSession>(x, tsession));
+                    }
+                }
+            }
+            else
+            {
+                var list = newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).OrderBy(x => x.SessionId).ToList();
+                list = list.FindAll(x => x.IsTrainingCompleted == true);
+                var startDay = Weekday.Date; //set startday given startday Monday
+                for (int x = 0; x < 7; x++)
+                {
+                    var day = startDay.AddDays(x);
+                    var daylist = list.FindAll(x => x.SessionDate.Date == day);
+                    foreach (var tsession in daylist)
+                    {
+                        ListDay.Add(new KeyValuePair<int, TrainingSession>(x, tsession));
+                    }
+                }
+
+            }
+            return ListDay;
+        }
+
 
 
         //------------------------------------------------------Get General Training-----------------------------------------------------------------------------------------------
@@ -213,6 +356,11 @@ namespace App1.Helpers
         public List<TrainingSession> GetLastTwoTrainingSessions()
         {
             return newConnection.Table<TrainingSession>().OrderByDescending(x => x.SessionId).Take(2).ToList();
+        }
+
+        public TrainingSession GetLastTrainingSession()
+        {
+            return newConnection.Table<TrainingSession>().LastOrDefault();
         }
 
         //get all TrainingsSession as Collection
@@ -258,6 +406,8 @@ namespace App1.Helpers
                 return data.OrderByDescending(x => x.SessionId).ToList();
             }
         }
+
+        
 
         //------------------------------------------------------Not My Methods-----------------------------------------------------------------------------------------------
 

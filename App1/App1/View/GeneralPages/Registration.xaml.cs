@@ -114,7 +114,7 @@ namespace App1.View.GeneralPages
                 user.Username = username;
                 user.Email = Entry_Email.Text;
                 // Generate random userID for the patient
-                var userid = 0;
+                int userid;
 
                 do
                 {

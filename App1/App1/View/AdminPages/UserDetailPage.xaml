@@ -22,6 +22,16 @@
                      Command="{Binding DeleteCommand}"
                      CommandParameter="{Binding user}"
                      />
+        <ToolbarItem Text="Wochenstatistik"
+                     Order="Secondary"
+                     Command="{Binding WeekTSessionCommand}"
+                     CommandParameter="{Binding user}"
+                     />
+        <ToolbarItem Text="Gesamtstatistik"
+                     Order="Secondary"
+                     Command="{Binding TotalTSessionCommand}"
+                     CommandParameter="{Binding user}"
+                     />
     </ContentPage.ToolbarItems>
     <NavigationPage.TitleView>
         <Label 
@@ -182,60 +192,57 @@
 
                             <Frame Style="{StaticResource FrameCardViewStyle}">
                                 <StackLayout Style="{StaticResource itemsCardViewStackLayoutStyle}"    >
-                                    <StackLayout Style="{StaticResource itemsInsideCardViewStackLayoutStyle}" Margin="10,0,10,0">
-                                        <Grid>
+                                    <StackLayout Style="{StaticResource itemsInsideCardViewStackLayoutStyle}" Margin="5,0,5,0">
+                                        <Grid HorizontalOptions="FillAndExpand">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />
                                                 <ColumnDefinition Width="Auto" />
                                                 <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
-                                            <StackLayout Grid.Column="0" HorizontalOptions="Center" >
-                                                <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
-                                                    <Label Text="Training ID:" Style="{StaticResource LabelStyle}" />
-                                                    <Label Text="{Binding cmplSession}" Style="{StaticResource LabelStyle}" />
+                                            <StackLayout Grid.Column="0" HorizontalOptions="FillAndExpand" Margin="0,0,5,0" >
+                                                <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                                    <Label Text="Training ID:" Style="{StaticResource LabelStyle}" HorizontalOptions="StartAndExpand" />
+                                                    <Label Text="{Binding cmplSession}" Style="{StaticResource LabelStyle}" HorizontalOptions="EndAndExpand"/>
                                                     </StackLayout>
-                                                <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
-                                                    <Label Text="Zeit:" Style="{StaticResource LabelStyle}" />
-                                                    <Label Text="{Binding ElapsedTime}" Style="{StaticResource LabelStyle}" HorizontalOptions="End"/>
+                                                <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                                    <Label Text="Zeit:" Style="{StaticResource LabelStyle}" HorizontalOptions="StartAndExpand" />
+                                                    <Label Text="{Binding ElapsedTime}" Style="{StaticResource LabelStyle}" HorizontalOptions="EndAndExpand"/>
                                                     </StackLayout>
-                                                <StackLayout Style="{StaticResource imageLableStackLayout}">
-                                                    <Label Text="Datum:" />
-                                                    <Label Text="{Binding SessionDate,StringFormat='{0:d}'}"/>
+                                                <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                                    <Label Text="Datum:" Style="{StaticResource LabelStyle}" HorizontalOptions="StartAndExpand" />
+                                                    <Label Text="{Binding SessionDate,StringFormat='{0:d}'}" Style="{StaticResource LabelStyle}" HorizontalOptions="EndAndExpand"/>
                                                 </StackLayout>
                                             </StackLayout>
-                                            <BoxView  Grid.Column="1" VerticalOptions="Fill" HorizontalOptions="Start" WidthRequest="1" Color="Gray"/>
-                                            
-                                            <StackLayout Grid.Column="2" VerticalOptions="Center"  HorizontalOptions="FillAndExpand" >
+                                            <BoxView Grid.Column="0" VerticalOptions="Fill" HorizontalOptions="End" WidthRequest="1" Color="Gray"/>
+
+                                            <StackLayout Grid.Column="1" VerticalOptions="Center"  HorizontalOptions="FillAndExpand" Margin="0,0,5,0" >
                                                 <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
                                                     <Label Text="ø pro Bild" Style="{StaticResource LabelStyle}" />
                                                     <Label Text="{Binding AvgT}" Style="{StaticResource LabelStyle}" HorizontalOptions="End"/>
                                                 </StackLayout>
-                                                <StackLayout Style="{StaticResource imageLableStackLayout}">
+                                                <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
                                                     <Label Text="ø pro richtig" Style="{StaticResource LabelStyle}" />
-                                                    <Label Text="{Binding AvgTCPic}" Style="{StaticResource LabelStyle}" />
+                                                    <Label Text="{Binding AvgTCPic}" Style="{StaticResource LabelStyle}" HorizontalOptions="End"/>
                                                 </StackLayout>
-                                                <StackLayout Style="{StaticResource imageLableStackLayout}">
+                                                <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
                                                     <Label Text="ø pro falsch" Style="{StaticResource LabelStyle}" />
-                                                    <Label Text="{Binding AvgTWPic}" Style="{StaticResource LabelStyle}" />
+                                                    <Label Text="{Binding AvgTWPic}" Style="{StaticResource LabelStyle}" HorizontalOptions="End"/>
                                                 </StackLayout>
                                             </StackLayout>
-                                            <BoxView  Grid.Column="3" VerticalOptions="Fill" HorizontalOptions="Start" WidthRequest="1" Color="Gray"/>
+                                            <BoxView  Grid.Column="1" VerticalOptions="Fill" HorizontalOptions="End" WidthRequest="1" Color="Gray"/>
 
-                                            <StackLayout Grid.Column="4" VerticalOptions="Center"  HorizontalOptions="Fill">
+                                            <StackLayout Grid.Column="2" VerticalOptions="Center"  HorizontalOptions="FillAndExpand" >
                                                 <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal" >
-                                                    <Label Text="Total: "  />
-                                                    <Label Text="{Binding NrOfAllImages}" Style="{StaticResource LabelStyle}" HorizontalOptions="CenterAndExpand" />
+                                                    <Label Text="Total: "  Style="{StaticResource LabelStyle}" />
+                                                    <Label Text="{Binding NrOfAllImages}" Style="{StaticResource LabelStyle}" HorizontalOptions="End" />
                                                 </StackLayout>
                                                 <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
-                                                    <Label Text="Richtig:"  />
-                                                    <Label Text="{Binding PctCIm, StringFormat='{}{0:.##}%'}" Style="{StaticResource LabelStyle}" HorizontalOptions="CenterAndExpand" />
+                                                    <Label Text="Richtig:"  Style="{StaticResource LabelStyle}" />
+                                                    <Label Text="{Binding PctCIm, StringFormat='{}{0:.##}%'}" Style="{StaticResource LabelStyle}" HorizontalOptions="End" />
                                                 </StackLayout>
                                                 <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
-                                                    <Label Text="Falsch:" />
-                                                    <Label Text="{Binding PctWIm, StringFormat='{}{0:#.##}%'}" Style="{StaticResource LabelStyle}" HorizontalOptions="CenterAndExpand"/>
+                                                    <Label Text="Falsch:" Style="{StaticResource LabelStyle}" />
+                                                    <Label Text="{Binding PctWIm, StringFormat='{}{0:#.##}%'}" Style="{StaticResource LabelStyle}" HorizontalOptions="End"/>
                                                 </StackLayout>
                                             </StackLayout>
                                         </Grid>

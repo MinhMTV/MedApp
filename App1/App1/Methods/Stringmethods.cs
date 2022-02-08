@@ -34,7 +34,20 @@ namespace App1.Methods
         }
 
         /// <summary>
-        /// Return TimeSpan object to String, return null if object is null
+        /// Return TimeSpan object to String in Min:Sec:MS format, return null if object is null
+        /// </summary>
+        /// <param name="timespan"></param>
+        /// <returns></returns>
+        public string TimeSpanToStringToH(TimeSpan timespan)
+        {
+            if (timespan == null)
+                return null;
+            else
+                return string.Format("{0:hh\\:mm\\:ss}", timespan);
+        }
+
+        /// <summary>
+        /// Return TimeSpan object to String in Min:Sec:MS format, return null if object is null
         /// </summary>
         /// <param name="timespan"></param>
         /// <returns></returns>
@@ -44,6 +57,32 @@ namespace App1.Methods
                 return null;
             else
                 return string.Concat(timespan.Minutes, ":", timespan.Seconds, ":", timespan.Milliseconds);
+        }
+
+        /// <summary>
+        /// Return TimeSpan object to String in Min:Sec:MS format, return null if object is null
+        /// </summary>
+        /// <param name="timespan"></param>
+        /// <returns></returns>
+        public string TimeSpanToStringToMinExt(TimeSpan timespan)
+        {
+            if (timespan == null)
+                return null;
+            else
+                return string.Format("{0:mm\\:ss\\:fff}", timespan);
+        }
+
+        /// <summary>
+        /// Return TimeSpan object to String in HH:MM:SS format, return null if object is null
+        /// </summary>
+        /// <param name="timespan"></param>
+        /// <returns></returns>
+        public string TimeSpanToStringToHExt(TimeSpan timespan)
+        {
+            if (timespan == null)
+                return null;
+            else
+                return string.Format("{0:hh\\h\\:mm\\m\\:ss}s", timespan);
         }
     }
 }

@@ -29,7 +29,8 @@
             <Label Grid.Column="0"
                MaxLines="1"
                Text="Patient"
-               FontSize="Medium"
+               FontSize="Large"
+               FontAttributes="Bold"
                HorizontalOptions="StartAndExpand"
                VerticalOptions="Center"/>
             <StackLayout x:Name="SelectedLayout"  

@@ -5,39 +5,32 @@ using App1.View.AdminPages;
 using Microcharts;
 using SkiaSharp;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows.Input;
+using System.Text;
+using Xamarin.CommunityToolkit.Extensions;
 using Xamarin.Forms;
 using Entry = Microcharts.ChartEntry;
 
 namespace App1.ViewModels
 {
-    public class TrainingStatViewModel : INotifyPropertyChanged
+    public class TrainingTotalViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private TrainingSessionDBHelper trainingSession = new TrainingSessionDBHelper();
+
+        private Stringmethods stringmethods = new Stringmethods();
 
         private DeviceMetricHelper deviceMetricHelper = new DeviceMetricHelper();
 
-        public event PropertyChangedEventHandler PropertyChanged;
         public Chart Chart { get; set; }
 
         public double Chart_Height { get; set; }
-
-        public Command EditCommand { get; set; }
-        public Command DeleteCommand { get; set; }
-
-        public Command SwipeCommand { get; set; }
-
-
-        public Command NextCommand { get; set; }
-
-        public Command LastCommand { get; set; }
-        public Command<User> TotalTSessionCommand { get; private set; }
-
         public Command<User> WeekTSessionCommand { get; private set; }
 
-        public UserDBHelper userDBHelper = new UserDBHelper();
+        public Command SwipeCommand { get; set; }
 
         public User user { get; private set; }
 
@@ -47,23 +40,23 @@ namespace App1.ViewModels
 
         public DateTime SessionDate { get; set; }
 
-        public int NrOfAllImages { get; set; }
+        public int NrOfAllImages { get; set; } 
 
-        public int NrOfGoodImages { get; set; }
-        public int NrOfBadImages { get; set; }
+        public int NrOfGoodImages { get; set; } 
+        public int NrOfBadImages { get; set; } 
 
-        public int cmplSession { get; set; }
+        public int cmplSession { get; set; } 
 
         //Total Number
-        public int NrOfCorrectImages { get; set; }
+        public int NrOfCorrectImages { get; set; } 
 
-        public int NrOfWrongImages { get; set; }
+        public int NrOfWrongImages { get; set; } 
 
-        
-        public int NrOfGoodCorrectImages { get; set; }
+
+        public int NrOfGoodCorrectImages { get; set; } 
         public int NrOfGoodWrongImages { get; set; }
-        public int NrOfBadCorrectImages { get; set; }
-        public int NrOfBadWrongImages { get; set; }
+        public int NrOfBadCorrectImages { get; set; } 
+        public int NrOfBadWrongImages { get; set; } 
 
         // Percentage
 
@@ -81,113 +74,42 @@ namespace App1.ViewModels
         public double PctBandWIm { get; set; }
 
         // Time
-        public long SessionTimeTicks { get; set; } //Time for finishing TrainingSession as Ticks
-        public string ElapsedTime { get; set; } //Time for finishing TrainingSession (conversion from Ticks to string for better reading) min,sec,ms
+        public string ElapsedTime { get; set; }
 
-        public long AvgTTicks { get; set; }//average time for Pic as Ticks
+        public string AvgElapsedTime { get; set; }
 
-        public string AvgT { get; set; }//average time for Pic in min,sec,ms
+        public string AvgT { get; set; }
 
+        public string AvgTGPic { get; set; }
 
+        public string AvgTBPic { get; set; }
 
-        public long AvgTGPicTicks { get; set; }//average time for good pics as Ticks
+        public string AvgTCPic { get; set; }
 
-        public string AvgTGPic { get; set; } //average time for good pics in min,sec,ms
-
-
-
-        public long AvgTBPicTicks { get; set; }//average time for Bad pics as Ticks
-
-        public string AvgTBPic { get; set; } //average time for bad pics in min,sec,ms
+        public string AvgTWPic { get; set; }
 
 
+        //Ticks for getting all time 
+        public long SessionTimeTicks { get; set; }
 
-        public long AvgTCPicTicks { get; set; }//average time for correct Pics in Ticks
-        public string AvgTCPic { get; set; } //average time for correct pics in min,sec,ms
+        public long AvgTTicks { get; set; }
+
+        public long AvgTGPicTicks { get; set; }
+        public long AvgTBPicTicks{ get; set; }
+        public long AvgTCPicTicks{ get; set; }
+
+        public long AvgTWPicTicks{ get; set; }
+
+        public int swipedir { get; set; } = 0; // swipe counter for Charts
 
 
-
-        public long AvgTWPicTicks { get; set; }//average time for wrong pics as Ticks
-        public string AvgTWPic { get; set; } //average time for wrong pics in min,sec,ms
-
-
-
-
-
-        public TrainingStatViewModel(TrainingSession obj)
+        public TrainingTotalViewModel(User obj)
         {
-            Tsession = obj;
-            Chart_Height = deviceMetricHelper.getHeightXamarin() / 3.5;
-            InitData(Tsession);
-            TotalTSessionCommand = new Command<User>(x => OnTotal(user));
-            WeekTSessionCommand = new Command<User>(x => OnWeek(user));
+            user = obj;
+            Chart_Height = deviceMetricHelper.getHeightXamarin() / 3;
+            InitData(user);
+            WeekTSessionCommand = new Command<User>(x => OnWeek(user)); 
             SwipeCommand = new Command<string>(Swipe);
-            NextCommand = new Command<string>(x => OnNext());
-            LastCommand = new Command<string>(x => OnLast());
-
-        }
-
-        private async void OnLast()
-        {
-            var ts = trainingSession.getBeforeCmplTrainingbyUserANDSession(user, Tsession);
-            if (ts != null)
-            {
-                Tsession = ts;
-                InitData(Tsession);
-            }
-            else
-            {
-                await App.Current.MainPage.DisplayAlert("Achtung", "Erstes Training schon erreicht", "OK");
-            }
-            
-        }
-
-
-
-        private async void OnNext()
-        {
-            var ts = trainingSession.getNextCmplTrainingbyUserANDSession(user, Tsession);
-            if (ts != null)
-            {
-                Tsession = ts;
-                InitData(Tsession);
-            }
-            else
-            {
-                await App.Current.MainPage.DisplayAlert("Achtung", "Letztes Training schon erreicht", "OK");
-            }
-        }
-
-        public int swipedir { get; set; } = 0;
-
-        private void Swipe(string value)
-        {
-            Console.WriteLine("bevor" + swipedir);
-            switch (value)
-            {
-                case "left":
-                    swipedir--;
-                    if (swipedir == -1)
-                        swipedir = 3;
-                        SetChart(swipedir);
-                    break;
-                case "right":
-                    swipedir++;
-                    if(swipedir == 4 )
-                    {
-                        swipedir = 0;
-                    }
-                    SetChart(swipedir);
-                    break;
-            }
-        }
-
-        private async void OnTotal(User obj)
-        {
-            if (trainingSession.getLastCmpTrainingSessionbyUser(obj) == null)
-                await App.Current.MainPage.DisplayAlert("Achtung", "User hat bisher noch kein Training absolviert für eine Statistik", "Ok");
-            else
-                await App.Current.MainPage.Navigation.PushAsync(new TrainingTotalPage(obj));
         }
 
         private async void OnWeek(User obj)
@@ -198,7 +120,27 @@ namespace App1.ViewModels
                 await App.Current.MainPage.Navigation.PushAsync(new TrainingWeekPage(obj));
         }
 
-        
+        private void Swipe(string value)
+        {
+            Console.WriteLine("bevor" + swipedir);
+            switch (value)
+            {
+                case "left":
+                    swipedir--;
+                    if (swipedir == -1)
+                        swipedir = 3;
+                    SetChart(swipedir);
+                    break;
+                case "right":
+                    swipedir++;
+                    if (swipedir == 4)
+                    {
+                        swipedir = 0;
+                    }
+                    SetChart(swipedir);
+                    break;
+            }
+        }
 
         private void SetChart(int chartNr)
         {
@@ -209,13 +151,13 @@ namespace App1.ViewModels
                 good = NrOfCorrectImages.ToString();
                 bad = NrOfWrongImages.ToString();
 
-            }   
+            }
             else
             {
                 good = NrOfCorrectImages.ToString() + " / " + String.Format("{0:0.##}%", PctCIm);
                 bad = NrOfWrongImages.ToString() + " / " + String.Format("{0:0.##}%", PctWIm);
             }
-                
+
 
             //good and bad pics Chart
             var entries = new[]{
@@ -328,7 +270,8 @@ namespace App1.ViewModels
             switch (chartNr)
             {
                 case 0:
-                    Chart = new DonutChart() {
+                    Chart = new DonutChart()
+                    {
                         Entries = entries,
                         HoleRadius = 0.4f,
                         LabelTextSize = textdonutsize,
@@ -343,7 +286,7 @@ namespace App1.ViewModels
                     {
                         Entries = entries,
                         LabelTextSize = textbarsize,
-                        MaxValue = NrOfAllImages, 
+                        MaxValue = NrOfAllImages,
                         ValueLabelOrientation = Orientation.Horizontal,
                         LabelOrientation = Orientation.Horizontal,
                         BackgroundColor = SKColors.AliceBlue,
@@ -361,7 +304,8 @@ namespace App1.ViewModels
                             LabelOrientation = Orientation.Horizontal,
                             BackgroundColor = SKColors.AliceBlue,
                         };
-                    } else
+                    }
+                    else
                     {
                         Chart = new BarChart()
                         {
@@ -386,72 +330,71 @@ namespace App1.ViewModels
                 default:
                     break;
             }
-
-
         }
 
-
-        private void InitData(TrainingSession obj)
+        private void InitData(User user)
         {
-            user = userDBHelper.GetUserByUserID(obj.UserID);
+            var tList = trainingSession.getCompletedTrainingSessionListbyUserAndOrder(user, false);
 
-            SessionDate = obj.SessionDate;
+            foreach(var obj in tList)
+            {
+                NrOfAllImages += obj.NrOfAllImages;
+                NrOfGoodImages += obj.NrOfGoodImages;
+                NrOfBadImages += obj.NrOfBadImages;
 
-            NrOfAllImages = obj.NrOfAllImages;
+                //Total Number
+                NrOfCorrectImages += obj.NrOfCorrectImages;
+                NrOfWrongImages += obj.NrOfWrongImages;
+                NrOfGoodCorrectImages += obj.NrOfGoodCorrectImages;
+                NrOfGoodWrongImages += obj.NrOfGoodWrongImages;
+                NrOfBadCorrectImages += obj.NrOfBadCorrectImages;
+                NrOfBadWrongImages += obj.NrOfBadWrongImages;
 
-            NrOfGoodImages = obj.NrOfGoodImages;
-            NrOfBadImages = obj.NrOfBadImages;
+                // Time
+                SessionTimeTicks += obj.SessionTimeTicks;
 
-            cmplSession = obj.cmplSession;
+                AvgTTicks += obj.AvgTTicks;
 
-        //Total Number
-            NrOfCorrectImages = obj.NrOfCorrectImages;
+                AvgTGPicTicks += obj.AvgTGPicTicks;
 
-            NrOfWrongImages  = obj.NrOfWrongImages;
+                AvgTBPicTicks += obj.AvgTBPicTicks;
+
+                AvgTCPicTicks += obj.AvgTCPicTicks;
+
+                AvgTWPicTicks += obj.AvgTWPicTicks;
+            }
 
 
-            NrOfGoodCorrectImages = obj.NrOfGoodCorrectImages;
-            NrOfGoodWrongImages = obj.NrOfGoodWrongImages;
-            NrOfBadCorrectImages = obj.NrOfBadCorrectImages;
-            NrOfBadWrongImages = obj.NrOfBadWrongImages;
+            cmplSession = tList.Count;
 
             // Percentage
-            PctGoodIm = obj.PctGoodIm;
+            PctGoodIm = ((double)NrOfGoodImages / (double)NrOfAllImages) * 100;
+            PctBadIm = ((double)NrOfBadImages / (double)NrOfAllImages) * 100;
+            PctCIm = ((double)NrOfCorrectImages / (double)NrOfAllImages) * 100;
+            PctWIm = ((double)NrOfWrongImages / (double)NrOfAllImages) * 100;
 
-            PctBadIm = obj.PctBadIm;
-            PctCIm = obj.PctCIm;
-            PctWIm = obj.PctWIm;
+            PctGandCIm = ((double)NrOfGoodCorrectImages / (double)NrOfGoodImages) * 100;
+            PctBandCIm = ((double)NrOfBadCorrectImages / (double)NrOfBadImages) * 100;
+            PctGandWIm = ((double)NrOfGoodWrongImages / (double)NrOfGoodImages) * 100;
+            PctBandWIm = ((double)NrOfBadWrongImages / (double)NrOfBadImages) * 100;
 
 
-            PctGandCIm = obj.PctGandCIm;
+            //Time
+            ElapsedTime = stringmethods.TimeSpanToStringToHExt(TimeSpan.FromTicks(SessionTimeTicks));
 
-            PctBandCIm = obj.PctBandCIm;
+            AvgElapsedTime = stringmethods.TimeSpanToStringToMinExt(TimeSpan.FromTicks(SessionTimeTicks / cmplSession));
 
-            PctGandWIm = obj.PctGandWIm;
+            AvgT = stringmethods.TimeSpanToStringToMinExt(TimeSpan.FromTicks(AvgTTicks / cmplSession));
 
-            PctBandWIm = obj.PctBandWIm;
+            AvgTGPic = stringmethods.TimeSpanToStringToMinExt(TimeSpan.FromTicks(AvgTGPicTicks / cmplSession));
 
-            // Time
-            SessionTimeTicks = obj.SessionTimeTicks;
-            ElapsedTime = obj.ElapsedTime;
+            AvgTBPic = stringmethods.TimeSpanToStringToMinExt(TimeSpan.FromTicks(AvgTBPicTicks / cmplSession));
 
-            AvgTTicks = obj.AvgTTicks;
-            AvgT = obj.AvgT;
+            AvgTCPic = stringmethods.TimeSpanToStringToMinExt(TimeSpan.FromTicks(AvgTCPicTicks / cmplSession));
 
-            AvgTGPicTicks = obj.AvgTGPicTicks;
-            AvgTGPic = obj.AvgTGPic;
-
-            AvgTBPicTicks = obj.AvgTBPicTicks;
-            AvgTBPic = obj.AvgTBPic;
-
-            AvgTCPicTicks = obj.AvgTCPicTicks;
-            AvgTCPic = obj.AvgTCPic;
-
-            AvgTWPicTicks = obj.AvgTWPicTicks;
-            AvgTWPic = obj.AvgTWPic;
+            AvgTWPic = stringmethods.TimeSpanToStringToMinExt(TimeSpan.FromTicks(AvgTWPicTicks / cmplSession));
 
             SetChart(swipedir);
-
         }
     }
 }

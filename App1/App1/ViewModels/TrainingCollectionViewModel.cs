@@ -1,5 +1,6 @@
 ﻿using App1.Helpers;
 using App1.Models;
+using App1.View.AdminPages;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,7 +10,7 @@ using Xamarin.Forms;
 
 namespace App1.ViewModels
 {
-    public class SessionCollectionViewModel : BaseViewModel
+    public class TrainingCollectionViewModel : BaseViewModel
     {
 
         private TrainingSessionDBHelper trainingSession = new TrainingSessionDBHelper();
@@ -22,17 +23,23 @@ namespace App1.ViewModels
 
         public Command<TrainingSession> PressedCommand { get; private set; }
 
+        public Command<User> TotalTSessionCommand { get; private set; }
+
+        public Command<User> WeekTSessionCommand { get; private set; }
+
         public UserDBHelper userDBHelper = new UserDBHelper();
 
         User user;
 
 
-        public SessionCollectionViewModel(User obj)
+        public TrainingCollectionViewModel(User obj)
         {
             user = obj;
             InitData(obj);
             PressedCommand = new Command<TrainingSession>(OnPressed);
             RefreshCommand = new Command(ExecuteRefreshCommand);
+            TotalTSessionCommand = new Command<User>(x => OnTotal(user));
+            WeekTSessionCommand = new Command<User>(x => OnWeek(user));
         }
 
         private bool isRefreshing;
@@ -43,6 +50,22 @@ namespace App1.ViewModels
             {
                 SetProperty(ref isRefreshing, value);
             }
+        }
+
+        private async void OnTotal(User obj)
+        {
+            if (trainingSession.getLastCmpTrainingSessionbyUser(obj) == null)
+                await App.Current.MainPage.DisplayAlert("Achtung", "User hat bisher noch kein Training absolviert für eine Statistik", "Ok");
+            else
+                await App.Current.MainPage.Navigation.PushAsync(new TrainingTotalPage(obj));
+        }
+
+        private async void OnWeek(User obj)
+        {
+            if (trainingSession.getLastCmpTrainingSessionbyUser(obj) == null)
+                await App.Current.MainPage.DisplayAlert("Achtung", "User hat bisher noch kein Training absolviert für eine Statistik", "Ok");
+            else
+                await App.Current.MainPage.Navigation.PushAsync(new TrainingWeekPage(obj));
         }
 
         private void ExecuteRefreshCommand()
@@ -59,9 +82,7 @@ namespace App1.ViewModels
 
         private async void OnPressed(TrainingSession obj)
         {
-            await App.Current.MainPage.DisplayToastAsync("Navigiere zu Trainingssession");
-
-            //          await App.Current.MainPage.Navigation.PushAsync(new TrainingSessionDetail(obj));
+            await App.Current.MainPage.Navigation.PushAsync(new TrainingDetailPage(obj));
         }
 
 

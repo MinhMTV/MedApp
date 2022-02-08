@@ -16,7 +16,7 @@ using Xamarin.Forms.Xaml;
 
 namespace App1.ViewModels
 {
-    public class UserEditViewModel
+    public class UserEditViewModel : BaseViewModel
     {
         public Command DeleteCommand { get; set; }
 

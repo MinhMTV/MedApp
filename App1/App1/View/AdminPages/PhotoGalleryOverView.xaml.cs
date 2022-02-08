@@ -27,8 +27,8 @@ namespace App1.View.AdminPages
 
         public PhotoGalleryOverView()
         {
-            GlobalVariables.isGallery = true;
             InitializeComponent();
+            GlobalVariables.isGallery = true;
         }
 
         async void AllGoodTapped(object sender, EventArgs e)

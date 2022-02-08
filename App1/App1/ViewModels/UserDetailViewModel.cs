@@ -26,6 +26,10 @@ namespace App1.ViewModels
         public Command EditCommand { get; set; }
         public Command DeleteCommand { get; set; }
 
+        public Command TotalTSessionCommand { get; set; }
+
+        public Command<User> WeekTSessionCommand { get; private set; }
+
         public Command<TrainingSession> PressedCommand { get; private set; }
 
         public UserDBHelper userDBHelper = new UserDBHelper();
@@ -62,14 +66,30 @@ namespace App1.ViewModels
             EditCommand = new Command<User>(x=> OnEdit(user));
             DeleteCommand = new Command<User>(x => OnDelete(user));
             PressedCommand = new Command<TrainingSession>(OnPressed);
+            TotalTSessionCommand = new Command<User>(x => OnTotal(user));
+            WeekTSessionCommand = new Command<User>(x => OnWeek(user));
         }
 
         private async void OnPressed(TrainingSession obj)
         {
             await App.Current.MainPage.Navigation.PushAsync(new TrainingDetailPage(obj));
-
- //          await App.Current.MainPage.Navigation.PushAsync(new TrainingSessionDetail(obj));
         }
+        private async void OnTotal(User obj)
+        {
+            if (trainingSession.getLastCmpTrainingSessionbyUser(obj) == null)
+                await App.Current.MainPage.DisplayAlert("Achtung", "User hat bisher noch kein Training absolviert für eine Statistik", "Ok");
+            else
+                await App.Current.MainPage.Navigation.PushAsync(new TrainingTotalPage(obj));
+        }
+
+        private async void OnWeek(User obj)
+        {
+            if (trainingSession.getLastCmpTrainingSessionbyUser(user) == null)
+                await App.Current.MainPage.DisplayAlert("Achtung", "User hat bisher noch kein Training absolviert für eine Statistik", "Ok");
+            else
+                await App.Current.MainPage.Navigation.PushAsync(new TrainingWeekPage(obj));
+        }
+
 
         private async void OnEdit(User obj)
         {

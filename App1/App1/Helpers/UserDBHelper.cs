@@ -37,7 +37,6 @@ namespace App1.Helpers
             }
             else
             {
-                GlobalVariables.SessionCount = 0;
                 newConnection.Insert(user);
                 return true;
             }
@@ -414,13 +413,9 @@ namespace App1.Helpers
         /// </summary>
         public async void LogOutUser()
         {
-            var data = newConnection.Table<User>();
-            string userName;
-
             //Make sure any logged in user exists
             if (!Preferences.Get(constants.loginUser,"false").Equals("false"))
             {
-                userName = Preferences.Get(constants.loginUser, "false");
                 try
                 {
                     await App.Current.MainPage.DisplayAlert("Erfolg", "Sie wurden ausgeloggt", "OK");
