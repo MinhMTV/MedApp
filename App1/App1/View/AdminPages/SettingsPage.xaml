@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App1.View.AdminPages.SettingsPage">
+    <NavigationPage.TitleView>
+        <Label 
+               Text="Einstellungen"
+               MaxLines="1"
+               FontSize="Large"
+               FontAttributes="Bold"
+               HorizontalOptions="StartAndExpand"
+               VerticalOptions="Center">
+        </Label>
+    </NavigationPage.TitleView>
+
+    <StackLayout HorizontalOptions="Fill">
+        <StackLayout>
+            <!--  User Personal Data First Frame-->
+            <Frame Style="{StaticResource FrameCardViewStyle}">
+                <StackLayout Style="{StaticResource itemsCardViewStackLayoutStyle}">
+                    <StackLayout Style="{StaticResource itemsInsideCardViewStackLayoutStyle}">
+                        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="10" RowSpacing="40">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            
+                            <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="0" >
+                                <Label  Text="Trainingszeit beschränken"  Style="{StaticResource SettingName}" />
+                                <StackLayout Orientation="Horizontal">
+                                    <Entry Text="{Binding TMin}"  HorizontalOptions="FillAndExpand" FontAttributes="Bold" Keyboard="Numeric">
+                                        <Entry.Triggers>
+                                            <DataTrigger TargetType="Entry" Binding="{Binding Source={x:Reference Timeswitch}, Path=IsToggled}"  Value="False">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Entry" Binding="{Binding Source={x:Reference Timeswitch}, Path=IsToggled}"  Value="True">
+                                                <Setter Property="IsEnabled" Value="True"/>
+                                            </DataTrigger>
+                                        </Entry.Triggers>
+                                    </Entry>
+                                    <Label Text="Minuten" Style="{StaticResource SettingName}" VerticalOptions="Center"/>
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Entry Text="{Binding TSec}"  HorizontalOptions="FillAndExpand" FontAttributes="Bold" Keyboard="Numeric">
+                                        <Entry.Triggers>
+                                            <DataTrigger TargetType="Entry" Binding="{Binding Source={x:Reference Timeswitch}, Path=IsToggled}"  Value="False">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Entry" Binding="{Binding Source={x:Reference Timeswitch}, Path=IsToggled}"  Value="True">
+                                                <Setter Property="IsEnabled" Value="True"/>
+                                            </DataTrigger>
+                                        </Entry.Triggers>
+                                    </Entry>
+                                    <Label Text="Sekunden" Style="{StaticResource SettingName}" VerticalOptions="Center"/>
+                                </StackLayout>
+                            </StackLayout>
+                            <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="1" >
+                                <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand">
+                                    <Switch x:Name="Timeswitch" IsToggled="{Binding isTime}" HorizontalOptions="CenterAndExpand" Toggled="OnTimeToggled">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="On">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="ThumbColor" Value="MediumSpringGreen" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState x:Name="Off">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="ThumbColor" Value="Red" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </Switch>
+                                    
+                                    <Label Style="{StaticResource SettingName}">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding Source={x:Reference Timeswitch}, Path=IsToggled}"  Value="False">
+                                                <Setter Property="Text" Value="Deaktiviert" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding Source={x:Reference Timeswitch}, Path=IsToggled}"  Value="True">
+                                                <Setter Property="Text" Value="Aktiviert" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+
+                                    
+                                </StackLayout>
+                            </StackLayout>
+                            <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0">
+                                <Label  Text="Anzahl Bilder pro Training" Style="{StaticResource SettingName}"/>
+                                <Entry Text="{Binding TPicAmount}"  HorizontalOptions="FillAndExpand" FontAttributes="Bold" Keyboard="Numeric">
+                                    <Entry.Triggers>
+                                        <DataTrigger TargetType="Entry" Binding="{Binding Source={x:Reference PicSwitch}, Path=IsToggled}"  Value="False">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Entry" Binding="{Binding Source={x:Reference PicSwitch}, Path=IsToggled}"  Value="True">
+                                            <Setter Property="IsEnabled" Value="True"/>
+                                        </DataTrigger>
+                                    </Entry.Triggers>
+                                </Entry>
+                            </StackLayout>
+                            <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="1"  >
+                                <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand">
+                                    <Switch x:Name="PicSwitch" IsToggled="{Binding isPic}" HorizontalOptions="CenterAndExpand"  Toggled="OnPicToggled">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="On">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="ThumbColor" Value="MediumSpringGreen" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState x:Name="Off">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="ThumbColor" Value="Red" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </Switch>
+                                    
+                                    <Label Style="{StaticResource SettingName}">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding Source={x:Reference PicSwitch}, Path=IsToggled}"  Value="False">
+                                                <Setter Property="Text" Value="Deaktiviert" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding Source={x:Reference PicSwitch}, Path=IsToggled}"  Value="True">
+                                                <Setter Property="Text" Value="Aktiviert" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+
+                                    
+                                </StackLayout>
+                            </StackLayout>
+                        </Grid>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+       
+        <Button Text="Änderung speichern" HorizontalOptions="CenterAndExpand"  Clicked="Button_Clicked"/>
+
+    </StackLayout>
+</ContentPage>

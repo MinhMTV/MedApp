@@ -132,5 +132,11 @@
     </Style>
 
 
+    <!--  SettingPage -->
+    <Style x:Key="SettingName" TargetType="Label">
+        <Setter Property="FontSize" Value="Large" />
+        <Setter Property="TextColor" Value="Black" />
+        <Setter Property="FontAttributes" Value="Italic" />
+    </Style>
 
 </ResourceDictionary>

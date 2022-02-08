@@ -7,33 +7,46 @@
              x:Class="App1.View.UserPages.EditUserInformtionPage"
              Title="Benutzerdaten">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Padding="20">
             <Label Padding="5,20,5,50"
                 Text="Benutzerdaten bearbeiten"
                 HorizontalOptions="CenterAndExpand"
                 FontSize="Large"
+                FontAttributes="Italic"
                 TextColor="Black"/>
             
             <Label
                 Text="Altes Passwort"
                 x:Name = "Lbl_OldPassword"
+                FontAttributes="Italic"
+                TextColor="Black"
                 FontSize="Large"/>
             <Entry x:Name="Entry_OldPassword"
                    IsPassword="True"
+                   Placeholder="Altes Passwort eingeben"
+                   ClearButtonVisibility="WhileEditing"
                    FontSize="Large"/>
             <Label
                 Text="Neues Passwort"
                 x:Name = "Lbl_NewPassword"
+                FontAttributes="Italic"
+                TextColor="Black"
                 FontSize="Large"/>
             <Entry x:Name="Entry_NewPassword"
                    IsPassword="True"
+                   Placeholder="Neues Passwort eingeben"
+                   ClearButtonVisibility="WhileEditing"
                    FontSize="Large"/>
             <Label
                 Text="Passwort bestätigen"
                 x:Name="Lbl_ConfirmPassword"
+                FontAttributes="Italic"
+                TextColor="Black"
                 FontSize="Large"/>
             <Entry x:Name="Entry_ConfirmPassword"
                    IsPassword="True"
+                   Placeholder="Neues Passwort wiederholen"
+                   ClearButtonVisibility="WhileEditing"
                    FontSize="Large"/>
             <Button 
                     Text="OK" 

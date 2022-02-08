@@ -37,6 +37,8 @@ namespace App1.Models
 
         public static int defaultSec { get; set; } = 0;//Session default sec are 0
 
+        public static bool isPicAmount { get; set; } = false; //Session has max Number of Pics swiped adjust by Admin  default: no restriction of max pics
+
         public static int defaultPicCount { get; set; } = 55; // Session default Number of Pics for one Training
     }
 }

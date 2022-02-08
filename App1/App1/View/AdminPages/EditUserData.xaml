@@ -3,9 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:pg="clr-namespace:App1.ViewModels"
              x:Class="App1.View.AdminPages.EditUserData">
-    
-    
-    
+
+    <NavigationPage.TitleView>
+        <Label 
+               Text="Patient bearbeiten"
+               MaxLines="1"
+               FontSize="Large"
+               FontAttributes="Bold"
+               HorizontalOptions="StartAndExpand"
+               VerticalOptions="Center">
+        </Label>
+    </NavigationPage.TitleView>
+
+
+
     <StackLayout HorizontalOptions="Fill">
         <StackLayout>
             <!--  User Personal Data First Frame-->
@@ -24,7 +35,7 @@
                         </Grid.RowDefinitions>
                             <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="0" >
                                 <Label  Text="Username"  Style="{StaticResource NameConstant}" />
-                                <Entry Text="{Binding UserName}"  HorizontalOptions="FillAndExpand" FontAttributes="Bold"/>
+                                <Entry Text="{Binding UserName}"  HorizontalOptions="FillAndExpand" FontAttributes="Bold" ClearButtonVisibility="WhileEditing"/>
                             </StackLayout>
                             <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="1" >
                             <Label  Text="UserID" Style="{StaticResource NameConstant}"/>
@@ -32,19 +43,19 @@
                         </StackLayout>
                         <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0" >
                             <Label  Text="Vorname" Style="{StaticResource NameConstant}"/>
-                                <Entry  Text="{Binding FirstName}"  />
+                                <Entry  Text="{Binding FirstName}" ClearButtonVisibility="WhileEditing" />
                         </StackLayout>
                         <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="1"  >
                             <Label  Text="Nachname" Style="{StaticResource NameConstant}"/>
-                                <Entry  Text="{Binding LastName}"  />
+                                <Entry  Text="{Binding LastName}" ClearButtonVisibility="WhileEditing" />
                         </StackLayout>
                         <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="0"  >
                             <Label  Text="E-Mail" Style="{StaticResource NameConstant}"/>
-                                <Entry   Text="{Binding Email}"  />
+                                <Entry   Text="{Binding Email}" ClearButtonVisibility="WhileEditing" />
                         </StackLayout>
                         <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="1" >
                             <Label  Text="Alter" Style="{StaticResource NameConstant}"/>
-                                <Entry   Text="{Binding Age}"  />
+                                <Entry   Text="{Binding Age}" ClearButtonVisibility="WhileEditing"  />
                         </StackLayout>
                     </Grid>
                 </StackLayout>
@@ -70,14 +81,14 @@
                                 <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                                     <Label  Text="Neues Passwort"  Style="{StaticResource TextBindingDetail}" HorizontalOptions="CenterAndExpand"/>
                                 </StackLayout>
-                                <Entry Text="{Binding Pw}" Placeholder="Passwort eingeben"  HorizontalOptions="CenterAndExpand" IsPassword="True"/>
+                                <Entry Text="{Binding Pw}" Placeholder="Passwort eingeben"  HorizontalOptions="CenterAndExpand" IsPassword="True" ClearButtonVisibility="WhileEditing"/>
                         </StackLayout>
 
                         <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="1">
                                 <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                                     <Label  Text="Passwort bestätigen"  Style="{StaticResource TextBindingDetail}" HorizontalOptions="CenterAndExpand"/>
                                 </StackLayout>
-                                <Entry Text="{Binding Pw2}"  Placeholder="Passwort bestätigen" HorizontalOptions="CenterAndExpand" IsPassword="True"/>
+                                <Entry Text="{Binding Pw2}"  Placeholder="Passwort bestätigen" HorizontalOptions="CenterAndExpand" IsPassword="True" ClearButtonVisibility="WhileEditing"/>
                         </StackLayout>
                     </Grid>
                 </StackLayout>

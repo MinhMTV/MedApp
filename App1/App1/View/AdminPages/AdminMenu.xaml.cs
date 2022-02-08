@@ -65,7 +65,7 @@ namespace App1.View.AdminPages
 
         void SettingClicked(object sender, System.EventArgs e)
         {
-            Detail = new NavigationPage(new EditUserInformtionPage());
+            Detail = new NavigationPage(new SettingsPage());
             IsPresented = false;
             GlobalVariables.isGallery = false;
         }

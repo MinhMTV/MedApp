@@ -59,7 +59,7 @@ namespace App1.View.UserPages
                 trainingSession.SessionId = 1;
             Console.WriteLine(trainingSession.SessionId);
             user = userDBHelper.GetLoggedUser();
-            trainingSession.SessionDate = DateTime.Now.AddDays(-4);
+            trainingSession.SessionDate = DateTime.Now;
             trainingSession.IsTrainingCompleted = false;
             totalImages = pictureDBHelper.GetAllImagesToList().Count;
 
@@ -69,18 +69,28 @@ namespace App1.View.UserPages
 
             if (GlobalVariables.isTimer)
             {
+                Console.WriteLine("Timer is on");
                 TotalTime = (GlobalVariables.defaultSec * 1000) + (GlobalVariables.defaultMin * 60000); //Total time by User in ms
+                if(TotalTime == 0)
+                {
+                    TotalTime = 36000000; //if TotalTime is 0, set default training to 10hours, so user wont have any time pressure
+                }
                 Console.WriteLine(TotalTime);
                 timer = new Timer(interval);
-                timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+                timer.Elapsed += new ElapsedEventHandler(OnTimedEventAsync);
                 timer.Enabled = true;
+            }
+
+            if(GlobalVariables.isPicAmount && GlobalVariables.defaultPicCount <= totalImages)
+            {
+                totalImages = GlobalVariables.defaultPicCount; //if there is a picture amount restriction, set it to totalImages
             }
             
 
             startStopWatches();
         }
 
-        private void OnTimedEvent(object source, ElapsedEventArgs e)
+        private async void OnTimedEventAsync(object source, ElapsedEventArgs e)
         {
             
             timer.Stop();
@@ -97,10 +107,16 @@ namespace App1.View.UserPages
             
                 if (GlobalVariables.Stopwatch.ElapsedMilliseconds > TotalTime)
                 {
+                    Console.WriteLine("Push to page");
                     trainingSession.IsTrainingCompleted = true;
                     getStatistic();
                     resetStopWatches();
-                    Navigation.PushAsync(new ResultsPage());
+
+                    //invoke async method in mainthread because no acces from second thread 
+                    MainThread.BeginInvokeOnMainThread(async () =>
+                    {
+                        await Navigation.PushAsync(new ResultsPage());
+                    });
                 }
                 else
                 {
@@ -113,8 +129,8 @@ namespace App1.View.UserPages
                     startStopWatches();
                 }
             }
-
         }
+
 
         private void startStopWatches()
         {
@@ -358,10 +374,6 @@ namespace App1.View.UserPages
 
         private async void OnDragging(object sender, DraggingCardEventArgs e)
         {
-            if (indexer == totalImages)
-            {
-                indexer += 1;
-            }
 
             switch (e.Position)
             {
@@ -467,7 +479,7 @@ namespace App1.View.UserPages
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            if (indexer == totalImages && GlobalVariables.isNavigation == true || indexer == GlobalVariables.defaultPicCount && GlobalVariables.isNavigation == true)
+            if (indexer == totalImages && GlobalVariables.isNavigation == true)
             {
                 indexer = 0;
                 stopStopWatches();

@@ -20,6 +20,7 @@
                 <Entry 
                     Placeholder="Benutzername" 
                     x:Name="Entry_Username"
+                    ClearButtonVisibility="WhileEditing"
                     FontSize="Large"/>
                 <Label 
                     Text="Passwort" 
@@ -29,6 +30,7 @@
                 <Entry 
                     Placeholder="Passwort" 
                     x:Name="Entry_Password" 
+                    ClearButtonVisibility="WhileEditing"
                     IsPassword="True"
                     FontSize="Large"/>
                 <Button 
