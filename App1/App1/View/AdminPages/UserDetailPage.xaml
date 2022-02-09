@@ -8,6 +8,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:DateTimeToMsg x:Key="DTToMSG" />
+            <converters:NullToZeroConverter x:Key="nulltoZero"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     
@@ -238,11 +239,11 @@
                                                 </StackLayout>
                                                 <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
                                                     <Label Text="Richtig:"  Style="{StaticResource LabelStyle}" />
-                                                    <Label Text="{Binding PctCIm, StringFormat='{}{0:.##}%'}" Style="{StaticResource LabelStyle}" HorizontalOptions="End" />
+                                                    <Label Text="{Binding PctCIm,StringFormat='{}{0:#0.##}%'}" Style="{StaticResource LabelStyle}" HorizontalOptions="End" />
                                                 </StackLayout>
                                                 <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
                                                     <Label Text="Falsch:" Style="{StaticResource LabelStyle}" />
-                                                    <Label Text="{Binding PctWIm, StringFormat='{}{0:#.##}%'}" Style="{StaticResource LabelStyle}" HorizontalOptions="End"/>
+                                                    <Label Text="{Binding PctWIm, StringFormat='{}{0:#0.##}%'}" Style="{StaticResource LabelStyle}" HorizontalOptions="End"/>
                                                 </StackLayout>
                                             </StackLayout>
                                         </Grid>

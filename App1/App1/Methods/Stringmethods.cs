@@ -41,7 +41,7 @@ namespace App1.Methods
         public string TimeSpanToStringToH(TimeSpan timespan)
         {
             if (timespan == null)
-                return null;
+                return "00:00:00";
             else
                 return string.Format("{0:hh\\:mm\\:ss}", timespan);
         }
@@ -54,7 +54,7 @@ namespace App1.Methods
         public string TimeSpanToStringToMin(TimeSpan timespan)
         {
             if (timespan == null)
-                return null;
+                return "0:0:000";
             else
                 return string.Concat(timespan.Minutes, ":", timespan.Seconds, ":", timespan.Milliseconds);
         }
@@ -67,7 +67,7 @@ namespace App1.Methods
         public string TimeSpanToStringToMinExt(TimeSpan timespan)
         {
             if (timespan == null)
-                return null;
+                return "00:00:000";
             else
                 return string.Format("{0:mm\\:ss\\:fff}", timespan);
         }
@@ -80,7 +80,7 @@ namespace App1.Methods
         public string TimeSpanToStringToHExt(TimeSpan timespan)
         {
             if (timespan == null)
-                return null;
+                return "00h:00m:000s";
             else
                 return string.Format("{0:hh\\h\\:mm\\m\\:ss}s", timespan);
         }

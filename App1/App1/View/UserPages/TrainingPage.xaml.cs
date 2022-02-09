@@ -38,6 +38,8 @@ namespace App1.View.UserPages
 
         private Stringmethods stringmethods = new Stringmethods();
         private Stopwatch stopwatch2 = new Stopwatch();
+        private Stopwatch sw = new Stopwatch();
+        private long counter = 0;
 
         private static Timer timer;
 
@@ -64,13 +66,14 @@ namespace App1.View.UserPages
             totalImages = pictureDBHelper.GetAllImagesToList().Count;
 
             newCollection = (this.BindingContext as SwipeViewModel).Pictures;
-            GlobalVariables.isNavigation = true;
+            GlobalVariables.isTraining = true;
             isRunning = false;
+            Console.WriteLine("StartTime" + GlobalVariables.Stopwatch.Elapsed);
 
-            if (GlobalVariables.isTimer)
+            if (Settings.isTimer)
             {
                 Console.WriteLine("Timer is on");
-                TotalTime = (GlobalVariables.defaultSec * 1000) + (GlobalVariables.defaultMin * 60000); //Total time by User in ms
+                TotalTime = (Settings.defaultSec * 1000) + (Settings.defaultMin * 60000); //Total time by User in ms
                 if(TotalTime == 0)
                 {
                     TotalTime = 36000000; //if TotalTime is 0, set default training to 10hours, so user wont have any time pressure
@@ -81,35 +84,37 @@ namespace App1.View.UserPages
                 timer.Enabled = true;
             }
 
-            if(GlobalVariables.isPicAmount && GlobalVariables.defaultPicCount <= totalImages)
+            if(Settings.isPicAmount && Settings.defaultPicCount <= totalImages)
             {
-                totalImages = GlobalVariables.defaultPicCount; //if there is a picture amount restriction, set it to totalImages
+                totalImages = Settings.defaultPicCount; //if there is a picture amount restriction, set it to totalImages
             }
-            
-
+            sw.Start();
             startStopWatches();
         }
 
         private async void OnTimedEventAsync(object source, ElapsedEventArgs e)
         {
-            
             timer.Stop();
-            if (GlobalVariables.isNavigation == false)
+            pauseStopWatches();
+            sw.Stop();
+            Console.WriteLine("Stopwatch total: " + GlobalVariables.Stopwatch.Elapsed);
+            Console.WriteLine("Sw: " + sw.Elapsed);
+            
+            if (GlobalVariables.isTraining == false)
             {
                 timer.Enabled = false;
                 Console.WriteLine("Timer wurde gestoppt");
             } 
             else
             {
-                stopwatch2.Stop();
-                GlobalVariables.Stopwatch.Stop();
-                Console.WriteLine(GlobalVariables.Stopwatch.Elapsed);
-            
+                
                 if (GlobalVariables.Stopwatch.ElapsedMilliseconds > TotalTime)
                 {
-                    Console.WriteLine("Push to page");
                     trainingSession.IsTrainingCompleted = true;
                     getStatistic();
+                    counter += sw.ElapsedTicks;
+                    Console.WriteLine("counter Total:" + GlobalVariables.Stopwatch.ElapsedTicks);
+                    Console.WriteLine("counter:" + counter.ToString());
                     resetStopWatches();
 
                     //invoke async method in mainthread because no acces from second thread 
@@ -126,7 +131,9 @@ namespace App1.View.UserPages
                 }
                 if(isRunning == true)
                 {
+                    counter += sw.ElapsedTicks; 
                     startStopWatches();
+                    sw.Restart();
                 }
             }
         }
@@ -136,6 +143,13 @@ namespace App1.View.UserPages
         {
             GlobalVariables.Stopwatch.Start();
             stopwatch2.Start();
+            isRunning = true;
+        }
+
+        public void pauseStopWatches()
+        {
+            GlobalVariables.Stopwatch.Stop();
+            stopwatch2.Stop();
             isRunning = true;
         }
 
@@ -221,13 +235,18 @@ namespace App1.View.UserPages
             // See Explanation of all Statistic in TrainingSession Model
             try
             {
-                trainingSession.AvgTTicks = GlobalVariables.Stopwatch.ElapsedTicks / trainingSession.NrOfAllImages;
-                trainingSession.AvgT = stringmethods.TimeSpanToStringToMinExt(TimeSpan.FromTicks(GlobalVariables.Stopwatch.ElapsedTicks / trainingSession.NrOfAllImages));
+                long timetickcounter = 0;
+                foreach(var item in piclist)
+                {
+                    timetickcounter  += item.TimeTicks;
+                }
+                trainingSession.AvgTTicks = timetickcounter / piclist.Count;
+                trainingSession.AvgT = stringmethods.TimeSpanToStringToMinExt(TimeSpan.FromTicks(timetickcounter / piclist.Count));
             }
             catch (DivideByZeroException)
             {
                 trainingSession.AvgTTicks = 0;
-                trainingSession.AvgT = null;
+                trainingSession.AvgT = "00:00:000";
             }
             
 
@@ -240,7 +259,7 @@ namespace App1.View.UserPages
             catch (DivideByZeroException)
             {
                 trainingSession.AvgTGPicTicks = 0;
-                trainingSession.AvgTGPic = null;
+                trainingSession.AvgTGPic = "00:00:000";
             }
             
 
@@ -253,7 +272,7 @@ namespace App1.View.UserPages
             catch (DivideByZeroException)
             {
                 trainingSession.AvgTGPicTicks = 0;
-                trainingSession.AvgTBPic = null;
+                trainingSession.AvgTBPic = "00:00:000";
             }
             
 
@@ -266,7 +285,7 @@ namespace App1.View.UserPages
             catch (DivideByZeroException)
             {
                 trainingSession.AvgTCPicTicks = 0;
-                trainingSession.AvgTCPic = null;
+                trainingSession.AvgTCPic = "00:00:000";
             }
             
 
@@ -279,7 +298,7 @@ namespace App1.View.UserPages
             catch (DivideByZeroException)
             {
                 trainingSession.AvgTWPicTicks = 0;
-                trainingSession.AvgTWPic = null;
+                trainingSession.AvgTWPic = "00:00:000";
             }
             
 
@@ -294,7 +313,7 @@ namespace App1.View.UserPages
             catch (DivideByZeroException)
             {
                 trainingSession.AvgTGAndCPicTicks = 0;
-                trainingSession.AvgTGAndCPic = null;
+                trainingSession.AvgTGAndCPic = "00:00:000";
             }
             
 
@@ -307,7 +326,7 @@ namespace App1.View.UserPages
             catch (DivideByZeroException)
             {
                 trainingSession.AvgTBAndCPicTicks = 0;
-                trainingSession.AvgTBAndCPic = null;
+                trainingSession.AvgTBAndCPic = "00:00:000";
             }
             
 
@@ -321,7 +340,7 @@ namespace App1.View.UserPages
             catch (DivideByZeroException)
             {
                 trainingSession.AvgTGAndWPicTicks = 0;
-                trainingSession.AvgTGAndWPic = null;
+                trainingSession.AvgTGAndWPic = "00:00:000";
             }
             
 
@@ -335,7 +354,7 @@ namespace App1.View.UserPages
             catch (DivideByZeroException)
             {
                 trainingSession.AvgTGAndWPicTicks = 0;
-                trainingSession.AvgTGAndWPic = null;
+                trainingSession.AvgTGAndWPic = "00:00:000";
             }
             
 
@@ -348,7 +367,7 @@ namespace App1.View.UserPages
             catch (DivideByZeroException)
             {
                 trainingSession.AvgTBAndWPicTicks = 0;
-                trainingSession.AvgTBAndWPic = null;
+                trainingSession.AvgTBAndWPic = "00:00:000";
             }
 
             if (trainingSession.IsTrainingCompleted == true)
@@ -416,7 +435,7 @@ namespace App1.View.UserPages
                         // Picture was moved up and the type is also bad
                         if (currentPicType == PicType.Bad)
                         {
-                            stopwatch2.Stop();
+                            pauseStopWatches();
                             PicTime picTime = new PicTime();
                             picTime.SessionID = trainingSession.SessionId;
                             picTime.TimeTicks = stopwatch2.ElapsedTicks;
@@ -426,11 +445,12 @@ namespace App1.View.UserPages
                             picTimeDBHelper.AddPicTime(picTime);
                             trainingSession.NrOfBadCorrectImages += 1;
                             stopwatch2.Restart();
+                            GlobalVariables.Stopwatch.Start();
                         }
                         // Picture was moved up but the type was good
                         else
                         {
-                            stopwatch2.Stop();
+                            pauseStopWatches();
                             PicTime picTime = new PicTime();
                             picTime.SessionID = trainingSession.SessionId;
                             picTime.TimeTicks = stopwatch2.ElapsedTicks;
@@ -440,6 +460,7 @@ namespace App1.View.UserPages
                             picTimeDBHelper.AddPicTime(picTime);
                             trainingSession.NrOfGoodWrongImages += 1;
                             stopwatch2.Restart();
+                            GlobalVariables.Stopwatch.Start();
                         }
 
                     }
@@ -448,7 +469,7 @@ namespace App1.View.UserPages
                         // Picture was moved down and the type is also good
                         if (currentPicType == PicType.Good)
                         {
-                            stopwatch2.Stop();
+                            pauseStopWatches();
                             PicTime picTime = new PicTime();
                             picTime.SessionID = trainingSession.SessionId;
                             picTime.TimeTicks = stopwatch2.ElapsedTicks;
@@ -458,11 +479,12 @@ namespace App1.View.UserPages
                             picTimeDBHelper.AddPicTime(picTime);
                             trainingSession.NrOfGoodCorrectImages += 1;
                             stopwatch2.Restart();
+                            GlobalVariables.Stopwatch.Start();
                         }
                         // Picture was moved down but the type was bad
                         else
                         {
-                            stopwatch2.Stop();
+                            pauseStopWatches();
                             PicTime picTime = new PicTime();
                             picTime.SessionID = trainingSession.SessionId;
                             picTime.TimeTicks = stopwatch2.ElapsedTicks;
@@ -472,6 +494,7 @@ namespace App1.View.UserPages
                             picTimeDBHelper.AddPicTime(picTime);
                             trainingSession.NrOfBadWrongImages += 1;
                             stopwatch2.Restart();
+                            GlobalVariables.Stopwatch.Start();
                         }
                     }
 
@@ -479,22 +502,32 @@ namespace App1.View.UserPages
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            if (indexer == totalImages && GlobalVariables.isNavigation == true)
+            if (indexer == totalImages && GlobalVariables.isTraining == true)
             {
                 indexer = 0;
+                if (Settings.isTimer)
+                {
+                    timer.Stop();
+                }
                 stopStopWatches();
                 trainingSession.IsTrainingCompleted = true;
-                GlobalVariables.isNavigation = false;
+                GlobalVariables.isTraining = false;
                 getStatistic();
                 resetStopWatches();
                 await Task.Delay(500);
                 await Navigation.PushAsync(new ResultsPage());
             }
+            Console.WriteLine("Stopwatch Total: " + GlobalVariables.Stopwatch.Elapsed);
+            Console.WriteLine("Stopwatch between: " + stopwatch2.Elapsed);
         }
 
 
         public async void Exit_button_Clicked(object sender, EventArgs e)
         {
+            if (Settings.isTimer)
+            {
+                timer.Stop();
+            }
             stopStopWatches();
             var result = await DisplayAlert("Exit", "Do you want to end the test?", "Yes", "No");
 
@@ -502,7 +535,7 @@ namespace App1.View.UserPages
             {
                 indexer = 0;
                 trainingSession.IsTrainingCompleted = false;
-                GlobalVariables.isNavigation = false;
+                GlobalVariables.isTraining = false;
                 getStatistic();
                 GlobalVariables.Stopwatch.Reset();
                 stopwatch2.Reset();
@@ -512,6 +545,10 @@ namespace App1.View.UserPages
             else
             {
                 //Methode um Timer weiterzufuehren
+                if (Settings.isTimer)
+                {
+                    timer.Stop();
+                }
                 startStopWatches();
             }
             return;

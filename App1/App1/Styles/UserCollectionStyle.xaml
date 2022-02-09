@@ -78,7 +78,6 @@
     <!--  UserDetailPage -->
     <Style x:Key="NameConstant" TargetType="Label">
         <Setter Property="FontSize" Value="Medium" />
-        <Setter Property="TextColor" Value="Gray" />
         <Setter Property="FontAttributes" Value="Italic" />
     </Style>
 
@@ -117,16 +116,12 @@
     <Style x:Key="Time_Label_Description" TargetType="Label">
         <Setter Property="FontSize" Value="Small" />
         <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
-        <Setter Property="MaxLines" Value="1"/>
-        <Setter Property="LineBreakMode" Value="TailTruncation"/>
         <Setter Property="FontAttributes" Value="Italic" />
     </Style>
 
     <Style x:Key="Time_Label_Value" TargetType="Label">
         <Setter Property="FontSize" Value="Small" />
         <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
-        <Setter Property="MaxLines" Value="1"/>
-        <Setter Property="LineBreakMode" Value="TailTruncation"/>
         <Setter Property="HorizontalOptions" Value="EndAndExpand"/>
         <Setter Property="FontAttributes" Value="Bold"/>
     </Style>

@@ -189,9 +189,9 @@ namespace App1.Helpers
         {
             try
             {
-                if (Preferences.Get(constants.loginUser, "false") != "false")
+                if (Settings.loginUser != "false")
                 {
-                    return GetUserByName(Preferences.Get(constants.loginUser, "false"));
+                    return GetUserByName(Settings.loginUser);
                 }
                 else
                 {
@@ -377,7 +377,7 @@ namespace App1.Helpers
             var d1 = data.Where(x => x.Username == username && x.Password == password).FirstOrDefault();
             if (d1 != null)
             {
-                Preferences.Set(constants.loginUser, username);
+                Settings.loginUser = username;
                 return true;
             }
             else
@@ -400,7 +400,7 @@ namespace App1.Helpers
             var d1 = data.Where(x => x.Username == username ).FirstOrDefault();
             if (CheckUserexist(username))
             {
-                Preferences.Set(constants.loginUser, username);
+                Settings.loginUser = username;
                 return true;
             } else
             {
@@ -414,7 +414,7 @@ namespace App1.Helpers
         public async void LogOutUser()
         {
             //Make sure any logged in user exists
-            if (!Preferences.Get(constants.loginUser,"false").Equals("false"))
+            if (Settings.loginUser != "false")
             {
                 try
                 {

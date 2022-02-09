@@ -3,7 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit" 
              xmlns:pg="clr-namespace:App1.ViewModels" xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+             xmlns:converts="clr-namespace:App1.Methods"
              x:Class="App1.View.AdminPages.TrainingDetailPage">
+    <ContentPage.Resources>
+        <converts:NullToZeroConverter x:Key="nulltoZero"/>
+    </ContentPage.Resources>
+    
+    
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Wochenstatistik"
                      Order="Secondary"
@@ -71,9 +77,9 @@
                 <Label  Text="Insg. richtig:" Style="{StaticResource NameConstant}" />
                 <Label  Style="{StaticResource NameConstant}" FontAttributes="Bold" HorizontalOptions="EndAndExpand">
                     <Label.Text>
-                        <MultiBinding StringFormat="{}{0}/{1:#.#}%">
+                        <MultiBinding StringFormat="{}{0}/{1:#0.#}%">
                             <Binding Path="NrOfCorrectImages" />
-                            <Binding Path="PctCIm" />
+                            <Binding Path="PctCIm" Converter="{StaticResource nulltoZero}"/>
                         </MultiBinding>
                     </Label.Text>
                 </Label>
@@ -82,9 +88,9 @@
                 <Label  Text="Insg. falsch:" Style="{StaticResource NameConstant}" />
                 <Label  Style="{StaticResource NameConstant}" FontAttributes="Bold" HorizontalOptions="EndAndExpand">
                     <Label.Text>
-                        <MultiBinding StringFormat="{}{0}/{1:#.#}%">
+                        <MultiBinding StringFormat="{}{0}/{1:#0.#}%">
                             <Binding Path="NrOfWrongImages" />
-                            <Binding Path="PctWIm" />
+                            <Binding Path="PctWIm" Converter="{StaticResource nulltoZero}"/>
                         </MultiBinding>
                     </Label.Text>
                 </Label>
@@ -98,9 +104,9 @@
                 <Label  Text="richtig &amp; subst. unabh. Bilder:"  Style="{StaticResource NameConstant}" />
                 <Label  Style="{StaticResource NameConstant}" FontAttributes="Bold" HorizontalOptions="EndAndExpand">
                     <Label.Text>
-                        <MultiBinding StringFormat="{}{0}/{1:#.#}%">
+                        <MultiBinding StringFormat="{}{0}/{1:#0.#}%">
                             <Binding Path="NrOfGoodCorrectImages" />
-                            <Binding Path="PctGandCIm" />
+                            <Binding Path="PctGandCIm" Converter="{StaticResource nulltoZero}"/>
                         </MultiBinding>
                     </Label.Text>
                 </Label>
@@ -109,9 +115,9 @@
                 <Label  Text="falsch &amp; subst. unabh. Bilder:"  Style="{StaticResource NameConstant}"/>
                 <Label  Style="{StaticResource NameConstant}" FontAttributes="Bold" HorizontalOptions="EndAndExpand">
                     <Label.Text>
-                        <MultiBinding StringFormat="{}{0}/{1:#.#}%">
+                        <MultiBinding StringFormat="{}{0}/{1:#0.#}%">
                             <Binding Path="NrOfGoodWrongImages" />
-                            <Binding Path="PctGandWIm" />
+                            <Binding Path="PctGandWIm" Converter="{StaticResource nulltoZero}"/>
                         </MultiBinding>
                     </Label.Text>
                 </Label>
@@ -120,9 +126,9 @@
                 <Label  Text="richtig &amp; subst. abh. Bilder:" Style="{StaticResource NameConstant}"/>
                 <Label  Style="{StaticResource NameConstant}" FontAttributes="Bold" HorizontalOptions="EndAndExpand">
                     <Label.Text>
-                        <MultiBinding StringFormat="{}{0}/{1:#.#}%">
+                        <MultiBinding StringFormat="{}{0}/{1:#0.#}%">
                             <Binding Path="NrOfBadCorrectImages" />
-                            <Binding Path="PctBandCIm" />
+                            <Binding Path="PctBandCIm" Converter="{StaticResource nulltoZero}"/>
                         </MultiBinding>
                     </Label.Text>
                 </Label>
@@ -131,9 +137,9 @@
                 <Label  Text="falsch &amp; subst. abh. Bilder:" Style="{StaticResource NameConstant}" />
                 <Label  Style="{StaticResource NameConstant}" FontAttributes="Bold" HorizontalOptions="EndAndExpand">
                     <Label.Text>
-                        <MultiBinding StringFormat="{}{0}/{1:#.#}%">
+                        <MultiBinding StringFormat="{}{0}/{1:#0.#}%">
                             <Binding Path="NrOfBadWrongImages" />
-                            <Binding Path="PctBandWIm" />
+                            <Binding Path="PctBandWIm" Converter="{StaticResource nulltoZero}"/>
                         </MultiBinding>
                     </Label.Text>
                 </Label>
@@ -167,11 +173,11 @@
                 <Label Text="{Binding AvgTWPic}" Style="{StaticResource Time_Label_Value}"  /> 
             </StackLayout>
             <StackLayout  VerticalOptions="FillAndExpand"  Orientation="Horizontal" Grid.Column="0" Grid.Row="2">
-                <Label Text="ø pro subst. unabh." Style="{StaticResource Time_Label_Description}"  />
+                <Label Text="ø p. subst. unabh." Style="{StaticResource Time_Label_Description}"  />
                 <Label Text="{Binding AvgTGPic}" Style="{StaticResource Time_Label_Value}" />
             </StackLayout>
             <StackLayout  VerticalOptions="FillAndExpand"  Orientation="Horizontal" Grid.Column="1" Grid.Row="2">
-                <Label Text="ø pro subst. abh." Style="{StaticResource Time_Label_Description}"  />
+                <Label Text="ø p. subst. abh." Style="{StaticResource Time_Label_Description}"  />
                 <Label Text="{Binding AvgTBPic}" Style="{StaticResource Time_Label_Value}"  />
             </StackLayout>
         </Grid>

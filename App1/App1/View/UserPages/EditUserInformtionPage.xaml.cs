@@ -30,7 +30,7 @@ namespace App1.View.UserPages
                     {
                         await DisplayAlert("Achtung", "Bitte gib ein neues Passwort ein", "Okay");
                     }
-                    else if (userDBHelper.SetUserPassword(Preferences.Get(constants.loginUser,"false"),Entry_NewPassword.Text))
+                    else if (userDBHelper.SetUserPassword(Settings.loginUser,Entry_NewPassword.Text))
                     {
                         await DisplayAlert("Erfolg", "Passwort wurde geändert!", "Okay");
                         Entry_OldPassword.Text = string.Empty;
@@ -49,7 +49,7 @@ namespace App1.View.UserPages
                     {
                         await DisplayAlert("Achtung", "Bitte gib ein neues Passwort ein", "Okay");
                     }
-                    else if (adminDBHelper.SetUserPassword(Preferences.Get(constants.loginUser, "false"), Entry_NewPassword.Text))
+                    else if (adminDBHelper.SetUserPassword(Settings.loginUser, Entry_NewPassword.Text))
                     {
                         await DisplayAlert("Erfolg", "Passwort wurde geändert!", "Okay");
                         Entry_OldPassword.Text = string.Empty;

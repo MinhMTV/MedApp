@@ -336,8 +336,8 @@ namespace App1.ViewModels
             }
             else
             {
-                textbarsize = 50f;
-                textdonutsize = 60f;
+                textbarsize = 40f;
+                textdonutsize = 50f;
             }
 
             switch (chartNr)

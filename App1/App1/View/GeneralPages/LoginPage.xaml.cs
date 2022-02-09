@@ -52,7 +52,7 @@ namespace App1.View.GeneralPages
                 if (adminDBHelper.ValidateLogin(username,Entry_Password.Text))
                 {
                     await DisplayAlert("Login", "Admin Login erfolgreich", "Okay");
-                    Preferences.Set(constants.loginUser, username);  // set login User to Username of admin
+                    Settings.loginUser = username;  // set login User to Username of admin
                     await Navigation.PushAsync(new AdminMenu());
                 }
 
@@ -61,7 +61,7 @@ namespace App1.View.GeneralPages
                 else if (userDBHelper.ValidateLogin(username, Entry_Password.Text))
                 {
                     await DisplayAlert("Login", "Login erfolgreich", "Okay");
-                    Preferences.Set(constants.loginUser, username);  // set login User to Username of user
+                    Settings.loginUser = username;   // set login User to Username of user
                     var user = userDBHelper.GetLoggedUser();
 
                     if (user.isAskDataProtec)

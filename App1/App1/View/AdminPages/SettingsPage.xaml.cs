@@ -25,11 +25,11 @@ namespace App1.View.AdminPages
         {
             InitializeComponent();
             this.BindingContext = this;
-            TMin = GlobalVariables.defaultMin;
-            TSec = GlobalVariables.defaultSec;
-            TPicAmount = GlobalVariables.defaultPicCount;
-            isPic = GlobalVariables.isPicAmount;
-            isTime = GlobalVariables.isTimer;
+            TMin = Settings.defaultMin;
+            TSec = Settings.defaultSec;
+            TPicAmount = Settings.defaultPicCount;
+            isPic = Settings.isPicAmount;
+            isTime = Settings.isTimer;
         }
 
         void OnTimeToggled(object sender, ToggledEventArgs e)
@@ -37,12 +37,10 @@ namespace App1.View.AdminPages
             if (e.Value)
             {
                 isTime = true;
-                GlobalVariables.isTimer = true;
             }
             else
             {
-                isTime = false; 
-                GlobalVariables.isTimer = false;
+                isTime = false;
             }
         }
 
@@ -51,24 +49,24 @@ namespace App1.View.AdminPages
             if (e.Value)
             {
                 isPic = true;
-                GlobalVariables.isPicAmount = true;
             }
             else
             {
                 isPic = false;
-                GlobalVariables.isPicAmount = false;
             }
         }
 
         private async void Button_Clicked(object sender, EventArgs e)
         {
-            GlobalVariables.defaultMin = TMin;
-            GlobalVariables.defaultSec = TSec;
-            GlobalVariables.defaultPicCount = TPicAmount;
-            GlobalVariables.isPicAmount = isPic;
-            GlobalVariables.isTimer = isTime;
+            Settings.defaultMin = TMin;
+            Settings.defaultSec = TSec;
+            Settings.defaultPicCount = TPicAmount;
 
-            Console.WriteLine("Time" + GlobalVariables.defaultMin + GlobalVariables.defaultSec);
+            Settings.isPicAmount = isPic;
+            Settings.isTimer = isTime;
+
+            Console.WriteLine("Time" + Settings.defaultMin + Settings.defaultSec);
+            Console.WriteLine("Pics" + Settings.defaultPicCount.ToString());
             await App.Current.MainPage.DisplayToastAsync("Einstellungen wurden gespeichert");
         }
     }

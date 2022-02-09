@@ -7,12 +7,7 @@
              xmlns:valueconverter="clr-namespace:App1.Methods"
              xmlns:converters="clr-namespace:App1.Methods;assembly=App1"
              x:Class="App1.View.AdminPages.PhotoGalleryPage">
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <converters:IntToString x:Key="IntToString" />
-        </ResourceDictionary>
-    </ContentPage.Resources>
-    
+
     <NavigationPage.TitleView>
         <Grid >
 

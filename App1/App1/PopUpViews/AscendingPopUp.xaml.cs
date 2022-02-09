@@ -28,16 +28,16 @@ namespace App1.PopUpViews
             switch (navigationtype)
             {
                 case constants.userPopup:
-                    setIsChecked(Preferences.Get(constants.isAscending, "True"));
+                    setIsChecked(Settings.isAscending);
                     break;
                 case constants.imagePopup:
-                    setIsChecked(Preferences.Get(constants.isImageAscending, "True"));
+                    setIsChecked(Settings.isImageAscending);
                     break;
                 case constants.goodimagePopup:
-                    setIsChecked(Preferences.Get(constants.isGoodImageAscending, "True"));
+                    setIsChecked(Settings.isGoodImageAscending);
                     break;
                 case constants.badimagePopup:
-                    setIsChecked(Preferences.Get(constants.isBadImageAscending, "True"));
+                    setIsChecked(Settings.isBadImageAscending);
                     break;
 
             }
@@ -53,11 +53,11 @@ namespace App1.PopUpViews
             isDescendingSelect = e.Value;
         }
 
-        private void setIsChecked(string sort)
+        private void setIsChecked(bool sort)
         {
-            if (sort.Equals("True"))
+            if (sort)
                 IsAscending.IsChecked = true;
-            else if (sort.Equals("False"))
+            else if (sort == false)
                 IsDescending.IsChecked = true;
         }
 
@@ -68,44 +68,44 @@ namespace App1.PopUpViews
                 case constants.userPopup:
                     if (isAscendingSelect)
                     {
-                        Preferences.Set(constants.isAscending, isAscendingSelect.ToString());
+                        Settings.isAscending = isAscendingSelect;
                     }
                     else if (isDescendingSelect)
                     {
-                        Preferences.Set(constants.isAscending, isAscendingSelect.ToString());
+                        Settings.isAscending = isAscendingSelect;
                     }
                     MessagingCenter.Send<App, string>(App.Current as App, constants.userPopup, isAscendingSelect.ToString());
                     break;
                 case constants.imagePopup:
                     if (isAscendingSelect)
                     {
-                        Preferences.Set(constants.isImageAscending, isAscendingSelect.ToString());
+                        Settings.isImageAscending = isAscendingSelect;
                     }
                     else if (isDescendingSelect)
                     {
-                        Preferences.Set(constants.isImageAscending, isAscendingSelect.ToString());
+                        Settings.isImageAscending = isAscendingSelect;
                     }
                     MessagingCenter.Send<App, string>(App.Current as App, constants.imagePopup, isAscendingSelect.ToString());
                     break;
                 case constants.goodimagePopup:
                     if (isAscendingSelect)
                     {
-                        Preferences.Set(constants.isGoodImageAscending, isAscendingSelect.ToString());
+                        Settings.isGoodImageAscending = isAscendingSelect;
                     }
                     else if (isDescendingSelect)
                     {
-                        Preferences.Set(constants.isGoodImageAscending, isAscendingSelect.ToString());
+                        Settings.isGoodImageAscending = isAscendingSelect;
                     }
                     MessagingCenter.Send<App, string>(App.Current as App, constants.goodimagePopup, isAscendingSelect.ToString());
                     break;
                 case constants.badimagePopup:
                     if (isAscendingSelect)
                     {
-                        Preferences.Set(constants.isBadImageAscending, isAscendingSelect.ToString());
+                        Settings.isBadImageAscending = isAscendingSelect;
                     }
                     else if (isDescendingSelect)
                     {
-                        Preferences.Set(constants.isBadImageAscending, isAscendingSelect.ToString());
+                        Settings.isBadImageAscending = isAscendingSelect;
                     }
                     MessagingCenter.Send<App, string>(App.Current as App, constants.badimagePopup, isAscendingSelect.ToString());
                     break;

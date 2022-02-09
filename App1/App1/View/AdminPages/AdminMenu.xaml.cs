@@ -19,9 +19,8 @@ namespace App1.View.AdminPages
             InitializeComponent();
             Detail = new NavigationPage(new UserCollectionPage());
             IsPresented = false;
-            var loguser = Preferences.Get(constants.loginUser, "false");
+            var loguser = Settings.loginUser;
             name.Text = "Hallo Therapeut " + loguser;
-            Console.WriteLine(Preferences.Get(constants.loginUser, "false"));
         }
 
         // This prevents a user from being able to hit the back button and leave the Admin Page.

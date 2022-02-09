@@ -93,7 +93,7 @@ namespace App1.ViewModels
             _selectedUser.Clear();
             IsRefreshing = true;
 
-            foreach (var item in userDBHelper.GetAllUserToListByOrder(Preferences.Get(constants.OrderBy, "createdat"), bool.Parse(Preferences.Get(constants.isAscending, "true"))))
+            foreach (var item in userDBHelper.GetAllUserToListByOrder(Settings.OrderBy,Settings.isAscending))
             { 
                 _user.Add(item);
             }
@@ -165,7 +165,7 @@ namespace App1.ViewModels
         private void InitData()
         {
             _selectedUser = new ObservableCollection<object>();
-            var userlist = userDBHelper.GetAllUserToListByOrder(Preferences.Get(constants.OrderBy, "createdat"), bool.Parse(Preferences.Get(constants.isAscending, "true")));
+            var userlist = userDBHelper.GetAllUserToListByOrder(Settings.OrderBy, Settings.isAscending);
             _user = userDBHelper.GetAllUserByListToCollection(userlist);
             _nrOfSelectedUser = SelectedUser.Count();
             _selectedUser_IsVisible = false;

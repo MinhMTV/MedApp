@@ -55,7 +55,7 @@ namespace App1.ViewModels
         private void InitData()
         {
             _selectedpictures = new ObservableCollection<object>();
-            _pictures = picturesDbHelper.GetAllBadImagesToCollectionByOrder(bool.Parse(Preferences.Get(constants.isBadImageAscending, "true")));
+            _pictures = picturesDbHelper.GetAllBadImagesToCollectionByOrder(Settings.isBadImageAscending);
             _nrOfSelectedPictures = SelectedPictures.Count();
             _selectedPictures_IsVisible = false;
         }
@@ -96,7 +96,7 @@ namespace App1.ViewModels
             _selectedpictures.Clear();
             IsRefreshing = true;
 
-            foreach (var item in picturesDbHelper.GetAllImagesToListByOrder(bool.Parse(Preferences.Get(constants.isBadImageAscending, "true"))))
+            foreach (var item in picturesDbHelper.GetAllImagesToListByOrder(Settings.isBadImageAscending))
             {
                 _pictures.Add(item);
             }

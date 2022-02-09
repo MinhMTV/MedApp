@@ -19,9 +19,8 @@ namespace App1.View.UserPages
             InitializeComponent();
             Detail = new NavigationPage(new DemoPage());
             IsPresented = false;
-            var loguser = Preferences.Get(constants.loginUser, "false");
+            var loguser = Settings.loginUser;
             name.Text = "Hallo " + loguser;
-            Console.WriteLine(Preferences.Get(constants.loginUser, "false"));
         }
 
         // This prevents a user from being able to hit the back button and leave the Menu Page.
@@ -61,7 +60,7 @@ namespace App1.View.UserPages
             {
                 UserDBHelper userDBHelper = new UserDBHelper();
                 userDBHelper.LogOutUser();
-                Preferences.Set(constants.loginUser, "false");
+                Settings.loginUser = "false";
                 await Navigation.PushAsync(new LoginPage());
             }
             IsPresented = false;

@@ -1,7 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:local="clr-namespace:App1.Methods"
              x:Class="App1.View.AdminPages.SettingsPage">
+    <ContentPage.Resources>
+        <local:IntToString x:Key="IntToString"/>
+    </ContentPage.Resources>
     <NavigationPage.TitleView>
         <Label 
                Text="Einstellungen"
@@ -33,7 +37,7 @@
                             <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="0" >
                                 <Label  Text="Trainingszeit beschränken"  Style="{StaticResource SettingName}" />
                                 <StackLayout Orientation="Horizontal">
-                                    <Entry Text="{Binding TMin}"  HorizontalOptions="FillAndExpand" FontAttributes="Bold" Keyboard="Numeric">
+                                    <Entry Text="{Binding TMin, Converter={StaticResource IntToString}}" HorizontalOptions="FillAndExpand" FontAttributes="Bold" Keyboard="Numeric">
                                         <Entry.Triggers>
                                             <DataTrigger TargetType="Entry" Binding="{Binding Source={x:Reference Timeswitch}, Path=IsToggled}"  Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
@@ -46,7 +50,7 @@
                                     <Label Text="Minuten" Style="{StaticResource SettingName}" VerticalOptions="Center"/>
                                 </StackLayout>
                                 <StackLayout Orientation="Horizontal">
-                                    <Entry Text="{Binding TSec}"  HorizontalOptions="FillAndExpand" FontAttributes="Bold" Keyboard="Numeric">
+                                    <Entry Text="{Binding TSec, Converter={StaticResource IntToString}}"  HorizontalOptions="FillAndExpand" FontAttributes="Bold" Keyboard="Numeric">
                                         <Entry.Triggers>
                                             <DataTrigger TargetType="Entry" Binding="{Binding Source={x:Reference Timeswitch}, Path=IsToggled}"  Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
@@ -94,7 +98,7 @@
                             </StackLayout>
                             <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0">
                                 <Label  Text="Anzahl Bilder pro Training" Style="{StaticResource SettingName}"/>
-                                <Entry Text="{Binding TPicAmount}"  HorizontalOptions="FillAndExpand" FontAttributes="Bold" Keyboard="Numeric">
+                                <Entry Text="{Binding TPicAmount, Converter={StaticResource IntToString}}"  HorizontalOptions="FillAndExpand" FontAttributes="Bold" Keyboard="Numeric">
                                     <Entry.Triggers>
                                         <DataTrigger TargetType="Entry" Binding="{Binding Source={x:Reference PicSwitch}, Path=IsToggled}"  Value="False">
                                             <Setter Property="IsEnabled" Value="False"/>

@@ -29,7 +29,8 @@ namespace App1.View.GeneralPages
                 // init Pictures just at first start of the App Run.
                 pictureDBHelper.initGivenPictures();
                 Settings.FirstRun = false;
-            }
+                
+    }
 
 
         } 
@@ -40,20 +41,19 @@ namespace App1.View.GeneralPages
          */
         async void Start_Clicked(object sender, System.EventArgs e)
         {
-            Console.WriteLine(Preferences.Get(constants.loginUser, "false"));
             if (adminDBHelper.IsRegisteredUserExists())  //check if there is a admin already
             {
-                if (Preferences.Get(constants.loginUser, "false").Equals("false")) //check if somebody is loggin
+                if (Settings.loginUser == "false") //check if somebody is loggin
                 {
                     await Navigation.PushAsync(new LoginPage());
                 }
                 else
                 {
-                    var logginUser = Preferences.Get(constants.loginUser, "false"); //get name of log in User
+                    var logginUser = Settings.loginUser; //get name of log in User
 
                     if (adminDBHelper.CheckUserexist(logginUser))
                     {
-                        Preferences.Set(constants.loginUser, "false");
+                        Settings.loginUser = "false";
                         await Navigation.PushAsync(new LoginPage()); //if admin was loggin pls repeat login as admin shouldnt be login all the time
                     }
                     else if (userDBHelper.CheckUserexist(logginUser)) // check if user was login

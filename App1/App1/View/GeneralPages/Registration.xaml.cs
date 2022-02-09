@@ -149,7 +149,7 @@ namespace App1.View.GeneralPages
                             await Navigation.PopModalAsync();
                         } else
                         {
-                            Preferences.Set(constants.loginUser, username);  // set login User to Username of user
+                            Settings.loginUser = username;  // set login User to Username of user
                             await Navigation.PushAsync(new DataProtectionPage());
                         }
                     }

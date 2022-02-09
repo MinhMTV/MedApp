@@ -143,7 +143,7 @@ namespace App1.Helpers
             {
                 foreach (Admin item in newConnection.Table<Admin>())
                 {
-                    if (item.Username == Preferences.Get(constants.loginUser, "false"))
+                    if (item.Username == Settings.loginUser)
                     {
                         return item;
                     }
@@ -280,11 +280,10 @@ namespace App1.Helpers
         //maybe redudant because you can always return the admin object and return its value
         public string getLoggedinUserProperty(string property)
         {
-            if (!Preferences.Get(constants.loginUser, "false").Equals("false"))
+            if (Settings.loginUser != "false")
             {
-                Console.WriteLine(Preferences.Get(constants.loginUser, "false"));
 
-                var username = Preferences.Get(constants.loginUser, "false");
+                var username = Settings.loginUser;
                 var data = newConnection.Table<Admin>();
                 try
                 {
@@ -338,7 +337,7 @@ namespace App1.Helpers
             var d1 = data.Where(x => x.Username == username && x.Password == password).FirstOrDefault();
             if (d1 != null)
             {
-                Preferences.Set(constants.loginUser, username);
+                Settings.loginUser = username;
                 return true;
             }
             else
@@ -358,7 +357,7 @@ namespace App1.Helpers
             var data = newConnection.Table<Admin>();
             if (CheckUserexist(username))
             {
-                Preferences.Set(constants.loginUser, username);
+                Settings.loginUser = username;
                 return true;
             }
             else
@@ -377,9 +376,9 @@ namespace App1.Helpers
             string userName;
 
             //Make sure any logged in user exists
-            if (!Preferences.Get(constants.loginUser, "false").Equals("false"))
+            if (Settings.loginUser != "false")
             {
-                userName = Preferences.Get(constants.loginUser, "false");
+                userName = Settings.loginUser;
                 try
                 {
                     await App.Current.MainPage.DisplayAlert("Erfolg", "Sie wurden ausgeloggt", "OK");

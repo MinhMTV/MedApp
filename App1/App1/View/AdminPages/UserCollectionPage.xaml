@@ -8,7 +8,6 @@
              xmlns:converters="clr-namespace:App1.Methods;assembly=App1">
     <ContentPage.Resources>
         <ResourceDictionary>
-            <converters:IntToString x:Key="IntToString" />
             <converters:DateTimeToMsg x:Key="DTToMSG" />
         </ResourceDictionary>
     </ContentPage.Resources>
