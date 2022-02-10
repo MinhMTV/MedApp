@@ -63,6 +63,7 @@ namespace App1.View.AdminPages
         protected override void OnAppearing()
         {
             base.OnAppearing();
+            BindingContext = _uvm = new UserCollectionViewModel();
         }
         async void AddUser_Clicked(System.Object sender, System.EventArgs e)
         {

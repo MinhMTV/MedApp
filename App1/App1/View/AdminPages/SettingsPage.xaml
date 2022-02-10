@@ -33,6 +33,7 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             
                             <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="0" >
@@ -128,7 +129,7 @@
                                             </VisualStateGroup>
                                         </VisualStateManager.VisualStateGroups>
                                     </Switch>
-                                    
+
                                     <Label Style="{StaticResource SettingName}">
                                         <Label.Triggers>
                                             <DataTrigger TargetType="Label" Binding="{Binding Source={x:Reference PicSwitch}, Path=IsToggled}"  Value="False">
@@ -139,17 +140,20 @@
                                             </DataTrigger>
                                         </Label.Triggers>
                                     </Label>
-
-                                    
                                 </StackLayout>
+                            </StackLayout>
+                            <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="0">
+                                <Label  Text="Anzahl Training pro Pokal" Style="{StaticResource SettingName}"/>
+                                <Entry Text="{Binding TCupAmount, Converter={StaticResource IntToString}}"  HorizontalOptions="FillAndExpand" FontAttributes="Bold" Keyboard="Numeric">
+                                </Entry>
                             </StackLayout>
                         </Grid>
                     </StackLayout>
                 </StackLayout>
             </Frame>
         </StackLayout>
-       
-        <Button Text="Änderung speichern" HorizontalOptions="CenterAndExpand"  Clicked="Button_Clicked"/>
+
+        <Button Text="Änderung speichern" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"  Clicked="Button_Clicked" Style="{StaticResource UserButton}"/>
 
     </StackLayout>
 </ContentPage>

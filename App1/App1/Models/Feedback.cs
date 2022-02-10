@@ -6,10 +6,12 @@ namespace App1.Models
 {
     public enum Feedback
     {
-        Bad = 0,
+        noFeedback = 0,
 
-        Good = 1,
+        Bad = 1,
 
-        Neutral = 2
+        Good = 2,
+
+        Neutral = 3
     }
 }

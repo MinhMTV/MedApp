@@ -30,6 +30,8 @@ namespace App1.View.UserPages
 
         public int countUntilPokal { get; set; }
 
+        public bool IsBackVisible { get; set; } = true;
+
         private UserDBHelper userDBHelper = new UserDBHelper();
         private TrainingSessionDBHelper trainingSessionDBHelper = new TrainingSessionDBHelper();
         private TrainingSession tsession;
@@ -49,18 +51,24 @@ namespace App1.View.UserPages
             var tCount = trainingSessionDBHelper.getCompletedTrainingSessionListbyUserAndOrder(user, false).Count;
             Console.WriteLine(tCount.ToString());
 
-            if (tCount % 5 == 0)
+            if (tCount % Settings.defaultCupCount == 0)
             {
                 isPokal = true;
                 isNextPokal = false;
             } else
             {
-                countUntilPokal = 5 - (tCount % 5) ;
+                countUntilPokal = Settings.defaultCupCount - (tCount % Settings.defaultCupCount) ;
                 isPokal = false;
                 isNextPokal = true;
             }
             Name = user.FirstName;
             BindingContext = this;
+
+            if(Device.RuntimePlatform == Device.UWP)
+            {
+                IsBackVisible = false;
+            }
+
         }
 
 

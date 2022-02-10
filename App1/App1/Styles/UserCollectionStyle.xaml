@@ -84,6 +84,7 @@
         <Setter Property="OutlineColor" Value="LightGray" />
         <Setter Property="BorderColor" Value="LightGray" />
         <Setter Property="HasShadow" Value="True" />
+        <Setter Property="BackgroundColor" Value="White"/>
     </Style>
 
     <!--Stacklayout of FrameCardView -->
@@ -153,7 +154,7 @@
 
     <!--  SettingPage -->
     <Style x:Key="SettingName" TargetType="Label">
-        <Setter Property="FontSize" Value="Large" />
+        <Setter Property="FontSize" Value="Medium" />
         <Setter Property="TextColor" Value="Black" />
         <Setter Property="FontAttributes" Value="Italic" />
     </Style>

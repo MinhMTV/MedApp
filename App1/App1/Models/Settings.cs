@@ -42,6 +42,12 @@ namespace App1.Models
             set => Preferences.Set(nameof(defaultPicCount), value);
         }
 
+        public static int defaultCupCount //Default number of trainings to get a new Cup {
+        {
+            get => Preferences.Get(nameof(defaultCupCount), 5); //embedded Pics Value
+            set => Preferences.Set(nameof(defaultCupCount), value);
+        }
+
         public static bool isAscending  //set default sort by ascending
         {
             get => Preferences.Get(nameof(isAscending), true);

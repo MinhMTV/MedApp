@@ -47,6 +47,8 @@ namespace App1.ViewModels
 
         public int cmplSession { get; set; } 
 
+        public int quitSession { get; set; }
+
         //Total Number
         public int NrOfCorrectImages { get; set; } 
 
@@ -100,6 +102,11 @@ namespace App1.ViewModels
 
         public long AvgTWPicTicks{ get; set; }
 
+        // Feedback
+        public int goodFeedback { get; set; } = 0;
+        public int sadFeedback { get; set; } = 0;
+        public int neutralFeedback { get; set; } = 0;
+
         public int swipedir { get; set; } = 0; // swipe counter for Charts
 
 
@@ -128,12 +135,12 @@ namespace App1.ViewModels
                 case "left":
                     swipedir--;
                     if (swipedir == -1)
-                        swipedir = 3;
+                        swipedir = 4;
                     SetChart(swipedir);
                     break;
                 case "right":
                     swipedir++;
-                    if (swipedir == 4)
+                    if (swipedir == 6)
                     {
                         swipedir = 0;
                     }
@@ -254,6 +261,48 @@ namespace App1.ViewModels
                  },
         };
 
+            //quit and compl pics Chart
+            var quit = new[]{
+                 new Entry(quitSession)
+                 {
+                     Label = "Abgebrochene Trainings",
+                     ValueLabel = quitSession.ToString(),
+                     Color = SKColor.Parse("#fc0303"),
+                     ValueLabelColor = SKColors.Black
+                 },
+                 new Entry(cmplSession)
+                 {
+                     Label = "Komplette Trainings",
+                     ValueLabel = cmplSession.ToString(),
+                     Color = SKColor.Parse("#13fc03"),
+                     ValueLabelColor = SKColors.Black
+                 } };
+
+            //Feedback Chart
+            var feedbackEntries = new[]{
+                 new Entry(sadFeedback)
+                 {
+                     Label = "schlechtes Feedback",
+                     ValueLabel = sadFeedback.ToString(),
+                     Color =  SKColor.Parse("#fc0303"),
+                     ValueLabelColor =  SKColors.Black
+                 },
+                 new Entry(neutralFeedback)
+                 {
+                     Label = "neutrales Feedback",
+                     ValueLabel = neutralFeedback.ToString(),
+                     Color = SKColors.LightBlue,
+                     ValueLabelColor = SKColors.Black
+                 },
+                 new Entry(goodFeedback)
+                 {
+                     Label = "gutes Feedback",
+                     ValueLabel = goodFeedback.ToString(),
+                     Color = SKColor.Parse("#13fc03"),
+                     ValueLabelColor = SKColors.Black
+                 } };
+
+
             float textbarsize;
             float textdonutsize;
             if (Device.RuntimePlatform == Device.UWP)
@@ -284,9 +333,8 @@ namespace App1.ViewModels
                 case 1:
                     Chart = new BarChart()
                     {
-                        Entries = entries,
+                        Entries = quit,
                         LabelTextSize = textbarsize,
-                        MaxValue = NrOfAllImages,
                         ValueLabelOrientation = Orientation.Horizontal,
                         LabelOrientation = Orientation.Horizontal,
                         BackgroundColor = SKColors.AliceBlue,
@@ -294,6 +342,17 @@ namespace App1.ViewModels
                     break;
 
                 case 2:
+                    Chart = new BarChart()
+                    {
+                        Entries = feedbackEntries,
+                        LabelTextSize = textbarsize,
+                        ValueLabelOrientation = Orientation.Horizontal,
+                        LabelOrientation = Orientation.Horizontal,
+                        BackgroundColor = SKColors.AliceBlue,
+                    };
+                    break;
+
+                case 3:
                     if (Device.RuntimePlatform == Device.UWP)
                     {
                         Chart = new BarChart()
@@ -318,11 +377,23 @@ namespace App1.ViewModels
                     }
                     break;
 
-                case 3:
+                case 4:
                     Chart = new RadarChart()
                     {
                         Entries = radarEntries,
                         LabelTextSize = textbarsize,
+                        BackgroundColor = SKColors.AliceBlue,
+                    };
+                    break;
+
+                case 5:
+                    Chart = new BarChart()
+                    {
+                        Entries = entries,
+                        LabelTextSize = textbarsize,
+                        MaxValue = NrOfAllImages,
+                        ValueLabelOrientation = Orientation.Horizontal,
+                        LabelOrientation = Orientation.Horizontal,
                         BackgroundColor = SKColors.AliceBlue,
                     };
                     break;
@@ -334,38 +405,68 @@ namespace App1.ViewModels
 
         private void InitData(User user)
         {
-            var tList = trainingSession.getCompletedTrainingSessionListbyUserAndOrder(user, false);
+            var tList = trainingSession.getAllTrainingSessionListbyUserAndOrder(user, false);
 
-            foreach(var obj in tList)
+            var cmpl = 0;
+            var quit = 0;
+            foreach (var obj in tList)
             {
-                NrOfAllImages += obj.NrOfAllImages;
-                NrOfGoodImages += obj.NrOfGoodImages;
-                NrOfBadImages += obj.NrOfBadImages;
+                if (obj.IsTrainingCompleted == true)
+                {
+                    NrOfAllImages += obj.NrOfAllImages;
+                    NrOfGoodImages += obj.NrOfGoodImages;
+                    NrOfBadImages += obj.NrOfBadImages;
 
-                //Total Number
-                NrOfCorrectImages += obj.NrOfCorrectImages;
-                NrOfWrongImages += obj.NrOfWrongImages;
-                NrOfGoodCorrectImages += obj.NrOfGoodCorrectImages;
-                NrOfGoodWrongImages += obj.NrOfGoodWrongImages;
-                NrOfBadCorrectImages += obj.NrOfBadCorrectImages;
-                NrOfBadWrongImages += obj.NrOfBadWrongImages;
+                    //Total Number
+                    NrOfCorrectImages += obj.NrOfCorrectImages;
+                    NrOfWrongImages += obj.NrOfWrongImages;
+                    NrOfGoodCorrectImages += obj.NrOfGoodCorrectImages;
+                    NrOfGoodWrongImages += obj.NrOfGoodWrongImages;
+                    NrOfBadCorrectImages += obj.NrOfBadCorrectImages;
+                    NrOfBadWrongImages += obj.NrOfBadWrongImages;
 
-                // Time
-                SessionTimeTicks += obj.SessionTimeTicks;
+                    // Time
+                    SessionTimeTicks += obj.SessionTimeTicks;
 
-                AvgTTicks += obj.AvgTTicks;
+                    AvgTTicks += obj.AvgTTicks;
 
-                AvgTGPicTicks += obj.AvgTGPicTicks;
+                    AvgTGPicTicks += obj.AvgTGPicTicks;
 
-                AvgTBPicTicks += obj.AvgTBPicTicks;
+                    AvgTBPicTicks += obj.AvgTBPicTicks;
 
-                AvgTCPicTicks += obj.AvgTCPicTicks;
+                    AvgTCPicTicks += obj.AvgTCPicTicks;
 
-                AvgTWPicTicks += obj.AvgTWPicTicks;
+                    AvgTWPicTicks += obj.AvgTWPicTicks;
+
+                    //Feedback
+                    if(obj.Feedback == Feedback.Bad)
+                    {
+                        sadFeedback++;
+                        Console.WriteLine("Sad");
+                    }
+                    else if (obj.Feedback == Feedback.Good)
+                    {
+                        goodFeedback++;
+                        Console.WriteLine("Good");
+                    } else if(obj.Feedback == Feedback.Neutral)
+                    {
+                        neutralFeedback++;
+                        Console.WriteLine("Neutral");
+                    }
+                    cmpl++;
+                }
+                else
+                {
+                    quit++;
+
+                }
+                
             }
 
 
-            cmplSession = tList.Count;
+            cmplSession = cmpl;
+            quitSession = quit;
+
 
             // Percentage
             PctGoodIm = ((double)NrOfGoodImages / (double)NrOfAllImages) * 100;

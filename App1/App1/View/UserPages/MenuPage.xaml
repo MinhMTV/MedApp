@@ -11,13 +11,15 @@
         <ContentPage Padding="5" Title="Master" BackgroundColor="SlateGray">
             <ContentPage.Content>
                 <StackLayout VerticalOptions="FillAndExpand">
-                    <Image Source="brain.png" HeightRequest="150" Aspect="AspectFit" HorizontalOptions="FillAndExpand" Margin="20"/>
+                    <Image Source="brain.jpg" HeightRequest="120" Aspect="AspectFit" HorizontalOptions="FillAndExpand" Margin="0,15,0,0"/>
                     <StackLayout Padding="20" VerticalOptions="FillAndExpand">
                         <Label Text="{Binding Loguser,  StringFormat='Willkommen {0}'}" TextColor="Black" FontSize="Large" FontAttributes="Bold" HorizontalOptions="CenterAndExpand"/>
                         <BoxView HorizontalOptions="FillAndExpand" BackgroundColor="Black" HeightRequest="1" Margin="0,0,0,20"/>
+                        <Button Text="Training Starten" Clicked="startTraining_Clicked" Style="{StaticResource UserButton}"></Button>
                         <Button Text="Erklärung" Clicked="Training_Clicked" Style="{StaticResource UserButton}"></Button>
-                        <Button Text="Trainingübersicht" Clicked="TOverview_Clicked" Style="{StaticResource UserButton}"></Button>
+                        <Button Text="Letztes Training" Clicked="TOverview_Clicked" Style="{StaticResource UserButton}"></Button>
                         <Button Text="Wochenübersicht" Clicked="WeeklyOverviewClicked" Style="{StaticResource UserButton}"></Button>
+                        <Button Text="Trainingsübersicht" Clicked="goals_clicked" Style="{StaticResource UserButton}"></Button>
                         <Button Text="Daten ändern" Clicked="editUser_Clicked" Style="{StaticResource UserButton}"></Button>
                         <Button Text="Abmelden" Clicked="LogOutClicked" VerticalOptions="EndAndExpand"  Style="{StaticResource UserButton}"></Button>
                     </StackLayout>

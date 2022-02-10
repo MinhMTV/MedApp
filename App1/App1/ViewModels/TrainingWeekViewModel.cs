@@ -58,6 +58,8 @@ namespace App1.ViewModels
 
         public List<int> cmplSession { get; set; } = new List<int> { 0, 0, 0, 0, 0, 0, 0 };
 
+        public List<int> quitSession { get; set; } = new List<int> { 0, 0, 0, 0, 0, 0, 0 };
+
         //Total Number
         public List<int> NrOfCorrectImages { get; set; } = new List<int> { 0, 0, 0, 0, 0, 0, 0 };
 
@@ -231,6 +233,18 @@ namespace App1.ViewModels
                 };
             }
 
+            var weekquit = new Entry[7];
+            for (int i = 0; i < weekquit.Length; i++)
+            {
+                weekquit[i] = new Entry(quitSession[i])
+                {
+                    Label = String.Format("{0:dd/MM}", weekDayTime[i]),
+                    ValueLabel = quitSession[i].ToString(),
+                    Color = SKColors.LightBlue,
+                    ValueLabelColor = SKColors.Black,
+                };
+            }
+
 
             //good and bad pics Chart
             var entries = new[]{
@@ -327,6 +341,8 @@ namespace App1.ViewModels
                  },
         };
 
+            
+
             float textbarsize;
             float textdonutsize;
             if (Device.RuntimePlatform == Device.UWP)
@@ -418,6 +434,19 @@ namespace App1.ViewModels
                     break;
 
                 case 5:
+                    Charttext = "Anzahl abgebrochener Trainings";
+                    Chart = new BarChart()
+                    {
+                        Entries = weekquit,
+                        LabelTextSize = textbarsize,
+                        BackgroundColor = SKColors.AliceBlue,
+                        Margin = 20,
+                        ValueLabelOrientation = Orientation.Horizontal,
+                        LabelOrientation = Orientation.Horizontal
+                    };
+                    break;
+
+                case 6:
                     Charttext = "Anzahl der Bilder pro Wochentag";
                     Chart = new BarChart()
                     {
@@ -430,7 +459,7 @@ namespace App1.ViewModels
                     };
                     break;
 
-                case 6:
+                case 7:
                     Charttext = "Zeit pro Wochentag";
                     Chart = new BarChart()
                     {
@@ -452,38 +481,48 @@ namespace App1.ViewModels
         public void setWeekData(List<KeyValuePair<int, TrainingSession>> list, int Day)
         {
             var count = 1;
+            var quitcount = 1;
 
             var daylist = list.FindAll(list => list.Key == Day); //Liste aller Trainingsession per Tag
 
             foreach (var obj in daylist)
             {
-                NrOfAllImages[Day] += obj.Value.NrOfAllImages;
-                NrOfGoodImages[Day] += obj.Value.NrOfGoodImages;
-                NrOfBadImages[Day] += obj.Value.NrOfBadImages;
+                if (obj.Value.IsTrainingCompleted == true)
+                {
 
-                //Total Number
-                NrOfCorrectImages[Day] += obj.Value.NrOfCorrectImages;
-                NrOfWrongImages[Day] += obj.Value.NrOfWrongImages;
-                NrOfGoodCorrectImages[Day] += obj.Value.NrOfGoodCorrectImages;
-                NrOfGoodWrongImages[Day] += obj.Value.NrOfGoodWrongImages;
-                NrOfBadCorrectImages[Day] += obj.Value.NrOfBadCorrectImages;
-                NrOfBadWrongImages[Day] += obj.Value.NrOfBadWrongImages;
 
-                // Time
-                SessionTimeTicks[Day] += obj.Value.SessionTimeTicks;
+                    NrOfAllImages[Day] += obj.Value.NrOfAllImages;
+                    NrOfGoodImages[Day] += obj.Value.NrOfGoodImages;
+                    NrOfBadImages[Day] += obj.Value.NrOfBadImages;
 
-                AvgTTicks += obj.Value.AvgTTicks;
+                    //Total Number
+                    NrOfCorrectImages[Day] += obj.Value.NrOfCorrectImages;
+                    NrOfWrongImages[Day] += obj.Value.NrOfWrongImages;
+                    NrOfGoodCorrectImages[Day] += obj.Value.NrOfGoodCorrectImages;
+                    NrOfGoodWrongImages[Day] += obj.Value.NrOfGoodWrongImages;
+                    NrOfBadCorrectImages[Day] += obj.Value.NrOfBadCorrectImages;
+                    NrOfBadWrongImages[Day] += obj.Value.NrOfBadWrongImages;
 
-                AvgTGPicTicks += obj.Value.AvgTGPicTicks;
+                    // Time
+                    SessionTimeTicks[Day] += obj.Value.SessionTimeTicks;
 
-                AvgTBPicTicks += obj.Value.AvgTBPicTicks;
+                    AvgTTicks += obj.Value.AvgTTicks;
 
-                AvgTCPicTicks += obj.Value.AvgTCPicTicks;
+                    AvgTGPicTicks += obj.Value.AvgTGPicTicks;
 
-                AvgTWPicTicks += obj.Value.AvgTWPicTicks;
-                
-                cmplSession[Day] = count;
-                count++;
+                    AvgTBPicTicks += obj.Value.AvgTBPicTicks;
+
+                    AvgTCPicTicks += obj.Value.AvgTCPicTicks;
+
+                    AvgTWPicTicks += obj.Value.AvgTWPicTicks;
+
+                    cmplSession[Day] = count;
+                    count++;
+                } else
+                {
+                    quitSession[Day] = quitcount;
+                    quitcount++;
+                }
             }
             //Time
               ElapsedTime[Day] = stringmethods.TimeSpanToStringToH(TimeSpan.FromTicks(SessionTimeTicks[Day]));
@@ -662,7 +701,7 @@ namespace App1.ViewModels
 
         private void InitData(User user, DateTime start)
         {
-            Tsession = trainingSession.GetCmplWeekbyUserOrderANDWeekSortByDay(user, false, start);  //Default start current Monday 
+            Tsession = trainingSession.GetWeekbyUserOrderANDWeekSortByDay(user, false, start);  //Default start current Monday 
             for (int x = 0; x < 7; x++)
             {
                 setWeekData(Tsession, x);

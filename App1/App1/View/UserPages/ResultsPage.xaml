@@ -75,7 +75,7 @@
 
                     <StackLayout Orientation="Horizontal"> 
                     <Button 
-                    Text="Trainingsübersicht"
+                    Text="Trainingsvergleich"
                     HorizontalOptions="CenterAndExpand"
                     Style="{StaticResource UserButton}"
                     Clicked="TrainingOverview_Clicked" />
@@ -98,7 +98,8 @@
                     Text="Zurück"
                     HorizontalOptions="CenterAndExpand"
                     Style="{StaticResource UserButton}"
-                    Clicked="Back_Clicked" VerticalOptions="End"/>
+                    Clicked="Back_Clicked" VerticalOptions="End" 
+                        IsVisible="{Binding IsBackVisible}"/>
                     
                 </StackLayout>
             </StackLayout>

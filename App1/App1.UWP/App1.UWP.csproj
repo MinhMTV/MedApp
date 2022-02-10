@@ -145,6 +145,7 @@
     <Content Include="brain.jpg" />
     <Content Include="checked.png" />
     <Content Include="employee.png" />
+    <BundleResource Include="exit.png" />
     <Content Include="face.png" />
     <Content Include="good.png" />
     <Content Include="key.png" />

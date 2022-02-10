@@ -26,11 +26,6 @@ namespace App1.View.GeneralPages
         public Registration(bool admin)
         {
             InitializeComponent();
-            Entry_Username.ReturnCommand = new Command(() => Entry_Firstname.Focus());
-            Entry_Firstname.ReturnCommand = new Command(() => Entry_Lastname.Focus());
-            Entry_Lastname.ReturnCommand = new Command(() => Entry_Email.Focus());
-            Entry_Email.ReturnCommand = new Command(() => Entry_Password.Focus());
-            Entry_Password.ReturnCommand = new Command(() => Entry_Repeatedpassword.Focus());
             age = (int)slider_age.Value;
             if (admin)
                 IsAdmin = true;

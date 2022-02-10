@@ -59,7 +59,15 @@ namespace App1.View.GeneralPages
                     else if (userDBHelper.CheckUserexist(logginUser)) // check if user was login
                     {
                         userDBHelper.LogInUser(logginUser);           //login user automatically
-                        await Navigation.PushAsync(new MenuPage());
+                        GlobalVariables.isTraining = false;
+                        if (userDBHelper.GetLoggedUser().isAskDataProtec == false)
+                        {
+                            await App.Current.MainPage.Navigation.PushAsync(new DataProtectionPage());
+                        }
+                        else
+                        {
+                            await App.Current.MainPage.Navigation.PushAsync(new MenuPage());
+                        }
                     }
                     else
                     {

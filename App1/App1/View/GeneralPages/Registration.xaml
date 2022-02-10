@@ -1,105 +1,129 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:behaviors="clr-namespace:App1.Methods"
              x:Class="App1.View.GeneralPages.Registration"
              BackgroundColor="SlateGray"
              NavigationPage.HasNavigationBar="false">
     <ContentPage.Content>
-        <ScrollView HeightRequest="3000">
-            <StackLayout  >
-                <Label
-                    Text="CBM Training"
+        <ScrollView HeightRequest="3000" >
+            <Frame Style="{StaticResource FrameCardViewStyle}" Margin="20">
+                <StackLayout  HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" Padding="15">
+                    <Label
+                        Margin="0,20,0,0"
+                    Text="Patienten-Registrierung"
                     HorizontalOptions="CenterAndExpand"
-                    FontSize="Large"
-                    FontAttributes="Bold"/>
+                    Style="{StaticResource NormalText}"
+                        FontAttributes="Bold"/>
 
-                <Label 
+                    <Label 
+                        Margin="0,20,0,0"
                     Text="Benutzername"
-                    TextColor="White"
-                    x:Name="Lbl_Username"
-                    FontSize="Large"/>
-                <Entry 
+                    Style="{StaticResource NormalText}"
+                    x:Name="Lbl_Username" />
+                    <Entry 
                     Placeholder="Benutzername " 
                     x:Name="Entry_Username"
                     ClearButtonVisibility="WhileEditing"
-                    FontSize="Large"/>
+                     Style="{StaticResource NormalText}">
+                        <Entry.Behaviors>
+                            <behaviors:NextEntry TargetElement="{x:Reference Entry_Firstname}" />
+                        </Entry.Behaviors>
+                    </Entry>
 
-                <Label 
+                    <Label 
                     Text="Vorname"
-                    TextColor="White"
-                    x:Name="Lbl_Firstname"
-                        FontSize="Large"/>
-                <Entry 
+                    Style="{StaticResource NormalText}"
+                    x:Name="Lbl_Firstname" />
+                    <Entry 
                     Placeholder="Vorname" 
                     x:Name="Entry_Firstname"
-                    ClearButtonVisibility="WhileEditing"
-                        FontSize="Large"/>
-                <Label 
+                    Style="{StaticResource NormalText}"
+                    ClearButtonVisibility="WhileEditing" >
+                    <Entry.Behaviors>
+                            <behaviors:NextEntry TargetElement="{x:Reference Entry_Lastname}" />
+                    </Entry.Behaviors>
+                    </Entry>
+
+                    <Label 
                     Text="Name"
-                    TextColor="White"
-                    x:Name="Lbl_Lastname"
-                        FontSize="Large"/>
-                <Entry 
+                    Style="{StaticResource NormalText}"
+                    x:Name="Lbl_Lastname" />
+                    <Entry 
                     Placeholder="Nachname" 
                     x:Name="Entry_Lastname"
                     ClearButtonVisibility="WhileEditing"
-                        FontSize="Large"/>
-                <Label 
+                    Style="{StaticResource NormalText}">
+                        <Entry.Behaviors>
+                            <behaviors:NextEntry TargetElement="{x:Reference Entry_Email}" />
+                        </Entry.Behaviors>
+                    </Entry>
+                    <Label 
                     Text="Email"
-                    TextColor="White"
-                    x:Name="Lbl_Email"
-                        FontSize="Large"/>
-                <Entry 
+                    Style="{StaticResource NormalText}"
+                    x:Name="Lbl_Email" />
+                    <Entry 
                     Placeholder="Email" 
                     x:Name="Entry_Email"
                     ClearButtonVisibility="WhileEditing"
-                        FontSize="Large"/>
-                <Label 
+                    Style="{StaticResource NormalText}">
+                        <Entry.Behaviors>
+                            <behaviors:NextEntry TargetElement="{x:Reference Entry_Password}" />
+                        </Entry.Behaviors>
+                    </Entry>
+                    
+                    <Label 
+
                     Text="Passwort"
-                    TextColor="White"
-                    x:Name="Lbl_Password"
-                    FontSize="Large"/>
-                <Entry 
+                    Style="{StaticResource NormalText}"
+                    x:Name="Lbl_Password" />
+                    <Entry 
                     Placeholder="Merken Sie sich das Passwort!" 
                     x:Name="Entry_Password"
                     FontSize="Medium"
                     ClearButtonVisibility="WhileEditing"
-                    IsPassword="True"/>
-                <Label 
+                    IsPassword="True">
+                        <Entry.Behaviors>
+                            <behaviors:NextEntry TargetElement="{x:Reference Entry_Repeatedpassword}" />
+                        </Entry.Behaviors>
+                    </Entry>
+                    
+                    <Label 
                     Text="Passwort wiederholen"
-                    TextColor="White"
-                    x:Name="Lbl_Repeatedpassword"
-                        FontSize="Large"/>
-                <Entry 
+                    Style="{StaticResource NormalText}"
+                    x:Name="Lbl_Repeatedpassword" />
+                    <Entry 
                     Placeholder="Tragen Sie das Passwort nochmal ein!" 
                     x:Name="Entry_Repeatedpassword"
                     FontSize="Medium"
                     ClearButtonVisibility="WhileEditing"
                     IsPassword="True"/>
-                <Label 
+
+                    <Label 
                     Text="Alter" 
-                    TextColor="White"
+                    Style="{StaticResource NormalText}"
                     x:Name="Lbl_Alter"
-                        FontSize="Large"/>
-                <Slider 
+                    FontSize="Large"/>
+                    <Slider 
                     Maximum="70"
                     Minimum="18"   
                     Value="25"
                     ValueChanged="Slider_ValueChanged"
+                    MaximumTrackColor="#004c93"
+                    MinimumTrackColor="#004c93"
+                    ThumbColor="#efe4bf"
                     x:Name="slider_age"/>
-                    
-                <Label Text="{Binding Source={x:Reference slider_age}, Path=Value, StringFormat='{}{0:N0}'}" TextColor="Black"
+
+                    <Label Text="{Binding Source={x:Reference slider_age}, Path=Value, StringFormat='{}{0:N0}'}" TextColor="Black"
                        HorizontalOptions="Center"
                        FontSize="Large"/>
 
-                <Button 
+                    <Button 
                     Text="Weiter" 
-                    TextColor="White"
-                    BackgroundColor="Blue"
-                    Margin="0,15,0,0"
                     HorizontalOptions="CenterAndExpand"
+                    Style="{StaticResource UserButton}"
                     Clicked="CompleteRegistration_Clicked" />
-            </StackLayout>
+                </StackLayout>
+            </Frame>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

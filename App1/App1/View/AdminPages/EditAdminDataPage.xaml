@@ -100,7 +100,7 @@
                 </StackLayout>
             </Frame>
         </StackLayout>
-        <Button Text="Änderung speichern" HorizontalOptions="CenterAndExpand"  Command="{Binding SafeCommand}" CommandParameter="{Binding User}"/>
+        <Button Text="Änderung speichern" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"  Command="{Binding SafeCommand}" CommandParameter="{Binding User}" Style="{StaticResource UserButton}"/>
 
     </StackLayout>
 </ContentPage>

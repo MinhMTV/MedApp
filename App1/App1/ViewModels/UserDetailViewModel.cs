@@ -104,7 +104,7 @@ namespace App1.ViewModels
                 try
                 {
                     userDBHelper.DeleteAllUser();
-                    await App.Current.MainPage.Navigation.PopAsync();
+                    await App.Current.MainPage.Navigation.PushAsync(new AdminMenu());
                 }
                 catch (Exception ex)
                 {

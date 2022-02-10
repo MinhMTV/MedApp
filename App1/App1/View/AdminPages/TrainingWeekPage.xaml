@@ -179,8 +179,8 @@
             </StackLayout>
         </Grid>
         <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Margin="0,0,0,10">
-            <Button Text="Letzte Woche" HorizontalOptions="Center"   Command="{Binding LastCommand}" Clicked="OnLast"/>
-            <Button Text="Nächste Woche" HorizontalOptions="Center"  Command="{Binding NextCommand}" Clicked="OnNext"/>
+            <Button Text="Letzte Woche" HorizontalOptions="Center"   Command="{Binding LastCommand}" Clicked="OnLast" Style="{StaticResource UserButton}"/>
+            <Button Text="Nächste Woche" HorizontalOptions="Center"  Command="{Binding NextCommand}" Clicked="OnNext" Style="{StaticResource UserButton}"/>
         </StackLayout>
 
     </StackLayout>

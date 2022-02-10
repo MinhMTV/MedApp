@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App1.View.UserPages.GoalPage" Style="{StaticResource UserBackground}"
+             Title="Trainingsübersicht"
+             Padding="10" >
+
+    <ContentPage.Content>
+        <ScrollView>
+            <Frame Style="{StaticResource FrameCardViewStyle}">
+                <StackLayout Style="{StaticResource itemsCardViewStackLayoutStyle}" VerticalOptions="FillAndExpand" >
+                    <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand"
+                         Padding="20">
+                        <Label Text="{Binding FirstName, StringFormat='Hallo {0}!'}"
+                          HorizontalTextAlignment="Center"
+                       TextColor="Black" FontSize="Large"
+                       HorizontalOptions="Center"/>
+                        <Label Text="Hier ist deine Trainingsübersicht"
+                          HorizontalTextAlignment="Center"
+                       TextColor="Black" FontSize="Large"
+                       HorizontalOptions="Center"/>
+
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding ElapsedTime, StringFormat='Du hast schon ingesamt \&#10; {0} trainiert, Klasse!'}"
+                                    VerticalOptions="Center" 
+                                    HorizontalOptions="FillAndExpand"
+                               HorizontalTextAlignment="Center"
+                           FontSize="Large"
+                       TextColor="Black"
+                                   Padding="10"/>
+                        </StackLayout>
+
+                        <Label Text="{Binding cmlpSessions, StringFormat='Dabei hast du schon \&#10; {0:N0} Trainings absolviert!'}"
+                    VerticalOptions="CenterAndExpand" 
+                           HorizontalTextAlignment="Center"
+                    HorizontalOptions="Center"
+                           FontSize="Large"
+                       TextColor="Black" Padding="10"/>
+
+                        <Label Text="{Binding TotalPictures, StringFormat='Und {0:N0} Bilder gewischt!'}"
+                    VerticalOptions="CenterAndExpand" 
+                           HorizontalTextAlignment="Center"
+                    HorizontalOptions="Center"
+                           FontSize="Large"
+                       TextColor="Black"/>
+
+                        <Label Text="{Binding cupscount, StringFormat='{}Und {0} Pokale hast du bisher gesammelt!'}"
+                    VerticalOptions="CenterAndExpand" 
+                           HorizontalTextAlignment="Center"
+                    HorizontalOptions="Center"
+                           FontSize="Large"
+                       TextColor="Black" />
+
+                        <Label Text="{Binding countUntilPokal, StringFormat='{}Noch {0} Trainings bis zum nächsten Pokal!'}" Style="{StaticResource NormalText}" IsVisible="{Binding isNextPokal}" HorizontalTextAlignment="Center"/>
+                        <StackLayout Orientation="Horizontal" IsVisible="{Binding isPokal}">
+                            <Label Text="{Binding defaultPokalCount, StringFormat='{}Noch {0} Trainings bis zum nächsten Pokal!'}" Style="{StaticResource NormalText}" HorizontalTextAlignment="Center"/>
+                        </StackLayout>
+
+                        <Label Text="Deine Pokalgallery:"
+                    VerticalOptions="CenterAndExpand" 
+                           HorizontalTextAlignment="Center"
+                    HorizontalOptions="Center"
+                           FontSize="Large"
+                       TextColor="Black"/>
+
+                        <StackLayout VerticalOptions="FillAndExpand">
+                        <CollectionView x:Name="CupCV" SelectionMode="None" ItemsSource="{Binding cups}" HorizontalOptions="FillAndExpand" VerticalOptions="Start" HeightRequest="{Binding CollectionHeight}" > 
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Orientation="Vertical" Span="6" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.EmptyView>
+                                <Grid>
+                                    <StackLayout>
+                                            <Label Text="Kein Pokal bisher vorhanden" HorizontalOptions="Center" VerticalOptions="Center"
+                                FontSize="Large" FontAttributes="Bold"/>
+                                    </StackLayout>
+                                </Grid>
+                            </CollectionView.EmptyView>
+                            
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="5">
+                                        <Image Source="pokal.png" Style="{StaticResource imageStyle}" WidthRequest="50" HeightRequest="50" ></Image>
+                                    </Grid>
+                                    
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                        </StackLayout>
+                        <Label Text="Danke für deinen Einsatz!"
+                    VerticalOptions="EndAndExpand" 
+                           HorizontalTextAlignment="Center"
+                    HorizontalOptions="Center"
+                           FontSize="Large"
+                       TextColor="Black"/>
+
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

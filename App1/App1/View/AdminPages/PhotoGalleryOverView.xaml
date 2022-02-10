@@ -32,9 +32,9 @@
         
         <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout Grid.Column="0" Grid.Row="0" Orientation="Vertical" VerticalOptions="Fill" HorizontalOptions="Fill" >
-                <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="20" Padding="20" BackgroundColor="AliceBlue">
-                    <Button Text="Alle" Font="Large" HorizontalOptions="StartAndExpand" Clicked="AllGoodTapped"/>
-                    <Label Text="Substanzabhängige Bilder" FontSize="Medium" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+                <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="10" Padding="10" BackgroundColor="AliceBlue">
+                    <Button Text="Alle" Font="Large" HorizontalOptions="StartAndExpand" Clicked="AllGoodTapped" Style="{StaticResource UserButton}"/>
+                    <Label Text="Substanzabhängige Bilder" FontSize="Medium" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" HorizontalTextAlignment="Center"/>
                     <Image x:Name="AddGood" Source="plus.png" HorizontalOptions="EndAndExpand" HeightRequest="50" WidthRequest="50">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnAddImageGoodTapped" NumberOfTapsRequired="1" />
@@ -73,9 +73,9 @@
             </StackLayout>
 
             <StackLayout Grid.Column="0" Grid.Row="1" Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
-                <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="20" Padding="20" BackgroundColor="AliceBlue">
-                    <Button Text="Alle" Font="Large" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Clicked="AllBadTapped"/>
-                    <Label Text="Substanzunabhängige Bilder" FontSize="Medium" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+                <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="10" Padding="10" BackgroundColor="AliceBlue">
+                    <Button Text="Alle" Font="Large" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Clicked="AllBadTapped" Style="{StaticResource UserButton}"/>
+                    <Label Text="Substanzunabhängige Bilder" FontSize="Medium" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" HorizontalTextAlignment="Center"/>
                     <Image x:Name="AddBad" Source="plus.png" HorizontalOptions="EndAndExpand" HeightRequest="50" WidthRequest="50">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnAddImageBadTapped" NumberOfTapsRequired="1" />

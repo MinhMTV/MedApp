@@ -257,4 +257,7 @@
   <ItemGroup>
     <BundleResource Include="Resources\pokal.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\exit.png" />
+  </ItemGroup>
 </Project>

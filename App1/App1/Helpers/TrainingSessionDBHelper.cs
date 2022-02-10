@@ -356,6 +356,47 @@ namespace App1.Helpers
             return ListDay;
         }
 
+        /// <summary>
+        /// get actual Completed Week of Training and Sort by Day,  key 0 for Monday to 6 for sunday
+        /// </summary>
+        /// <param name="user">user </param>
+        /// <param name="isAscending"></param>
+        /// <param name="day">WeekStart</param>
+        /// <returns>List with Key and Value pair, and empty list if no values </returns>
+        public List<KeyValuePair<int, TrainingSession>> GetWeekbyUserOrderANDWeekSortByDay(User user, bool isAscending, DateTime Weekday)
+        {
+            List<KeyValuePair<int, TrainingSession>> ListDay = new List<KeyValuePair<int, TrainingSession>>();
+            if (isAscending == true)
+            {
+                var list = newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).OrderBy(x => x.SessionId).ToList();
+                var startDay = Weekday.Date; //set startday given startday Monday
+                for (int x = 0; x < 7; x++)
+                {
+                    var day = startDay.AddDays(x);
+                    var daylist = list.FindAll(x => x.SessionDate.Date == day);
+                    foreach (var tsession in daylist)
+                    {
+                        ListDay.Add(new KeyValuePair<int, TrainingSession>(x, tsession));
+                    }
+                }
+            }
+            else
+            {
+                var list = newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).OrderBy(x => x.SessionId).ToList();
+                var startDay = Weekday.Date; //set startday given startday Monday
+                for (int x = 0; x < 7; x++)
+                {
+                    var day = startDay.AddDays(x);
+                    var daylist = list.FindAll(x => x.SessionDate.Date == day);
+                    foreach (var tsession in daylist)
+                    {
+                        ListDay.Add(new KeyValuePair<int, TrainingSession>(x, tsession));
+                    }
+                }
+
+            }
+            return ListDay;
+        }
 
 
         //------------------------------------------------------Get General Training-----------------------------------------------------------------------------------------------

@@ -183,8 +183,8 @@
     <Compile Update="View\UserPages\DataProtectionPage.xaml.cs">
       <DependentUpon>DataProtectionPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="View\UserPages\DemoPage.xaml.cs">
-      <DependentUpon>DemoPage.xaml</DependentUpon>
+    <Compile Update="View\UserPages\ExplainPage.xaml.cs">
+      <DependentUpon>ExplainPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="View\AdminPages\UserCollectionPage.xaml.cs">
       <DependentUpon>UserCollectionPage.xaml</DependentUpon>
@@ -267,6 +267,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="View\UserPages\EditUserInformtionPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="View\UserPages\GoalPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="View\UserPages\MenuPage.xaml">

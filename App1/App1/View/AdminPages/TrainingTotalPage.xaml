@@ -13,7 +13,7 @@
         <ToolbarItem Text="Wochenstatistik"
                      Order="Secondary"
                      Command="{Binding WeekTSessionCommand}"
-                     CommandParameter="{Binding _user}"
+                     CommandParameter="{Binding user}"
                      />
     </ContentPage.ToolbarItems>
     

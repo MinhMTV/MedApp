@@ -531,7 +531,7 @@ namespace App1.View.UserPages
                 timer.Stop();
             }
             stopStopWatches();
-            var result = await DisplayAlert("Exit", "Do you want to end the test?", "Yes", "No");
+            var result = await DisplayAlert("Ende", "Willst du das Training abbrechen?", "Ja", "Nein");
 
             if (result == true) //if yes is true\
             {
@@ -541,7 +541,21 @@ namespace App1.View.UserPages
                 getStatistic();
                 GlobalVariables.Stopwatch.Reset();
                 stopwatch2.Reset();
-                await Navigation.PushAsync(new MenuPage());
+                if (Navigation.NavigationStack.Count == 1) //user clicks on direct training start button
+                {
+                    if(Device.RuntimePlatform == Device.UWP)
+                    {
+                        await Navigation.PushAsync(new ExplainPage());
+                    } else
+                    {
+                        await Navigation.PushAsync(new MenuPage());
+                    }
+                    
+                } else //user clicks on explanation page and then training start
+                {
+                    await Navigation.PopAsync();
+                }
+                
 
             }
             else

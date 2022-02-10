@@ -111,6 +111,7 @@ namespace App1.Helpers
         //check if user already exist in table by name
         public bool CheckUserexist(string username)
         {
+            username = username.ToLower().Trim();
             var data = newConnection.Table<Admin>();
             var d1 = data.Where(x => x.Username == username).FirstOrDefault();
             if (d1 != null)

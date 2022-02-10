@@ -18,6 +18,8 @@ namespace App1.View.AdminPages
         public int TSec { get; set; }
         public int TPicAmount { get; set; }
 
+        public int TCupAmount { get; set; }
+
         public bool isPic { get; set; }
         public bool isTime { get; set; }
 
@@ -30,6 +32,7 @@ namespace App1.View.AdminPages
             TPicAmount = Settings.defaultPicCount;
             isPic = Settings.isPicAmount;
             isTime = Settings.isTimer;
+            TCupAmount = Settings.defaultCupCount;
         }
 
         void OnTimeToggled(object sender, ToggledEventArgs e)
@@ -58,9 +61,34 @@ namespace App1.View.AdminPages
 
         private async void Button_Clicked(object sender, EventArgs e)
         {
-            Settings.defaultMin = TMin;
-            Settings.defaultSec = TSec;
-            Settings.defaultPicCount = TPicAmount;
+            if(TMin + TSec == 0 && isTime)
+            {
+                await DisplayAlert("Achtung", "Trainigszeit kann nicht null sein", "ok");
+                return;
+            } else
+            {
+                Settings.defaultMin = TMin;
+                Settings.defaultSec = TSec;
+            }
+            if (TPicAmount == 0)
+            {
+                await DisplayAlert("Achtung", "Trainingsbilderanzahl kann nicht null sein", "ok");
+                return;
+            }
+            else
+            {
+                Settings.defaultPicCount = TPicAmount;
+            }
+
+            if (TCupAmount == 0)
+            {
+                await DisplayAlert("Achtung", "Anzahl erreichter Trainings pro Pokal kann nicht null sein", "ok");
+                return;
+            }
+            else
+            {
+                Settings.defaultCupCount = TCupAmount;
+            }
 
             Settings.isPicAmount = isPic;
             Settings.isTimer = isTime;

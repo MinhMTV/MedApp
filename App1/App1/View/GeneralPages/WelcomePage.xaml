@@ -4,23 +4,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:App1"
              x:Class="App1.View.GeneralPages.WelcomePage"
-             BackgroundColor= "SlateGray">
+             Style="{StaticResource UserBackground}">
     
     
-    <StackLayout
-         Padding="0,120,0,0"
-         Spacing="20">
+    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
 
-            <StackLayout
-             Spacing="0">
+        <Image Source="brain.jpg" HeightRequest="250" WidthRequest="250" Aspect="AspectFit"/>
 
-                <Label Text="Herzlich Willkomen"
+        <StackLayout >
+
+                <Label Text="Herzlich Willkommen"
                 TextColor="White"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                        FontSize="Large"/>
 
-                <Label Text="zur Cognitive Bias Trainings App!"
+                <Label Text="zur Cognitive Bias Trainings-App!"
                 TextColor="White"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
@@ -30,8 +29,7 @@
 
             <Button Text="Start"
              Clicked="Start_Clicked"
-             TextColor="White"
-             BackgroundColor="Blue"
+             Style="{StaticResource UserButton}"
              HorizontalOptions="Center"
              VerticalOptions="Center"
                     FontSize="Large"/>

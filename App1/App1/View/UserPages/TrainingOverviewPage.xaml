@@ -7,7 +7,7 @@
              mc:Ignorable="d"
              x:Class="App1.View.UserPages.TrainingOverviewPage"
              Style="{StaticResource UserBackground}"
-             Title="Training Übersicht">
+             Title="Trainingsvergleich">
     <ContentPage.Content>
         <StackLayout Orientation="Vertical" Padding="10" Margin="0,20,0,0">
             <Label Text="Vergleich mit dem letztem Training"

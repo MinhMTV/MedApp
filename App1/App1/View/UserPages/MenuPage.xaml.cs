@@ -17,7 +17,6 @@ namespace App1.View.UserPages
     {
         UserDBHelper userDBHelper = new UserDBHelper();
         private string loguser { get; set; }
-        private User user;
 
         public string Loguser
         {
@@ -31,10 +30,10 @@ namespace App1.View.UserPages
 
             InitializeComponent();
             this.BindingContext = this;
-            Detail = new NavigationPage(new DemoPage());
+            Detail = new NavigationPage(new ExplainPage());
             IsPresented = false;
             Loguser = Settings.loginUser;
-            user = userDBHelper.GetLoggedUser();
+            
 
             MessagingCenter.Subscribe<object, string>(this, "loguser", (sender, user) =>
             {
@@ -55,24 +54,39 @@ namespace App1.View.UserPages
             IsPresented = false;
         }
 
+        void startTraining_Clicked(object sender, System.EventArgs e)
+        {
+            Detail = new NavigationPage(new TrainingPage());
+            IsPresented = false;
+        }
+
         void Training_Clicked(object sender, System.EventArgs e)
         {
-            Detail = new NavigationPage(new DemoPage());
+            Detail = new NavigationPage(new ExplainPage());
             IsPresented = false;
         }
 
         void TOverview_Clicked(object sender, System.EventArgs e)
         {
-            
+            var user = userDBHelper.GetLoggedUser();
             Detail = new NavigationPage(new TrainingOverviewPage(user));
             IsPresented = false;
         }
 
         void WeeklyOverviewClicked(object sender, System.EventArgs e)
         {
+            var user = userDBHelper.GetLoggedUser();
             Detail = new NavigationPage(new WeeklyOverviewPage(user));
             IsPresented = false;
             
+        }
+
+        void goals_clicked(object sender, System.EventArgs e)
+        {
+            var user = userDBHelper.GetLoggedUser();
+            Detail = new NavigationPage(new GoalPage(user));
+            IsPresented = false;
+
         }
 
         void EditUserInformationClicked(object sender, System.EventArgs e)
@@ -82,6 +96,7 @@ namespace App1.View.UserPages
         }
         void editUser_Clicked(object sender, System.EventArgs e)
         {
+            var user = userDBHelper.GetLoggedUser();
             Detail = new NavigationPage(new EditDataPage(user));
             IsPresented = false;
         }

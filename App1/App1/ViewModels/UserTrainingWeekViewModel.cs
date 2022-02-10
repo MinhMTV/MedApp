@@ -55,6 +55,8 @@ namespace App1.ViewModels
 
         public List<int> cmplSession { get; set; } = new List<int> { 0, 0, 0, 0, 0, 0, 0 };
 
+        public List<int> quitSession { get; set; } = new List<int> { 0, 0, 0, 0, 0, 0, 0 };
+
 
         // Time
         public List<string> ElapsedTime { get; set; } = new List<string> { "", "", "", "", "", "", "" };
@@ -95,12 +97,12 @@ namespace App1.ViewModels
                 case "left":
                     swipedir--;
                     if (swipedir == -1)
-                        swipedir = 2;
+                        swipedir = 3;
                     SetChart(swipedir);
                     break;
                 case "right":
                     swipedir++;
-                    if (swipedir == 3)
+                    if (swipedir == 4)
                     {
                         swipedir = 0;
                     }
@@ -153,13 +155,13 @@ namespace App1.ViewModels
                 };
             }
 
-            var weektimeavg = new Entry[7];
-            for (int i = 0; i < weektimeavg.Length; i++)
+            var weekquit = new Entry[7];
+            for (int i = 0; i < weekquit.Length; i++)
             {
-                weektimeamount[i] = new Entry(SessionTimeTicks[i])
+                weekquit[i] = new Entry(quitSession[i])
                 {
                     Label = String.Format("{0:dd/MM}", weekDayTime[i]),
-                    ValueLabel = ElapsedTime[i].ToString(),
+                    ValueLabel = quitSession[i].ToString(),
                     Color = SKColor.Parse("#004c93"),
                     ValueLabelColor = SKColors.Black,
                 };
@@ -192,6 +194,21 @@ namespace App1.ViewModels
                     break;
 
                 case 1:
+                    Charttext = "Anzahl abgebrochener Trainings";
+                    Chart = new BarChart()
+                    {
+                        Entries = weekquit,
+                        LabelTextSize = textbarsize,
+                        BackgroundColor = SKColors.AliceBlue,
+                        Margin = 20,
+                        ValueLabelOrientation = Orientation.Horizontal,
+                        LabelOrientation = Orientation.Horizontal
+                    };
+                    break;
+
+
+
+                case 2:
                     Charttext = "Anzahl der Bilder pro Wochentag";
                     Chart = new BarChart()
                     {
@@ -204,7 +221,7 @@ namespace App1.ViewModels
                     };
                     break;
 
-                case 2:
+                case 3:
                     Charttext = "Insgesamtzeit pro Wochentag";
                     Chart = new BarChart()
                     {
@@ -226,45 +243,31 @@ namespace App1.ViewModels
         public void setWeekData(List<KeyValuePair<int, TrainingSession>> list, int Day)
         {
             var count = 1;
+            var quitcount = 1;
 
             var daylist = list.FindAll(list => list.Key == Day); //Liste aller Trainingsession per Tag
 
             foreach (var obj in daylist)
             {
-                NrOfAllImages[Day] += obj.Value.NrOfAllImages;
+                if(obj.Value.IsTrainingCompleted == true)
+                {
+                    NrOfAllImages[Day] += obj.Value.NrOfAllImages;
 
-                // Time
-                SessionTimeTicks[Day] += obj.Value.SessionTimeTicks;
-                cmplSession[Day] = count;
-                count++;
+                    // Time
+                    SessionTimeTicks[Day] += obj.Value.SessionTimeTicks;
+                    cmplSession[Day] = count;
+                    count++;
+                } else
+                {
+                    quitSession[Day] = quitcount;
+                    quitcount++;
+                }
+                
             }
             //Time
             ElapsedTime[Day] = stringmethods.TimeSpanToStringToH(TimeSpan.FromTicks(SessionTimeTicks[Day]));
         }
 
-        public void setTotalData()
-        {
-
-
-            // Percentage
-            for (int i = 0; i < 7; i++)
-            {
-                NrOfAllImagesTotal += NrOfAllImages[i];
-
-                cmplSessionTotal += cmplSession[i];
-
-                SessionTimeTicksTotal += SessionTimeTicks[i];
-            }
-
-            try
-            {
-                ElapsedTimeTotal = stringmethods.TimeSpanToStringToHExt(TimeSpan.FromTicks(SessionTimeTicksTotal));
-            }
-            catch (DivideByZeroException)
-            {
-                ElapsedTimeTotal = "0";
-            }
-        }
 
 
         /// <summary>
@@ -281,13 +284,12 @@ namespace App1.ViewModels
 
         private void InitData(User user, DateTime start)
         {
-            Tsession = trainingSession.GetCmplWeekbyUserOrderANDWeekSortByDay(user, false, start);  //Default start current Monday 
+            Tsession = trainingSession.GetWeekbyUserOrderANDWeekSortByDay(user, false, start);  //Default start current Monday 
             for (int x = 0; x < 7; x++)
             {
                 setWeekData(Tsession, x);
 
             }
-            setTotalData();
             SetDateTime(start);
             SetChart(swipedir);
         }

@@ -184,8 +184,8 @@
         </Grid>
 
         <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Margin="0,0,0,10">
-            <Button Text="Letztes" HorizontalOptions="Center"   Command="{Binding LastCommand}"/>
-            <Button Text="Nächstes" HorizontalOptions="Center"  Command="{Binding NextCommand}"/>
+            <Button Text="Letztes" HorizontalOptions="Center"   Command="{Binding LastCommand}" Style="{StaticResource UserButton}"/>
+            <Button Text="Nächstes" HorizontalOptions="Center"  Command="{Binding NextCommand}" Style="{StaticResource UserButton}"/>
         </StackLayout>
 
     </StackLayout>

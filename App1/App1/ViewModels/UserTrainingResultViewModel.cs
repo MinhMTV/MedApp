@@ -35,7 +35,7 @@ namespace App1.ViewModels
 
         public List<TrainingSession> Tsession { get; set; }
 
-        public List<String> ElapsedTime { get; set; } = new List<String> { "", "" };
+        public List<String> ElapsedTime { get; set; } = new List<String> { "00:00:00", "00:00:00" };
 
         public List<long> SessionTimeTicks { get; set; } = new List<long> { 0, 0 };
         public List<int> NrOfAllImages { get; set; } = new List<int> { 0,0};

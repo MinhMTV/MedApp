@@ -11,7 +11,7 @@
     <StackLayout HorizontalOptions="Fill">
 
         <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
-            <Button HeightRequest="50" WidthRequest="50" HorizontalOptions="EndAndExpand" x:Name="exit_button" Image="exit.png" Clicked="Exit_button_Clicked"       />
+            <Button Image="exit.png" HeightRequest="50" WidthRequest="50" HorizontalOptions="EndAndExpand" x:Name="exit_button"  Clicked="Exit_button_Clicked"/>
         </StackLayout>
 
         <swipeCardView:SwipeCardView
