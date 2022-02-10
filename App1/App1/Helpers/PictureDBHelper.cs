@@ -30,10 +30,6 @@ namespace App1.Helpers
         //initialize the embedded pictures
         public async void initGivenPictures()
         {
-            /*            newConnection.DropTable<Pictures>();
-                        newConnection.CreateTable<Pictures>();
-                        var data = newConnection.Table<Pictures>();
-            DeleteAllImages();*/
             var ImageResizer = DependencyService.Get<IImageResizer>();
             var ImageResizerWin = DependencyService.Get<IImageResizerWin>();
 

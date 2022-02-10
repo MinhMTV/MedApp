@@ -22,6 +22,7 @@
                Text="Gesamtstatistik"
                MaxLines="1"
                FontSize="Large"
+            TextColor="White"
                FontAttributes="Bold"
                HorizontalOptions="StartAndExpand"
                VerticalOptions="Center">
@@ -39,7 +40,7 @@
         </StackLayout>
 
         <!--Total Number-->
-        <Grid Padding="10">
+        <Grid Padding="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -51,25 +52,25 @@
             </Grid.RowDefinitions>
             <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="0" >
                 <Label  Text="Insgesamt:"  Style="{StaticResource NameConstant}" />
-                <Label Text="{Binding NrOfAllImages}" Style="{StaticResource NameConstant}"  HorizontalOptions="EndAndExpand" FontAttributes="Bold"/>
+                <Label Text="{Binding NrOfAllImages}" Style="{StaticResource NameConstant}"  HorizontalOptions="EndAndExpand" FontAttributes="Bold" MaxLines="1"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="0" >
                 <Label  Text="Subst. unabh. Bild.:" Style="{StaticResource NameConstant}"/>
-                <Label  Text="{Binding NrOfGoodImages}" Style="{StaticResource NameConstant}" HorizontalOptions="EndAndExpand" FontAttributes="Bold"/>
+                <Label  Text="{Binding NrOfGoodImages}" Style="{StaticResource NameConstant}" HorizontalOptions="EndAndExpand" FontAttributes="Bold" MaxLines="1"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal" Grid.Row="2" Grid.Column="0" >
                 <Label  Text="Subst. abh. Bild.:" Style="{StaticResource NameConstant}"/>
-                <Label  Text="{Binding NrOfBadImages}" Style="{StaticResource NameConstant}" HorizontalOptions="EndAndExpand" FontAttributes="Bold"/>
+                <Label  Text="{Binding NrOfBadImages}" Style="{StaticResource NameConstant}" HorizontalOptions="EndAndExpand" FontAttributes="Bold" />
             </StackLayout>
             <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="1" >
                 <Label  Text="Anzahl Training:" Style="{StaticResource NameConstant}" />
                 <Label  Text="{Binding cmplSession}" Style="{StaticResource NameConstant}"  FontAttributes="Bold" HorizontalOptions="EndAndExpand"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="1" >
-                <Label  Text="Insg. richtig:" Style="{StaticResource NameConstant}" />
-                <Label  Style="{StaticResource NameConstant}" FontAttributes="Bold" HorizontalOptions="EndAndExpand">
+                <Label  Text="Richtig:" Style="{StaticResource NameConstant}" />
+                <Label  Style="{StaticResource NameConstant}" FontAttributes="Bold" HorizontalOptions="EndAndExpand" MaxLines="1">
                     <Label.Text>
-                        <MultiBinding StringFormat="{}{0}/{1:#0.#}%">
+                        <MultiBinding StringFormat="{}{0}/{1:#0.##}%">
                             <Binding Path="NrOfCorrectImages" />
                             <Binding Path="PctCIm" Converter="{StaticResource nulltoZero}"/>
                         </MultiBinding>
@@ -77,10 +78,10 @@
                 </Label>
             </StackLayout>
             <StackLayout Orientation="Horizontal" Grid.Row="2" Grid.Column="1" >
-                <Label  Text="Insg. falsch:" Style="{StaticResource NameConstant}" />
+                <Label  Text="Falsch:" Style="{StaticResource NameConstant}" />
                 <Label  Style="{StaticResource NameConstant}" FontAttributes="Bold" HorizontalOptions="EndAndExpand">
                     <Label.Text>
-                        <MultiBinding StringFormat="{}{0}/{1:#0.#}%">
+                        <MultiBinding StringFormat="{}{0}/{1:#0.##}%">
                             <Binding Path="NrOfWrongImages" />
                             <Binding Path="PctWIm" Converter="{StaticResource nulltoZero}"/>
                         </MultiBinding>
@@ -93,7 +94,7 @@
         <!--Detail Number-->
         <StackLayout  Margin="10,0,10,0">
             <StackLayout Orientation="Horizontal"  >
-                <Label  Text="korrect &amp; subst. unabh. Bilder:"  Style="{StaticResource NameConstant}" />
+                <Label  Text="Richtig &amp; subst. unabh. Bilder:"  Style="{StaticResource NameConstant}" />
                 <Label  Style="{StaticResource NameConstant}" FontAttributes="Bold" HorizontalOptions="EndAndExpand">
                     <Label.Text>
                         <MultiBinding StringFormat="{}{0}/{1:#0.#}%">
@@ -104,7 +105,7 @@
                 </Label>
             </StackLayout>
             <StackLayout Orientation="Horizontal"  >
-                <Label  Text="falsch &amp; subst. unabh. Bilder:"  Style="{StaticResource NameConstant}"/>
+                <Label  Text="Falsch &amp; subst. unabh. Bilder:"  Style="{StaticResource NameConstant}"/>
                 <Label  Style="{StaticResource NameConstant}" FontAttributes="Bold" HorizontalOptions="EndAndExpand">
                     <Label.Text>
                         <MultiBinding StringFormat="{}{0}/{1:#0.#}%">
@@ -115,7 +116,7 @@
                 </Label>
             </StackLayout>
             <StackLayout Orientation="Horizontal" >
-                <Label  Text="korrect &amp; subst. abh. Bilder:" Style="{StaticResource NameConstant}"/>
+                <Label  Text="Richtig &amp; subst. abh. Bilder:" Style="{StaticResource NameConstant}"/>
                 <Label  Style="{StaticResource NameConstant}" FontAttributes="Bold" HorizontalOptions="EndAndExpand">
                     <Label.Text>
                         <MultiBinding StringFormat="{}{0}/{1:#0.#}%">
@@ -126,7 +127,7 @@
                 </Label>
             </StackLayout>
             <StackLayout Orientation="Horizontal" >
-                <Label  Text="falsch &amp; subst. abh. Bilder:" Style="{StaticResource NameConstant}" />
+                <Label  Text="Falsch &amp; subst. abh. Bilder:" Style="{StaticResource NameConstant}" />
                 <Label  Style="{StaticResource NameConstant}" FontAttributes="Bold" HorizontalOptions="EndAndExpand">
                     <Label.Text>
                         <MultiBinding StringFormat="{}{0}/{1:#0.#}%">

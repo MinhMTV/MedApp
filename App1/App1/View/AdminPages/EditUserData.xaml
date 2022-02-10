@@ -9,6 +9,7 @@
                Text="Patient bearbeiten"
                MaxLines="1"
                FontSize="Large"
+            TextColor="White"
                FontAttributes="Bold"
                HorizontalOptions="StartAndExpand"
                VerticalOptions="Center">
@@ -37,11 +38,7 @@
                                 <Label  Text="Username"  Style="{StaticResource NameConstant}" />
                                 <Entry Text="{Binding UserName}"  HorizontalOptions="FillAndExpand" FontAttributes="Bold" ClearButtonVisibility="WhileEditing"/>
                             </StackLayout>
-                            <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="1" >
-                            <Label  Text="UserID" Style="{StaticResource NameConstant}"/>
-                                <Entry  Text="{Binding UserID}"   IsEnabled="false"/>
-                        </StackLayout>
-                        <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0" >
+                            <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0" >
                             <Label  Text="Vorname" Style="{StaticResource NameConstant}"/>
                                 <Entry  Text="{Binding FirstName}" ClearButtonVisibility="WhileEditing" />
                         </StackLayout>

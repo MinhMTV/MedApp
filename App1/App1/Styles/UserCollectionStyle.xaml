@@ -2,6 +2,30 @@
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
+    <!-- General Pages -->
+    <!-- Default Background -->
+    <Color x:Key="Primary">#004c93</Color>
+    <Style TargetType="NavigationPage" ApplyToDerivedTypes="True">
+        <Setter Property="BarBackgroundColor" Value="{StaticResource Primary}" />
+        <Setter Property="BarTextColor" Value="White"/>
+    </Style>
+
+    <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
+        <Setter Property="BackgroundColor" Value="#dfe4f2" />
+    </Style>
+
+    <!-- User Background -->
+    <Style x:Key="UserBackground" TargetType="ContentPage">
+        <Setter Property="BackgroundColor" Value="SlateGray" />
+    </Style>
+
+    <Style x:Key="UserButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="#004c93" />
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="CornerRadius" Value="20" />
+    </Style>
+
+
     <!-- UserCollectionPage -->
 
     <Style x:Key="NameLabel" TargetType="Label">
@@ -133,5 +157,23 @@
         <Setter Property="TextColor" Value="Black" />
         <Setter Property="FontAttributes" Value="Italic" />
     </Style>
+
+    <!--  Explanation Page -->
+    <Style x:Key="NormalText" TargetType="Label">
+        <Setter Property="FontSize" Value="Large" />
+        <Setter Property="TextColor" Value="Black" />
+    </Style>
+
+    <Style x:Key="MediumText" TargetType="Label">
+        <Setter Property="FontSize" Value="Medium" />
+        <Setter Property="TextColor" Value="Black" />
+    </Style>
+
+    <Style x:Key="MarkedText" TargetType="Label">
+        <Setter Property="FontSize" Value="Large" />
+        <Setter Property="TextColor" Value="Red" />
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
 
 </ResourceDictionary>

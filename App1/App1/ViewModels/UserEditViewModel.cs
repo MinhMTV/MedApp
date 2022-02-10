@@ -5,6 +5,7 @@ using App1.View.AdminPages;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -16,8 +17,9 @@ using Xamarin.Forms.Xaml;
 
 namespace App1.ViewModels
 {
-    public class UserEditViewModel : BaseViewModel
+    public class UserEditViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
         public Command DeleteCommand { get; set; }
 
         public Command SafeCommand { get; set; }
@@ -25,6 +27,8 @@ namespace App1.ViewModels
         public Command<TrainingSession> PressedCommand { get; private set; }
 
         public UserDBHelper userDBHelper = new UserDBHelper();
+
+        public AdminDBHelper adminDBHelper = new AdminDBHelper();
 
         public User User { get; set; }
 
@@ -44,6 +48,8 @@ namespace App1.ViewModels
         public string Pw { get;set; }
 
         public string Pw2 { get; set; }
+
+        public string Pwold { get; set; }
 
         Stringmethods stringmethods = new Stringmethods();
 
@@ -74,24 +80,48 @@ namespace App1.ViewModels
             obj.Email = Email;
             obj.Age = Age;
 
-            if (!stringmethods.isEmpty(Pw) || !stringmethods.isEmpty(Pw2))
+
+            if (!stringmethods.isEmpty(Pw) || !stringmethods.isEmpty(Pw2) || !stringmethods.isEmpty(Pwold))
             {
-                if(string.Equals(Pw, Pw2))
+                if (string.Equals(Pw, Pw2) && string.Equals(Pwold, obj.Password))
                 {
-                    obj.Password = Pw;
-                    userDBHelper.UpdateUser(obj);
-                    await App.Current.MainPage.DisplayToastAsync("Einstellung wurde gespeichert");
+                    if(string.Equals(Pw, obj.Password))
+                    {
+                        await App.Current.MainPage.DisplayAlert("Achtung", "Altes Passwort darf nicht gleich dem neuem Passwort sein!", "OK");
+                    }
+                    else
+                    {
+                        obj.Password = Pw;
+                        Settings.loginUser = obj.Username;
+                        MessagingCenter.Send<object, string>(this, "loguser", obj.Username);
+                        userDBHelper.UpdateUser(obj);
+                        await App.Current.MainPage.DisplayToastAsync("Einstellung wurde gespeichert");
+                    }
                 }
-                else
+                else if(!string.Equals(Pw, Pw2))
                 {
                     await App.Current.MainPage.DisplayAlert("Achtung", "Passwörter stimmen nicht überein!", "OK");
+                }
+                else if (!string.Equals(Pwold, obj.Password))
+                {
+                    await App.Current.MainPage.DisplayAlert("Achtung", "Altes Passwort ist nicht korrekt!", "OK");
                 }
 
             }
             else
             {
-                userDBHelper.UpdateUser(obj);
-                await App.Current.MainPage.DisplayToastAsync("Einstellung wurde gespeichert");
+                if(userDBHelper.CheckUserexist(UserName) || adminDBHelper.CheckUserexist(UserName))
+                {
+                    await App.Current.MainPage.DisplayAlert("Achtung", "Username ist schon vergeben!", "OK");
+                } else
+                {
+                    Settings.loginUser = obj.Username;
+                    userDBHelper.UpdateUser(obj);
+                    MessagingCenter.Send<object, string>(this, "loguser", obj.Username);
+                    Console.WriteLine(obj.Username);
+                    await App.Current.MainPage.DisplayToastAsync("Einstellung wurde gespeichert");
+
+                }
             }
         }
 

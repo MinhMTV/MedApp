@@ -6,6 +6,7 @@ using Plugin.Connectivity;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
+using Xamarin.CommunityToolkit.Extensions;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -22,51 +23,44 @@ namespace App1.View.UserPages
         public string ElapsedTime { get; set; }
         public string AverageReactionTime { get; set; }
         public string Name { get; set; }
-        public int PicturesRight { get; set; }
-        public int PicturesWrong { get; set; }
+
+        public bool isPokal { get; set; }
+
+        public bool isNextPokal { get; set; }
+
+        public int countUntilPokal { get; set; }
+
         private UserDBHelper userDBHelper = new UserDBHelper();
         private TrainingSessionDBHelper trainingSessionDBHelper = new TrainingSessionDBHelper();
+        private TrainingSession tsession;
+        private User user;
 
 
 
         public ResultsPage()
         {
             InitializeComponent();
-            var user = userDBHelper.GetLoggedUser();
-            var trainingSession = trainingSessionDBHelper.getLastTrainingSessionbyUser(user);
+            user = userDBHelper.GetLoggedUser();
+            tsession  = trainingSessionDBHelper.getLastTrainingSessionbyUser(user);
 
-            ElapsedTime = trainingSession.ElapsedTime;
-            PicturesRight = trainingSession.NrOfCorrectImages;
-            PicturesWrong = trainingSession.NrOfWrongImages;
-            TotalPictures = trainingSession.NrOfAllImages;
+            ElapsedTime = tsession.ElapsedTime;
+            TotalPictures = tsession.NrOfAllImages;
 
+            var tCount = trainingSessionDBHelper.getCompletedTrainingSessionListbyUserAndOrder(user, false).Count;
+            Console.WriteLine(tCount.ToString());
 
-            AverageReactionTime = trainingSession.AvgT;
-
-            trainingSession.UserID =  userDBHelper.GetLoggedUser().UserID;
-
+            if (tCount % 5 == 0)
+            {
+                isPokal = true;
+                isNextPokal = false;
+            } else
+            {
+                countUntilPokal = 5 - (tCount % 5) ;
+                isPokal = false;
+                isNextPokal = true;
+            }
             Name = user.FirstName;
             BindingContext = this;
-
-            List<Entry> entries = new List<Entry>
-            {
-                 new Entry(PicturesWrong)
-                {
-                    Label = "Falsche Bilder",
-                    ValueLabel = PicturesWrong.ToString(),
-                    Color = SKColor.Parse("#ff0000")
-                },
-                  new Entry(PicturesRight)
-                {
-                    Label = "Richtige Bilder",
-                    ValueLabel = PicturesRight.ToString(),
-                    Color = SKColor.Parse("#00ff00")
-                }
-
-            };
-            PictureChart.Chart = new DonutChart() { Entries = entries };
-            PictureChart.Chart.LabelTextSize = 35;
-            PictureChart.BackgroundColor = Color.SlateGray;
         }
 
 
@@ -75,19 +69,47 @@ namespace App1.View.UserPages
             return true;
         }
 
+        async private void OnSad_Tapped(object sender, EventArgs e)
+        {
+            await App.Current.MainPage.DisplayToastAsync("Danke für dein Feedback!");
+            tsession.Feedback = Feedback.Bad;
+            trainingSessionDBHelper.UpdateTraining(tsession);
+        }
+
+        async private void OnGood_Tapped(object sender, EventArgs e)
+        {
+            await App.Current.MainPage.DisplayToastAsync("Danke für dein Feedback!");
+            tsession.Feedback = Feedback.Good;
+            trainingSessionDBHelper.UpdateTraining(tsession);
+        }
+
+
+        async private void OnNeutral_Tapped(object sender, EventArgs e)
+        {
+            await App.Current.MainPage.DisplayToastAsync("Danke für dein Feedback!");
+            tsession.Feedback = Feedback.Neutral;
+            trainingSessionDBHelper.UpdateTraining(tsession);
+        }
+
+
         async private void Start_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new TrainingPage());
         }
 
+        async private void Back_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new MenuPage());
+        }
+
         async private void WeeklyOverview_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new WeeklyOverviewPage());
+            await Navigation.PushAsync(new WeeklyOverviewPage(user));
         }
 
         async private void TrainingOverview_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new TrainingOverviewPage());
+            await Navigation.PushAsync(new TrainingOverviewPage(user));
         }
     }
 }

@@ -94,7 +94,7 @@ namespace App1.ViewModels
             IsRefreshing = true;
 
             foreach (var item in userDBHelper.GetAllUserToListByOrder(Settings.OrderBy,Settings.isAscending))
-            { 
+            {
                 _user.Add(item);
             }
             SelectedUser_IsVisible = false;

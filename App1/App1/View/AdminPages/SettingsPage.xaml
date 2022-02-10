@@ -12,6 +12,7 @@
                MaxLines="1"
                FontSize="Large"
                FontAttributes="Bold"
+                TextColor="White"
                HorizontalOptions="StartAndExpand"
                VerticalOptions="Center">
         </Label>

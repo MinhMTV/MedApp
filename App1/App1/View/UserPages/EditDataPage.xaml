@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pg="clr-namespace:App1.ViewModels"
+             x:Class="App1.View.UserPages.EditDataPage"
+             Style="{StaticResource UserBackground}">
+
+    <NavigationPage.TitleView>
+        <Label 
+               Text="Patient bearbeiten"
+               MaxLines="1"
+               FontSize="Large"
+            TextColor="White"
+               FontAttributes="Bold"
+               HorizontalOptions="StartAndExpand"
+               VerticalOptions="Center">
+        </Label>
+    </NavigationPage.TitleView>
+
+
+
+    <StackLayout HorizontalOptions="Fill">
+        <StackLayout>
+            <!--  User Personal Data First Frame-->
+            <Frame Style="{StaticResource FrameCardViewStyle}">
+                <StackLayout Style="{StaticResource itemsCardViewStackLayoutStyle}">
+                    <StackLayout Style="{StaticResource itemsInsideCardViewStackLayoutStyle}">
+                        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="0" >
+                                <Label  Text="Username"  Style="{StaticResource NameConstant}" />
+                                <Entry Text="{Binding UserName}"  HorizontalOptions="FillAndExpand" FontAttributes="Bold" ClearButtonVisibility="WhileEditing"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0" >
+                                <Label  Text="Vorname" Style="{StaticResource NameConstant}"/>
+                                <Entry  Text="{Binding FirstName}" ClearButtonVisibility="WhileEditing" />
+                            </StackLayout>
+                            <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="1"  >
+                                <Label  Text="Nachname" Style="{StaticResource NameConstant}"/>
+                                <Entry  Text="{Binding LastName}" ClearButtonVisibility="WhileEditing" />
+                            </StackLayout>
+                            <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="0"  >
+                                <Label  Text="E-Mail" Style="{StaticResource NameConstant}"/>
+                                <Entry   Text="{Binding Email}" ClearButtonVisibility="WhileEditing" />
+                            </StackLayout>
+                            <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="1" >
+                                <Label  Text="Alter" Style="{StaticResource NameConstant}"/>
+                                <Entry   Text="{Binding Age}" ClearButtonVisibility="WhileEditing"  />
+                            </StackLayout>
+                        </Grid>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+        <!--  User Personal Data First Frame-->
+        <StackLayout>
+
+
+            <Frame Style="{StaticResource FrameCardViewStyle}">
+                <StackLayout Style="{StaticResource itemsCardViewStackLayoutStyle}">
+                    <StackLayout Style="{StaticResource itemsInsideCardViewStackLayoutStyle}">
+                        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+
+                            </Grid.RowDefinitions>
+                            <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="0" >
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                    <Label  Text="Altes Passwort"  Style="{StaticResource TextBindingDetail}"  HorizontalOptions="FillAndExpand"/>
+                                </StackLayout>
+                                <Entry Text="{Binding Pwold}" Placeholder="Altes Passwort"  HorizontalOptions="FillAndExpand" IsPassword="True" ClearButtonVisibility="WhileEditing"/>
+                            </StackLayout>
+
+                            <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0" >
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                    <Label  Text="Neues Passwort"  Style="{StaticResource TextBindingDetail}"  HorizontalOptions="FillAndExpand"/>
+                                </StackLayout>
+                                <Entry Text="{Binding Pw}" Placeholder="Passwort eingeben"   HorizontalOptions="FillAndExpand" IsPassword="True" ClearButtonVisibility="WhileEditing"/>
+                            </StackLayout>
+
+                            <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="1">
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                    <Label  Text="Passwort bestätigen"  Style="{StaticResource TextBindingDetail}"  HorizontalOptions="FillAndExpand"/>
+                                </StackLayout>
+                                <Entry Text="{Binding Pw2}"  Placeholder="Passwort bestätigen"  HorizontalOptions="FillAndExpand" IsPassword="True" ClearButtonVisibility="WhileEditing"/>
+                            </StackLayout>
+                        </Grid>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+        <Button Text="Änderung speichern" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"  Command="{Binding SafeCommand}" CommandParameter="{Binding User}"  Style="{StaticResource UserButton}"/>
+
+    </StackLayout>
+</ContentPage>

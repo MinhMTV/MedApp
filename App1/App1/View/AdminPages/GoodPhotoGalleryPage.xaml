@@ -26,6 +26,7 @@
                MaxLines="1"
                Text="Bilder"
                FontSize="Medium"
+                   TextColor="White"
                HorizontalOptions="StartAndExpand"
                VerticalOptions="Center"/>
             <StackLayout x:Name="SelectedLayout"  
@@ -38,7 +39,7 @@
                     <TapGestureRecognizer Tapped="OnTrashTapped"/>
                 </StackLayout.GestureRecognizers>
                 <Label Text="{Binding NrofSelectedPictures, StringFormat='Selected: {0}'}" VerticalOptions="Center" FontSize="Medium" HorizontalOptions="EndAndExpand" MaxLines="1"/>
-                <Image Source="https://img.icons8.com/external-tulpahn-flat-tulpahn/64/fa314a/external-bin-mobile-user-interface-tulpahn-flat-tulpahn.png"
+                <Image Source="trash.png"
                     HorizontalOptions="EndAndExpand">
                 </Image>
             </StackLayout>
@@ -128,7 +129,7 @@
                             Aspect="Fill"/>
                             <Image
                             x:Name="CheckIcon"
-                            Source="https://img.icons8.com/ios-glyphs/30/fa314a/checked-checkbox.png"
+                            Source="checked.png"
                             VerticalOptions="End"
                             HorizontalOptions="End"
                             Margin="4"

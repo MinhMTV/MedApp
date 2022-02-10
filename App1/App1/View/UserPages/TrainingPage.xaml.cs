@@ -68,6 +68,8 @@ namespace App1.View.UserPages
             newCollection = (this.BindingContext as SwipeViewModel).Pictures;
             GlobalVariables.isTraining = true;
             isRunning = false;
+            GlobalVariables.Stopwatch.Reset();
+            stopwatch2.Reset();
             Console.WriteLine("StartTime" + GlobalVariables.Stopwatch.Elapsed);
 
             if (Settings.isTimer)

@@ -6,46 +6,38 @@
              xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              mc:Ignorable="d"
              x:Class="App1.View.UserPages.TrainingOverviewPage"
-             Title="Übersicht">
+             Style="{StaticResource UserBackground}"
+             Title="Training Übersicht">
     <ContentPage.Content>
-        <ScrollView HeightRequest="3000">
-            <StackLayout Orientation="Vertical" Padding="0,20,0,0">
-                <Label Text="Vergleich mit dem letzen Training"
-                    VerticalOptions="CenterAndExpand" 
+        <StackLayout Orientation="Vertical" Padding="10" Margin="0,20,0,0">
+            <Label Text="Vergleich mit dem letztem Training"
                     HorizontalOptions="CenterAndExpand"
-                    FontSize="20"/>
+                    Style="{StaticResource NormalText}"/>
 
+            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0,20,0,0">
 
+                <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Grid.Row="0">
                 <Label Text="Anzahl der Bilder"
-                    VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="CenterAndExpand"
+                        Style="{StaticResource MediumText}"
+                        Padding="0,5,0,5"/>
+
+                    <forms:ChartView
+                        Chart="{Binding ChartPic}"
+                        HeightRequest="{Binding Chart_Height}"/>
+                </StackLayout>
+
+                <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Grid.Row="1">
+                    <Label Text="Dauer vom Training"
                     HorizontalOptions="CenterAndExpand"
-                    FontSize="15"
-                    Padding="0,10,0,10"/>
+                    Style="{StaticResource MediumText}"
+                    Padding="0,5,0,5"/>
 
-                <forms:ChartView
-                    x:Name="PictureChart"
-                    HeightRequest="200"/>
-
-                <Label Text="Dauer vom Training"
-                    VerticalOptions="CenterAndExpand" 
-                    HorizontalOptions="CenterAndExpand"
-                    FontSize="15"
-                    Padding="0,10,0,10"/>
-
-                <forms:ChartView
-                    x:Name="TimeChart"
-                    HeightRequest="200"/>
-
-                <Label Text="Ihre Reaktionszeit pro Bilder"
-                    VerticalOptions="CenterAndExpand" 
-                    HorizontalOptions="CenterAndExpand"
-                    FontSize="15"
-                    Padding="0,10,0,10"/>
-
-                <forms:ChartView
-                    x:Name="ReactionTimeChart"
-                    HeightRequest="200"/>
-            </StackLayout>
-        </ScrollView>
+            <forms:ChartView
+                     Chart="{Binding ChartTime}"
+                    HeightRequest="{Binding Chart_Height}"/>
+                    </StackLayout>
+            </Grid>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

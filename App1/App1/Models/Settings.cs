@@ -83,9 +83,5 @@ namespace App1.Models
             set => Preferences.Set(nameof(loginUser), value);
         }
 
-       
-
-
-
     }
 }

@@ -9,15 +9,23 @@
 
 
     <FlyoutPage.Flyout>
-        <ContentPage Padding="10" Title="Master">
+        <ContentPage Padding="5" Title="Master" >
             <ContentPage.Content>
-                <StackLayout Margin="5,30,5,5">
-                    <Label x:Name="name" TextColor="Black" FontSize="20" HorizontalOptions="CenterAndExpand"/>
-                    <Button Text="Patient" Clicked="ListUserView_Clicked" TextColor="White" BackgroundColor="Blue"></Button>
-                    <Button Text="PhotoGallery" Clicked="PhotoGalleryClicked" TextColor="White" BackgroundColor="Blue"></Button>
-                    <Button Text="Passwort ändern"  Clicked="EditUserInformationClicked" TextColor="White"  BackgroundColor="Blue"></Button>
-                    <Button Text="Einstellung"  Clicked="SettingClicked" TextColor="White" BackgroundColor="Blue"></Button>
-                    <Button Text="Abmelden" Clicked="LogOutClicked" VerticalOptions="EndAndExpand" TextColor="White" BackgroundColor="Blue"></Button>
+                <StackLayout VerticalOptions="FillAndExpand">
+                    <Image Source="logo.png" HeightRequest="100" Aspect="AspectFit" HorizontalOptions="FillAndExpand" Margin="20"/>
+                <StackLayout Padding="20" VerticalOptions="FillAndExpand">
+                    <Label Text="Therapeuten Zugang" TextColor="Black" FontSize="Large" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" />
+                        <BoxView HorizontalOptions="FillAndExpand" BackgroundColor="Black" HeightRequest="1" Margin="0,0,0,20"/>
+                        <Button Text="Patient" Clicked="ListUserView_Clicked" TextColor="White" BackgroundColor="#004c93" CornerRadius="20"></Button>
+                    <Button Text="PhotoGallery" Clicked="PhotoGalleryClicked" TextColor="White" BackgroundColor="#004c93" CornerRadius="20"></Button>
+                    <Button Text="Passwort ändern"  Clicked="EditUserInformationClicked" TextColor="White"  BackgroundColor="#004c93" CornerRadius="20"></Button>
+                    <Button Text="Einstellung"  Clicked="SettingClicked" TextColor="White" BackgroundColor="#004c93" CornerRadius="20"></Button>
+                    <Button Text="Abmelden" Clicked="LogOutClicked" VerticalOptions="EndAndExpand" TextColor="White" BackgroundColor="#004c93" CornerRadius="20"></Button>
+                </StackLayout>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                        <Label Text="In Zusammenarbeit mit " TextColor="Black" FontSize="Small" />
+                        <Image Source="signet.png"  Aspect="AspectFit" HeightRequest="5" WidthRequest="20"/>
+                    </StackLayout>
                 </StackLayout>
             </ContentPage.Content>
         </ContentPage>

@@ -142,6 +142,8 @@ namespace App1.Models
 
         public bool IsTrainingCompleted { get; set; } // true, if training was completed or not! 
 
+        public Feedback Feedback { get; set; } // get Feedback of training, null if no Feedback
+
 
         public TrainingSession() { }
         public TrainingSession(DateTime dateTime)

@@ -5,7 +5,8 @@
              x:Class="App1.View.AdminPages.UserCollectionPage"
              xmlns:pg="clr-namespace:App1.ViewModels"
              x:Name="UserCollectionView"
-             xmlns:converters="clr-namespace:App1.Methods;assembly=App1">
+             xmlns:converters="clr-namespace:App1.Methods;assembly=App1"
+             >
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:DateTimeToMsg x:Key="DTToMSG" />
@@ -29,6 +30,7 @@
                MaxLines="1"
                Text="Patient"
                FontSize="Large"
+               TextColor="White"
                FontAttributes="Bold"
                HorizontalOptions="StartAndExpand"
                VerticalOptions="Center"/>
@@ -42,8 +44,7 @@
                     <TapGestureRecognizer Tapped="OnTrashTapped"/>
                 </StackLayout.GestureRecognizers>
                 <Label Text="{Binding NrofSelectedUser, StringFormat='Selected: {0}'}" VerticalOptions="Center" FontSize="Medium" HorizontalOptions="EndAndExpand" MaxLines="1"/>
-                <Image Source="https://img.icons8.com/external-tulpahn-flat-tulpahn/64/fa314a/external-bin-mobile-user-interface-tulpahn-flat-tulpahn.png"
-                    HorizontalOptions="EndAndExpand">
+                <Image Source="trash.png" HorizontalOptions="EndAndExpand" Aspect="AspectFit">
                 </Image>
             </StackLayout>
         </Grid>
@@ -120,33 +121,33 @@
                                 <StackLayout Style="{StaticResource itemsCardViewStackLayoutStyle}"    >
                                     <StackLayout Style="{StaticResource itemsInsideCardViewStackLayoutStyle}">
                                         <Frame Style="{StaticResource profileImageFrameStyle}">
-                                            <Image Style="{StaticResource profileImageStyle}" Source="https://img.icons8.com/ios-filled/50/000000/face.png" />
+                                            <Image Style="{StaticResource profileImageStyle}" Source="face.png" />
                                         </Frame>
                                         <StackLayout Style="{StaticResource detailsStackLayout}">
                                             <Label Text="{Binding Fullname}" Style="{StaticResource NameLabel}" />
                                             <StackLayout Style="{StaticResource imageLableStackLayout}">
-                                                <Image Source="https://img.icons8.com/material-outlined/24/000000/employee-card.png" Style="{StaticResource imageStyle}"></Image>
+                                                <Image Source="employee.png" Style="{StaticResource imageStyle}"></Image>
                                                 <Label Text="Username:" Style="{StaticResource LabelStyle}" />
                                                 <StackLayout Style="{StaticResource imageLableStackLayout}">
                                                     <Label Text="{Binding Username}" Style="{StaticResource LabelStyle}" />
                                                 </StackLayout>
                                             </StackLayout>
                                             <StackLayout Style="{StaticResource imageLableStackLayout}">
-                                                <Image Source="https://img.icons8.com/material-outlined/24/000000/age.png" Style="{StaticResource imageStyle}"></Image>
+                                                <Image Source="age.png" Style="{StaticResource imageStyle}"></Image>
                                                 <Label Text="Alter:" Style="{StaticResource LabelStyle}" />
                                                 <StackLayout Style="{StaticResource imageLableStackLayout}">
                                                     <Label Text="{Binding Age}" Style="{StaticResource LabelStyle}" />
                                                 </StackLayout>
                                             </StackLayout>
                                             <StackLayout Style="{StaticResource imageLableStackLayout}">
-                                                <Image Source="https://img.icons8.com/fluency-systems-regular/48/000000/key.png" Style="{StaticResource imageStyle}"></Image>
+                                                <Image Source="key.png" Style="{StaticResource imageStyle}"></Image>
                                                 <Label Text="UserID:" Style="{StaticResource LabelStyle}" />
                                                 <StackLayout Style="{StaticResource imageLableStackLayout}">
                                                     <Label Text="{Binding UserID}" Style="{StaticResource LabelStyle}" />
                                                 </StackLayout>
                                             </StackLayout>
                                             <StackLayout Style="{StaticResource imageLableStackLayout}">
-                                                <Image Source="https://img.icons8.com/material-two-tone/24/000000/time-machine.png" Style="{StaticResource imageStyle}"></Image>
+                                                <Image Source="time.png" Style="{StaticResource imageStyle}"></Image>
                                                 <Label Text="Letztes Training:" Style="{StaticResource LabelStyle}"></Label>
                                                 <Label Text="{Binding LastSession,Converter={StaticResource DTToMSG}}" Style="{StaticResource LabelStyle}" />
                                             </StackLayout>
@@ -154,7 +155,7 @@
                                         <StackLayout Orientation="Horizontal" HorizontalOptions="End">
                                             <Image
                                         x:Name="CheckIcon"
-                                        Source="https://img.icons8.com/ios-glyphs/30/fa314a/checked-checkbox.png"
+                                        Source="checked.png"
                                         WidthRequest="20" HeightRequest="20"
                                         VerticalOptions="End"
                                         HorizontalOptions="End"

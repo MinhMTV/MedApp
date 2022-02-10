@@ -29,6 +29,12 @@ namespace App1.Helpers
             newConnection.Insert(trainingSession);
         }
 
+        public int UpdateTraining(TrainingSession trainingSession)
+        {
+            return newConnection.Update(trainingSession);
+
+        }
+
         //Delete Trainingssession without PicTime
         public bool DeleteOnlyTrainingSession(TrainingSession tsession)
         { 
@@ -100,7 +106,13 @@ namespace App1.Helpers
         public TrainingSession getFirstCmplTrainingSessionbyUser(User user)
         {
             var list = newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).ToList();
-            return list.FindAll(x => x.IsTrainingCompleted == true).FirstOrDefault();
+            return list.FindAll(x => x.IsTrainingCompleted == true).OrderByDescending(x => x.SessionId).FirstOrDefault();
+        }
+
+        public List<TrainingSession> getLastTwoCmplTrainingSessionbyUser(User user)
+        {
+            var list = newConnection.Table<TrainingSession>().Where(x => x.UserID == user.UserID).ToList();
+            return list.FindAll(x => x.IsTrainingCompleted == true).OrderByDescending(x => x.SessionId).Take(2).ToList();
         }
 
         public TrainingSession getNextCmplTrainingbyUserANDSession(User user, TrainingSession tsession)
@@ -353,11 +365,6 @@ namespace App1.Helpers
             return newConnection.Table<TrainingSession>().ToList();
         }
 
-        public List<TrainingSession> GetLastTwoTrainingSessions()
-        {
-            return newConnection.Table<TrainingSession>().OrderByDescending(x => x.SessionId).Take(2).ToList();
-        }
-
         public TrainingSession GetLastTrainingSession()
         {
             return newConnection.Table<TrainingSession>().LastOrDefault();
@@ -405,55 +412,6 @@ namespace App1.Helpers
             {
                 return data.OrderByDescending(x => x.SessionId).ToList();
             }
-        }
-
-        
-
-        //------------------------------------------------------Not My Methods-----------------------------------------------------------------------------------------------
-
-
-        public List<TrainingSession> GetLastTrainingSessions()
-        {
-            DateTime dateTime = DateTime.Today;
-            List<TrainingSession> trainingSessions = new List<TrainingSession>();
-
-            for (int i = 0; i < 7; i++)
-            {
-                var trainingSession = (from tSession in newConnection.Table<TrainingSession>()
-                                       where tSession.SessionDate == dateTime
-                                       select tSession).ToList<TrainingSession>();
-
-                if (trainingSession.Count == 0)
-                {
-                    trainingSessions.Add(new TrainingSession(dateTime));
-                }
-                else
-                {
-                    trainingSessions.AddRange(trainingSession);
-                }
-                dateTime = dateTime.AddDays(-1);
-
-            }
-            return trainingSessions;
-            //var data = newConnection.Table<TrainingSession>().Take(7).ToList();
-        }
-
-      
-      
-
-        public void UpdateInformation(TrainingSession ts, DateTime dateTime)
-        {
-            ts.SessionDate = dateTime.Date;
-            //if (ts.IsTrainingCompleted == true)
-            //{
-            //    ts.ElapsedTime = "60";
-            //}
-            //if (ts.IsTrainingCompleted == false)
-            //{
-            //    ts.IsTrainingCompleted = true;
-            //}
-
-            newConnection.Update(ts);
         }
 
         //------------------------------------------------------Not My Methods-----------------------------------------------------------------------------------------------

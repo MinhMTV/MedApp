@@ -14,13 +14,12 @@ namespace App1.View.AdminPages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AdminMenu : FlyoutPage
     {
+        AdminDBHelper adminDBHelper = new AdminDBHelper();
         public AdminMenu()
         { 
             InitializeComponent();
             Detail = new NavigationPage(new UserCollectionPage());
             IsPresented = false;
-            var loguser = Settings.loginUser;
-            name.Text = "Hallo Therapeut " + loguser;
         }
 
         // This prevents a user from being able to hit the back button and leave the Admin Page.
@@ -57,7 +56,8 @@ namespace App1.View.AdminPages
 
         void EditUserInformationClicked(object sender, System.EventArgs e)
         {
-            Detail = new NavigationPage(new EditUserInformtionPage());
+            var admin = adminDBHelper.GetLoggedUser();
+            Detail = new NavigationPage(new EditAdminDataPage(admin));
             IsPresented = false;
             GlobalVariables.isGallery = false;
         }
@@ -76,7 +76,7 @@ namespace App1.View.AdminPages
             var decision = await DisplayAlert("Achtung", "Möchten Sie sich wirklich ausloggen?", "Ja", "Nein");
             if (decision)
             {
-                AdminDBHelper adminDBHelper = new AdminDBHelper();
+                
                 adminDBHelper.LogOutUser();
                 await Navigation.PushAsync(new LoginPage());
             }

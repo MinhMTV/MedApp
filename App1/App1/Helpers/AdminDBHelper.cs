@@ -80,6 +80,12 @@ namespace App1.Helpers
             }
         }
 
+        public int UpdateUser(Admin user)
+        {
+            return newConnection.Update(user);
+
+        }
+
         /// <summary>
         /// change password of user by username
         /// </summary>

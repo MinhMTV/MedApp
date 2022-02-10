@@ -5,59 +5,38 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              mc:Ignorable="d"
-             x:Class="App1.View.UserPages.WeeklyOverviewPage">
+             x:Class="App1.View.UserPages.WeeklyOverviewPage" Style="{StaticResource UserBackground}">
     <ContentPage.Content>
-        <ScrollView HeightRequest="3000">
-            <StackLayout Padding="0,20,0,0">
+        <StackLayout Padding="0,20,0,0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                 <Label Text="Ihre wöchentliche Trainingsübersicht"
-                       FontSize="20"
+                       Style="{StaticResource NormalText}"
                     VerticalOptions="Start" 
                     HorizontalOptions="CenterAndExpand" />
 
-                <Label Text="Wie oft haben Sie in den letzen 7 Tagen trainiert?"
-                       FontSize="15"
-                       Margin="0,15"
-                    VerticalOptions="StartAndExpand" 
-                    HorizontalOptions="CenterAndExpand" />
+            <Label 
+                   Text="{Binding Charttext}"
+                   MaxLines="1"
+                   Style="{StaticResource MediumText}"
+                   HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="Center"
+                Margin="0,10,0,10">
+            </Label>
+        
+        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                    <StackLayout>
+                        <forms:ChartView Chart="{Binding Chart}" HeightRequest="{Binding Chart_Height}">
+                            <forms:ChartView.GestureRecognizers>
+                                <SwipeGestureRecognizer Direction="Left" Command="{Binding SwipeCommand}" CommandParameter="left"/>
+                                <SwipeGestureRecognizer Direction="Right" Command="{Binding SwipeCommand}" CommandParameter="right"/>
+                            </forms:ChartView.GestureRecognizers>
+                        </forms:ChartView>
+                    </StackLayout>
 
-                <forms:ChartView
-                    Margin="0,10,0,20"
-                    x:Name="PrsenceChart"
-                    HeightRequest="150"/>
-
-                <BoxView HorizontalOptions="FillAndExpand" HeightRequest="3" Color="Black"/>
-                <Label Text="Wie viele Bilder haben Sie in den letzen 7 Tagen trainiert? "
-                       FontSize="15"
-                       Margin="0,15"
-                    VerticalOptions="StartAndExpand" 
-                    HorizontalOptions="CenterAndExpand" />
-                <forms:ChartView
-                    Margin="0,10"
-                    x:Name="PictureChart"
-                    HeightRequest="150"/>
-            
-                <BoxView HorizontalOptions="FillAndExpand" HeightRequest="3" Color="Black"/>
-                <Label Text="Wie lange haben Sie in den letzen 7 Tagen trainiert? "
-                       FontSize="15"
-                       Margin="0,15"
-                    VerticalOptions="StartAndExpand" 
-                    HorizontalOptions="CenterAndExpand" />
-                <forms:ChartView
-                    Margin="0,10"
-                    x:Name="TimeChart"
-                    HeightRequest="150"/>
-
-                <BoxView HorizontalOptions="FillAndExpand" HeightRequest="3" Color="Black"/>
-                <Label Text="Wie oft brechen Sie ein Training ab? "
-                       FontSize="15"
-                       Margin="0,15"
-                    VerticalOptions="StartAndExpand" 
-                    HorizontalOptions="CenterAndExpand" />
-                <forms:ChartView
-                    Margin="0,10"
-                    x:Name="CancellationChart"
-                    HeightRequest="150"/>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Margin="0,0,0,10">
+                    <Button Text="Letzte Woche" HorizontalOptions="Center"   Command="{Binding LastCommand}" Clicked="OnLast" Style="{StaticResource UserButton}"/>
+                    <Button Text="Nächste Woche" HorizontalOptions="Center"  Command="{Binding NextCommand}" Clicked="OnNext" Style="{StaticResource UserButton}"/>
+                </StackLayout>
             </StackLayout>
-        </ScrollView>        
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

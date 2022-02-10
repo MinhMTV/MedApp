@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App1.View.UserPages.DemoPage"
-             BackgroundColor="SlateGray"
+             Style="{StaticResource UserBackground}"
              Title="Erklärung">
     <ContentPage.Content>
         
@@ -10,22 +10,68 @@
             
             <Label 
                 Text="Hinweis zur Nutzung der App"
-                TextColor="White"
+                TextColor="Black"
                 HorizontalOptions="CenterAndExpand"
+                FontAttributes="Bold"
                 Padding="20"
                 FontSize="20"/>
-            <Label Text="Im Rahmen des Trainings ist Ihre Aufgabe, die angezeigten Bilder möglichst schnell nach oben oder unten zu 'schieben\wischen'"
-                   VerticalOptions="CenterAndExpand" 
-                   HorizontalOptions="CenterAndExpand"
-                   Padding="10">
-            </Label>
-            
+
+            <Frame Style="{StaticResource FrameCardViewStyle}">
+                <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
+                    <Label 
+                       HorizontalOptions="CenterAndExpand"
+                       TextColor="Black"
+                       FontSize="Large"
+                       HorizontalTextAlignment="Center"
+                       Padding="10">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Das Training besteht darin, jedes Bild, welches Sie angezeigt bekommen, jeweils nach " Style="{StaticResource NormalText}"  />
+                                <Span Text="unten" Style="{StaticResource MarkedText}" />
+                                <Span Text=" oder " Style="{StaticResource NormalText}" />
+                                <Span Text="oben " Style="{StaticResource MarkedText}"/>
+                                <Span Text="zu schieben bzw. wischen" Style="{StaticResource NormalText}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Label 
+                       HorizontalOptions="CenterAndExpand"
+                       Style="{StaticResource NormalText}"
+                       HorizontalTextAlignment="Center">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Gibt ihnen das Bild ein "  Style="{StaticResource NormalText}" />
+                                <Span Text="unangenehmes " Style="{StaticResource NormalText}" />
+                                <Span Text="Gefühl, so wischen Sie nach " Style="{StaticResource NormalText}" />
+                                <Span Text="oben!" Style="{StaticResource MarkedText}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label 
+                       HorizontalOptions="CenterAndExpand"
+                       Style="{StaticResource NormalText}"
+                       HorizontalTextAlignment="Center"
+                       Padding="5">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Haben Sie ein " Style="{StaticResource NormalText}" />
+                                <Span Text="neutrales " Style="{StaticResource MarkedText}"/>
+                                <Span Text="oder " Style="{StaticResource NormalText}" />
+                                <Span Text="positives " Style="{StaticResource MarkedText}" />
+                                <Span Text="Gefühl, so wischen Sie nach " Style="{StaticResource NormalText}"  />
+                                <Span Text="unten!"  Style="{StaticResource MarkedText}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </StackLayout>
+            </Frame>
+
 
             <Button 
                 Text="Training Starten"
                 Clicked="Handle_Clicked"
-                TextColor="White"
-                BackgroundColor="Blue"
+                Style="{StaticResource UserButton}"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 Margin="0,0,0,20"/>

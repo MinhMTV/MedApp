@@ -7,32 +7,26 @@
              x:Class="App1.View.UserPages.MenuPage"
              NavigationPage.HasNavigationBar="false">
 
-        
     <FlyoutPage.Flyout>
-        <ContentPage Padding="10" Title="Master">
+        <ContentPage Padding="5" Title="Master" BackgroundColor="SlateGray">
             <ContentPage.Content>
-                <StackLayout Margin="5,30,5,5">
-                    <Label  x:Name="name" TextColor="Black" FontSize="20" HorizontalOptions="CenterAndExpand"/>
-                    <Button Text="Erklärung" Clicked="Demo_Clicked" TextColor="White" BackgroundColor="Blue"></Button>
-                    <Button Text="Wochenübersicht" Clicked="WeeklyOverviewClicked" TextColor="White" BackgroundColor="Blue"></Button>
-                    <Button Text="Passwort ändern"  Clicked="EditUserInformationClicked" TextColor="White"  BackgroundColor="Blue"></Button>
-                    <Button Text="Abmelden" Clicked="LogOutClicked" VerticalOptions="EndAndExpand" TextColor="White" BackgroundColor="Blue"></Button>
+                <StackLayout VerticalOptions="FillAndExpand">
+                    <Image Source="brain.png" HeightRequest="150" Aspect="AspectFit" HorizontalOptions="FillAndExpand" Margin="20"/>
+                    <StackLayout Padding="20" VerticalOptions="FillAndExpand">
+                        <Label Text="{Binding Loguser,  StringFormat='Willkommen {0}'}" TextColor="Black" FontSize="Large" FontAttributes="Bold" HorizontalOptions="CenterAndExpand"/>
+                        <BoxView HorizontalOptions="FillAndExpand" BackgroundColor="Black" HeightRequest="1" Margin="0,0,0,20"/>
+                        <Button Text="Erklärung" Clicked="Training_Clicked" Style="{StaticResource UserButton}"></Button>
+                        <Button Text="Trainingübersicht" Clicked="TOverview_Clicked" Style="{StaticResource UserButton}"></Button>
+                        <Button Text="Wochenübersicht" Clicked="WeeklyOverviewClicked" Style="{StaticResource UserButton}"></Button>
+                        <Button Text="Daten ändern" Clicked="editUser_Clicked" Style="{StaticResource UserButton}"></Button>
+                        <Button Text="Abmelden" Clicked="LogOutClicked" VerticalOptions="EndAndExpand"  Style="{StaticResource UserButton}"></Button>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                        <Label Text="In Zusammenarbeit mit " TextColor="Black" FontSize="Small" />
+                        <Image Source="signet.png"  Aspect="AspectFit" HeightRequest="5" WidthRequest="20"/>
+                    </StackLayout>
                 </StackLayout>
             </ContentPage.Content>
         </ContentPage>
     </FlyoutPage.Flyout>
-
-    <FlyoutPage.Detail>
-        <ContentPage>
-            <ContentPage.Content>
-                <StackLayout Margin="5,30,5,5">
-                    <Label Text="Detail Page">
-            
-                    </Label>
-                </StackLayout>
-            </ContentPage.Content>
-        </ContentPage>
-        
-    </FlyoutPage.Detail>
-
 </FlyoutPage>

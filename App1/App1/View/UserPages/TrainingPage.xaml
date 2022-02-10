@@ -6,10 +6,11 @@
              xmlns:valueconverter="clr-namespace:App1.Methods"
              NavigationPage.HasNavigationBar="false"
              Padding="20"
+             Style="{StaticResource UserBackground}"
              BackgroundColor="SlateGray">
-    <StackLayout HorizontalOptions="Fill" BackgroundColor="Yellow">
+    <StackLayout HorizontalOptions="Fill">
 
-        <StackLayout HorizontalOptions="FillAndExpand" BackgroundColor="red" Orientation="Horizontal">
+        <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
             <Button HeightRequest="50" WidthRequest="50" HorizontalOptions="EndAndExpand" x:Name="exit_button" Image="exit.png" Clicked="Exit_button_Clicked"       />
         </StackLayout>
 
@@ -18,7 +19,6 @@
                 ItemsSource="{Binding Pictures}"
                 HorizontalOptions="FillAndExpand" 
                 VerticalOptions="FillAndExpand"
-                BackgroundColor="Red"
                 Padding="10"
                 SwipedCommand="{Binding SwipedCommand}"
                 DraggingCommand="{Binding DraggingCommand}"
@@ -29,7 +29,7 @@
             >
             <swipeCardView:SwipeCardView.ItemTemplate>
                 <DataTemplate>
-                    <Grid ColumnSpacing="0" RowSpacing="0" BackgroundColor="Wheat">
+                    <Grid ColumnSpacing="0" RowSpacing="0" >
                         <Grid.Resources>
                             <valueconverter:ByteArrayToImageSourceConverter x:Key="SourceConverter" />
                         </Grid.Resources>

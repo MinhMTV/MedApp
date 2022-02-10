@@ -16,6 +16,7 @@
                MaxLines="1"
                FontSize="Large"
                FontAttributes="Bold"
+            TextColor="White"
                HorizontalOptions="StartAndExpand"
                VerticalOptions="Center"/>
     </NavigationPage.TitleView>
@@ -57,12 +58,12 @@
 
                     <Frame Style="{StaticResource FrameCardViewStyle}">
                         <StackLayout Style="{StaticResource itemsCardViewStackLayoutStyle}"    >
-                            <StackLayout Style="{StaticResource itemsInsideCardViewStackLayoutStyle}" Margin="10,0,10,0">
+                            <StackLayout Style="{StaticResource itemsInsideCardViewStackLayoutStyle}">
                                 <Grid HorizontalOptions="FillAndExpand">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <StackLayout Grid.Column="0" HorizontalOptions="FillAndExpand" Margin="0,0,5,0" >
                                         <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal" HorizontalOptions="FillAndExpand">
@@ -103,11 +104,11 @@
                                         </StackLayout>
                                         <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
                                             <Label Text="Richtig:"  Style="{StaticResource LabelStyle}" />
-                                            <Label Text="{Binding PctCIm,StringFormat='{}{0:#0.##}%'}" Style="{StaticResource LabelStyle}" HorizontalOptions="End" />
+                                            <Label Text="{Binding PctCIm,Converter={StaticResource nulltoZero},StringFormat='{}{0:#0.##}%'}" Style="{StaticResource LabelStyle}" HorizontalOptions="End" />
                                         </StackLayout>
                                         <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
                                             <Label Text="Falsch:" Style="{StaticResource LabelStyle}" />
-                                            <Label Text="{Binding PctWIm, StringFormat='{}{0:#0.##}%'}" Style="{StaticResource LabelStyle}" HorizontalOptions="End"/>
+                                            <Label Text="{Binding PctWIm,Converter={StaticResource nulltoZero}, StringFormat='{}{0:#0.##}%' }" Style="{StaticResource LabelStyle}" HorizontalOptions="End"/>
                                         </StackLayout>
                                     </StackLayout>
                                 </Grid>

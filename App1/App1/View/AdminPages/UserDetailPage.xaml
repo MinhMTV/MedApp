@@ -39,6 +39,7 @@
                MaxLines="1"
                FontSize="Large"
                FontAttributes="Bold"
+               TextColor="White"
                HorizontalOptions="StartAndExpand"
                VerticalOptions="Center">
             <Label.Text>
@@ -65,7 +66,7 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Frame Style="{StaticResource profileImageFrameStyle}" Grid.Column="0" Grid.Row="0">
-                            <Image Style="{StaticResource profileImageStyle}" Source="https://img.icons8.com/ios-filled/50/000000/face.png" />
+                            <Image Style="{StaticResource profileImageStyle}" Source="face.png" />
                         </Frame>
                         <StackLayout  Grid.Column="0" Grid.Row="1">
                             <Label Text="Anzahl" Style="{StaticResource Session_Style}"  />
@@ -193,12 +194,12 @@
 
                             <Frame Style="{StaticResource FrameCardViewStyle}">
                                 <StackLayout Style="{StaticResource itemsCardViewStackLayoutStyle}"    >
-                                    <StackLayout Style="{StaticResource itemsInsideCardViewStackLayoutStyle}" Margin="5,0,5,0">
+                                    <StackLayout Style="{StaticResource itemsInsideCardViewStackLayoutStyle}" Margin="5,0,0,0" HorizontalOptions="FillAndExpand" >
                                         <Grid HorizontalOptions="FillAndExpand">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />
                                                 <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
                                             <StackLayout Grid.Column="0" HorizontalOptions="FillAndExpand" Margin="0,0,5,0" >
                                                 <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal" HorizontalOptions="FillAndExpand">
@@ -232,18 +233,18 @@
                                             </StackLayout>
                                             <BoxView  Grid.Column="1" VerticalOptions="Fill" HorizontalOptions="End" WidthRequest="1" Color="Gray"/>
 
-                                            <StackLayout Grid.Column="2" VerticalOptions="Center"  HorizontalOptions="FillAndExpand" >
+                                            <StackLayout Grid.Column="2" VerticalOptions="Center"  HorizontalOptions="FillAndExpand">
                                                 <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal" >
                                                     <Label Text="Total: "  Style="{StaticResource LabelStyle}" />
                                                     <Label Text="{Binding NrOfAllImages}" Style="{StaticResource LabelStyle}" HorizontalOptions="End" />
                                                 </StackLayout>
                                                 <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
                                                     <Label Text="Richtig:"  Style="{StaticResource LabelStyle}" />
-                                                    <Label Text="{Binding PctCIm,StringFormat='{}{0:#0.##}%'}" Style="{StaticResource LabelStyle}" HorizontalOptions="End" />
+                                                    <Label Text="{Binding PctCIm,Converter={StaticResource nulltoZero},StringFormat='{}{0:#0.##}%'}" Style="{StaticResource LabelStyle}" HorizontalOptions="End" />
                                                 </StackLayout>
                                                 <StackLayout VerticalOptions="FillAndExpand"  Orientation="Horizontal">
                                                     <Label Text="Falsch:" Style="{StaticResource LabelStyle}" />
-                                                    <Label Text="{Binding PctWIm, StringFormat='{}{0:#0.##}%'}" Style="{StaticResource LabelStyle}" HorizontalOptions="End"/>
+                                                    <Label Text="{Binding PctWIm,Converter={StaticResource nulltoZero}, StringFormat='{}{0:#0.##}%'}" Style="{StaticResource LabelStyle}" HorizontalOptions="End"/>
                                                 </StackLayout>
                                             </StackLayout>
                                         </Grid>

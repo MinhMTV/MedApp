@@ -213,168 +213,48 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\g33.jpg" />
+    <BundleResource Include="Resources\key.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\b01.jpg" />
+    <BundleResource Include="Resources\age.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\b02.jpg" />
+    <BundleResource Include="Resources\checked.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\b03.jpg" />
+    <BundleResource Include="Resources\employee.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\b04.jpg" />
+    <BundleResource Include="Resources\face.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\b05.jpg" />
+    <BundleResource Include="Resources\time.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\b06.jpg" />
+    <BundleResource Include="Resources\trash.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\b07.jpg" />
+    <BundleResource Include="Resources\plus.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\b08.jpg" />
+    <BundleResource Include="Resources\logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\b09.jpg" />
+    <BundleResource Include="Resources\signet.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\b10.jpg" />
+    <BundleResource Include="Resources\brain.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\b11.jpg" />
+    <BundleResource Include="Resources\good.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\b12.jpg" />
+    <BundleResource Include="Resources\neutral.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\b13.jpg" />
+    <BundleResource Include="Resources\sad.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\b14.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\b15.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\b16.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\b17.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\b18.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\b19.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\b20.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\b21.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\b22.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g01.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g02.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g03.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g04.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g05.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g06.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g07.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g08.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g09.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g10.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g11.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g12.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g13.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g14.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g15.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g16.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g17.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g18.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g19.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g20.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g21.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g22.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g23.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g24.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g25.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g26.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g27.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g28.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g29.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g30.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g31.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\g32.jpg" />
+    <BundleResource Include="Resources\pokal.png" />
   </ItemGroup>
 </Project>
