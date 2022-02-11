@@ -1,7 +1,7 @@
-﻿using App1.Extensions;
-using App1.Helpers;
-using App1.Models;
-using App1.ViewModels;
+﻿using CBMTraining.Extensions;
+using CBMTraining.Helpers;
+using CBMTraining.Models;
+using CBMTraining.ViewModels;
 using Microcharts;
 using SkiaSharp;
 using System;
@@ -11,7 +11,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Entry = Microcharts.ChartEntry;
 
-namespace App1.View.UserPages
+namespace CBMTraining.View.UserPages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class WeeklyOverviewPage : ContentPage

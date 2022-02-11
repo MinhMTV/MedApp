@@ -4,7 +4,7 @@ using System.Text;
 using SQLite;
 
 
-namespace App1.Models
+namespace CBMTraining.Models
 {
     public class Admin
     {

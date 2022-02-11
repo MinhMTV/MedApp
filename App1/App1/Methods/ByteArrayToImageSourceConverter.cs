@@ -4,9 +4,9 @@ using System.Text;
 using Xamarin.Forms;
 using System.Globalization;
 using System.IO;
-using App1.DependencyServices;
+using CBMTraining.DependencyServices;
 
-namespace App1.Methods
+namespace CBMTraining.Methods
 {
     class ByteArrayToImageSourceConverter : IValueConverter
     {

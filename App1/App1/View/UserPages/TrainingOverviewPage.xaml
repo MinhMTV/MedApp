@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              mc:Ignorable="d"
-             x:Class="App1.View.UserPages.TrainingOverviewPage"
+             x:Class="CBMTraining.View.UserPages.TrainingOverviewPage"
              Style="{StaticResource UserBackground}"
              Title="Trainingsvergleich">
     <ContentPage.Content>

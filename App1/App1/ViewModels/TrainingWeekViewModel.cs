@@ -1,7 +1,7 @@
-﻿using App1.Helpers;
-using App1.Methods;
-using App1.Models;
-using App1.View.AdminPages;
+﻿using CBMTraining.Helpers;
+using CBMTraining.Methods;
+using CBMTraining.Models;
+using CBMTraining.View.AdminPages;
 using Microcharts;
 using SkiaSharp;
 using System;
@@ -12,9 +12,9 @@ using System.Text;
 using Xamarin.CommunityToolkit.Extensions;
 using Xamarin.Forms;
 using Entry = Microcharts.ChartEntry;
-using App1.Extensions;
+using CBMTraining.Extensions;
 
-namespace App1.ViewModels
+namespace CBMTraining.ViewModels
 { 
     public class TrainingWeekViewModel : INotifyPropertyChanged
     {

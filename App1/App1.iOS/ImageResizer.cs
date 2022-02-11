@@ -4,15 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UIKit;
-using App1.iOS;
-using App1.DependencyServices;
+using CBMTraining.iOS;
+using CBMTraining.DependencyServices;
 using System.Drawing;
 using CoreGraphics;
 
 
 
 [assembly: Xamarin.Forms.Dependency(typeof(ImageResizer))]
-namespace App1.iOS
+namespace CBMTraining.iOS
 {
     public class ImageResizer : IImageResizer
     {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Xamarin.Forms;
 
-namespace App1.Methods
+namespace CBMTraining.Methods
 {
     public class Stringmethods : ContentPage
     {

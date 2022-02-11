@@ -1,4 +1,4 @@
-﻿namespace App1.Models
+﻿namespace CBMTraining.Models
 {
     public enum PicType
     {

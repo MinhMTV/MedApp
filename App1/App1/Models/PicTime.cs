@@ -6,7 +6,7 @@ using System.Text;
 
 using Xamarin.Forms;
 
-namespace App1.Models
+namespace CBMTraining.Models
 {
 	public class PicTime
 	{

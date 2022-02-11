@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Xamarin.Forms;
 
-namespace App1.Methods
+namespace CBMTraining.Methods
 {
     public class NextEntry : Behavior
     {

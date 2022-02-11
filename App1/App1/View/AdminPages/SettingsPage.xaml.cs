@@ -1,4 +1,4 @@
-﻿using App1.Models;
+﻿using CBMTraining.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +9,7 @@ using Xamarin.CommunityToolkit.Extensions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace App1.View.AdminPages
+namespace CBMTraining.View.AdminPages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SettingsPage : ContentPage, INotifyPropertyChanged

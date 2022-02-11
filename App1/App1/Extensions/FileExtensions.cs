@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using System.IO;
 
-namespace App1.Extensions
+namespace CBMTraining.Extensions
 {
     public static class FileExtensions
     {

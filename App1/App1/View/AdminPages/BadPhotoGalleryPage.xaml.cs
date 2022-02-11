@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using App1.Helpers;
-using App1.Models;
-using App1.PopUpViews;
-using App1.ViewModels;
+using CBMTraining.Helpers;
+using CBMTraining.Models;
+using CBMTraining.PopUpViews;
+using CBMTraining.ViewModels;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace App1.View.AdminPages
+namespace CBMTraining.View.AdminPages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class BadPhotoGalleryPage : ContentPage

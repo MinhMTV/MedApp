@@ -1,4 +1,4 @@
-﻿namespace App1.UWP
+﻿namespace CBMTraining.UWP
 {
     public sealed partial class MainPage
     {
@@ -6,7 +6,7 @@
         {
             this.InitializeComponent();
 
-            LoadApplication(new App1.App());
+            LoadApplication(new CBMTraining.App());
         }
     }
 }

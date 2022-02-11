@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App1.DependencyServices
+namespace CBMTraining.DependencyServices
 {
     public interface IImageResizerWin
     {

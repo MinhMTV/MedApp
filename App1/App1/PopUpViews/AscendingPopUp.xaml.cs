@@ -1,4 +1,4 @@
-﻿using App1.Models;
+﻿using CBMTraining.Models;
 using Rg.Plugins.Popup.Extensions;
 using Rg.Plugins.Popup.Services;
 using System;
@@ -11,7 +11,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 
-namespace App1.PopUpViews
+namespace CBMTraining.PopUpViews
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AscendingPopUp : Rg.Plugins.Popup.Pages.PopupPage

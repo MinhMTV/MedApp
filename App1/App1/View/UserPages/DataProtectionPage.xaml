@@ -2,7 +2,7 @@
 <ContentPage NavigationPage.HasNavigationBar="false"
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="App1.View.UserPages.DataProtectionPage"
+             x:Class="CBMTraining.View.UserPages.DataProtectionPage"
              Style="{StaticResource UserBackground}">
     <ContentPage.Content>
         <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Margin="30">

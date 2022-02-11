@@ -1,7 +1,7 @@
-﻿using App1.Helpers;
-using App1.Models;
-using App1.View.GeneralPages;
-using App1.ViewModels;
+﻿using CBMTraining.Helpers;
+using CBMTraining.Models;
+using CBMTraining.View.GeneralPages;
+using CBMTraining.ViewModels;
 using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace App1.View.UserPages
+namespace CBMTraining.View.UserPages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MenuPage : FlyoutPage

@@ -1,17 +1,17 @@
-﻿using App1.Models;
+﻿using CBMTraining.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using App1.Helpers;
+using CBMTraining.Helpers;
 
 using Xamarin.Forms;
-using App1.PopUpViews;
+using CBMTraining.PopUpViews;
 using Xamarin.Essentials;
-using App1.View.AdminPages;
+using CBMTraining.View.AdminPages;
 
-namespace App1.ViewModels
+namespace CBMTraining.ViewModels
 {
     public class PhotoCollectionViewModel : BaseViewModel
     {

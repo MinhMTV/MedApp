@@ -1,12 +1,12 @@
-﻿using App1.Helpers;
-using App1.Models;
-using App1.View;
+﻿using CBMTraining.Helpers;
+using CBMTraining.Models;
+using CBMTraining.View;
 using Xamarin.CommunityToolkit.Extensions;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace App1.View.UserPages
+namespace CBMTraining.View.UserPages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DataProtectionPage : ContentPage

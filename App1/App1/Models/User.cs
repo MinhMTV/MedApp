@@ -1,7 +1,7 @@
 ﻿using SQLite;
 using System;
 
-namespace App1.Models
+namespace CBMTraining.Models
 {
     public class User
     {

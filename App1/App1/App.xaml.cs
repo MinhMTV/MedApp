@@ -1,14 +1,14 @@
-﻿using App1.Helpers;
-using App1.Models;
-using App1.View.GeneralPages;
-using App1.View.UserPages;
+﻿using CBMTraining.Helpers;
+using CBMTraining.Models;
+using CBMTraining.View.GeneralPages;
+using CBMTraining.View.UserPages;
 using System;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
-namespace App1
+namespace CBMTraining
 {
     public partial class App : Application
     {

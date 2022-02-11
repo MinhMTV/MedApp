@@ -1,4 +1,4 @@
-﻿namespace App1.Models
+﻿namespace CBMTraining.Models
 {
     public static class constants
     {
@@ -36,7 +36,7 @@
         public const string typebad = "bad";
         public const string typegood = "good";
 
-        public const string ImageFolderPath = "App1.EmbeddedImages.";
+        public const string ImageFolderPath = "CBMTraining.EmbeddedImages.";
 
         //PopupNavigation
         public const string userPopup = "userpopup";

@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="App1.View.AdminPages.UserDetailPage" 
-             xmlns:pg="clr-namespace:App1.ViewModels"
+             x:Class="CBMTraining.View.AdminPages.UserDetailPage" 
+             xmlns:pg="clr-namespace:CBMTraining.ViewModels"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit" 
-             xmlns:converters="clr-namespace:App1.Methods">
+             xmlns:converters="clr-namespace:CBMTraining.Methods">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:DateTimeToMsg x:Key="DTToMSG" />

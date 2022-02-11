@@ -1,6 +1,6 @@
-﻿using App1.Helpers;
-using App1.Methods;
-using App1.Models;
+﻿using CBMTraining.Helpers;
+using CBMTraining.Methods;
+using CBMTraining.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,7 +8,7 @@ using System.ComponentModel;
 using System.Text;
 using Xamarin.Forms;
 
-namespace App1.ViewModels
+namespace CBMTraining.ViewModels
 {
     class GoalViewModel : INotifyPropertyChanged
     {

@@ -1,6 +1,6 @@
-﻿using App1.Helpers;
-using App1.Models;
-using App1.View;
+﻿using CBMTraining.Helpers;
+using CBMTraining.Models;
+using CBMTraining.View;
 using Microcharts;
 using Plugin.Connectivity;
 using SkiaSharp;
@@ -13,7 +13,7 @@ using Xamarin.Forms.Xaml;
 using Entry = Microcharts.ChartEntry;
 
 
-namespace App1.View.UserPages
+namespace CBMTraining.View.UserPages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ResultsPage : ContentPage

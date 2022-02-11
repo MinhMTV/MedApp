@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace App1.DependencyServices
+namespace CBMTraining.DependencyServices
 {
     public interface IImageResizer
     {

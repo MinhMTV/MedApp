@@ -1,5 +1,5 @@
-﻿using App1.Models;
-using App1.ViewModels;
+﻿using CBMTraining.Models;
+using CBMTraining.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace App1.View.UserPages
+namespace CBMTraining.View.UserPages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class GoalPage : ContentPage

@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:pg="clr-namespace:App1.ViewModels"
-             x:Class="App1.View.UserPages.EditDataPage"
+             xmlns:pg="clr-namespace:CBMTraining.ViewModels"
+             x:Class="CBMTraining.View.UserPages.EditDataPage"
              Style="{StaticResource UserBackground}">
 
     <NavigationPage.TitleView>

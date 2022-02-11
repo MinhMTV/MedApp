@@ -7,7 +7,7 @@ using System.Text;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace App1.Extensions
+namespace CBMTraining.Extensions
 {
     [ContentProperty(nameof(Source))]
     public class ImageResourceExtension : IMarkupExtension

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 
 
-namespace App1.Methods
+namespace CBMTraining.Methods
 {
     public static class ImageHelper
     {

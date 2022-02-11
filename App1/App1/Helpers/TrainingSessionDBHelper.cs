@@ -1,6 +1,6 @@
-﻿using App1.Database;
-using App1.Extensions;
-using App1.Models;
+﻿using CBMTraining.Database;
+using CBMTraining.Extensions;
+using CBMTraining.Models;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Xamarin.Forms;
 
-namespace App1.Helpers
+namespace CBMTraining.Helpers
 {
     public class TrainingSessionDBHelper
     {

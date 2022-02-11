@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace App1.PopUpViews
+namespace CBMTraining.PopUpViews
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PhotoPopUp : Rg.Plugins.Popup.Pages.PopupPage

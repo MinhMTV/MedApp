@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using App1.DependencyServices;
+using CBMTraining.DependencyServices;
 using System.IO;
 using Windows.Storage.Streams;
 using Windows.Graphics.Imaging;
 using System.Runtime.InteropServices.WindowsRuntime;
-using App1.UWP;
+using CBMTraining.UWP;
 
 [assembly: Xamarin.Forms.Dependency(typeof(ImageResizerWindows))]
 
-namespace App1.UWP
+namespace CBMTraining.UWP
 {
     public class ImageResizerWindows : IImageResizerWin
     {

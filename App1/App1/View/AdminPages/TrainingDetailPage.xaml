@@ -2,9 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit" 
-             xmlns:pg="clr-namespace:App1.ViewModels" xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
-             xmlns:converts="clr-namespace:App1.Methods"
-             x:Class="App1.View.AdminPages.TrainingDetailPage">
+             xmlns:pg="clr-namespace:CBMTraining.ViewModels" xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+             xmlns:converts="clr-namespace:CBMTraining.Methods"
+             x:Class="CBMTraining.View.AdminPages.TrainingDetailPage">
     <ContentPage.Resources>
         <converts:NullToZeroConverter x:Key="nulltoZero"/>
     </ContentPage.Resources>

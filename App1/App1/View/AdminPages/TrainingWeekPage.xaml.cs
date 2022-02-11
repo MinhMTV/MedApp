@@ -1,7 +1,7 @@
-﻿using App1.Extensions;
-using App1.Helpers;
-using App1.Models;
-using App1.ViewModels;
+﻿using CBMTraining.Extensions;
+using CBMTraining.Helpers;
+using CBMTraining.Models;
+using CBMTraining.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace App1.View.AdminPages
+namespace CBMTraining.View.AdminPages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TrainingWeekPage : ContentPage

@@ -1,15 +1,15 @@
-﻿using App1.Helpers;
-using App1.Models;
+﻿using CBMTraining.Helpers;
+using CBMTraining.Models;
 using MLToolkit.Forms.SwipeCardView.Core;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Xamarin.Forms;
-using App1.Extensions;
-using App1.Methods;
+using CBMTraining.Extensions;
+using CBMTraining.Methods;
 
-namespace App1.ViewModels
+namespace CBMTraining.ViewModels
 {
     class SwipeViewModel : BaseViewModel
     {

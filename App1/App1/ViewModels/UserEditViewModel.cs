@@ -1,7 +1,7 @@
-﻿using App1.Helpers;
-using App1.Methods;
-using App1.Models;
-using App1.View.AdminPages;
+﻿using CBMTraining.Helpers;
+using CBMTraining.Methods;
+using CBMTraining.Models;
+using CBMTraining.View.AdminPages;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,7 +15,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 
-namespace App1.ViewModels
+namespace CBMTraining.ViewModels
 {
     public class UserEditViewModel : INotifyPropertyChanged
     {

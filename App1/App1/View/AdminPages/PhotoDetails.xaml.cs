@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace App1.View.AdminPages
+namespace CBMTraining.View.AdminPages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PhotoDetails : ContentPage

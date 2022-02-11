@@ -1,12 +1,12 @@
-﻿using App1.Database;
-using App1.iOS.Database;
+﻿using CBMTraining.Database;
+using CBMTraining.iOS.Database;
 using SQLite;
 using System;
 using System.IO;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(SQLiteiOS))]
-namespace App1.iOS.Database
+namespace CBMTraining.iOS.Database
 {
     public class SQLiteiOS : ISQLite
     {

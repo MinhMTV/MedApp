@@ -1,5 +1,5 @@
-﻿using App1.Database;
-using App1.Models;
+﻿using CBMTraining.Database;
+using CBMTraining.Models;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Text;
 
 using Xamarin.Forms;
 
-namespace App1.Helpers
+namespace CBMTraining.Helpers
 {
 	public class PicTimeDBHelper : ContentPage
 	{

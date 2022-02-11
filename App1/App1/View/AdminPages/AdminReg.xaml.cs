@@ -1,13 +1,13 @@
-﻿using App1.Helpers;
-using App1.Models;
-using App1.Methods;
+﻿using CBMTraining.Helpers;
+using CBMTraining.Models;
+using CBMTraining.Methods;
 using System;
 using System.Diagnostics;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using App1.View.GeneralPages;
+using CBMTraining.View.GeneralPages;
 
-namespace App1.View.AdminPages
+namespace CBMTraining.View.AdminPages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AdminReg : ContentPage

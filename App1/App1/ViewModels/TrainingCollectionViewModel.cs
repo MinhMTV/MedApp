@@ -1,6 +1,6 @@
-﻿using App1.Helpers;
-using App1.Models;
-using App1.View.AdminPages;
+﻿using CBMTraining.Helpers;
+using CBMTraining.Models;
+using CBMTraining.View.AdminPages;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,7 +8,7 @@ using System.Text;
 using Xamarin.CommunityToolkit.Extensions;
 using Xamarin.Forms;
 
-namespace App1.ViewModels
+namespace CBMTraining.ViewModels
 {
     public class TrainingCollectionViewModel : BaseViewModel
     {

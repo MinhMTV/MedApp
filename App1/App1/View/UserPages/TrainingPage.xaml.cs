@@ -1,5 +1,5 @@
-﻿using App1.Models;
-using App1.ViewModels;
+﻿using CBMTraining.Models;
+using CBMTraining.ViewModels;
 using MLToolkit.Forms.SwipeCardView;
 using MLToolkit.Forms.SwipeCardView.Core;
 using System;
@@ -7,14 +7,14 @@ using System.Collections.ObjectModel;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using App1.Helpers;
-using App1.Extensions;
-using App1.Methods;
+using CBMTraining.Helpers;
+using CBMTraining.Extensions;
+using CBMTraining.Methods;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace App1.View.UserPages
+namespace CBMTraining.View.UserPages
 {
 
     [XamlCompilation(XamlCompilationOptions.Compile)]

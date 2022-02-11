@@ -1,15 +1,15 @@
-﻿using App1.Helpers;
-using App1.Methods;
-using App1.Models;
-using App1.View;
-using App1.View.UserPages;
+﻿using CBMTraining.Helpers;
+using CBMTraining.Methods;
+using CBMTraining.Models;
+using CBMTraining.View;
+using CBMTraining.View.UserPages;
 using System;
 using System.Diagnostics;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace App1.View.GeneralPages
+namespace CBMTraining.View.GeneralPages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Registration : ContentPage

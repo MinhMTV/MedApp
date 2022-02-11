@@ -1,4 +1,4 @@
-﻿using App1.Methods;
+﻿using CBMTraining.Methods;
 using NativeMedia;
 using System;
 using System.Collections.Generic;
@@ -6,17 +6,17 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using App1.DependencyServices;
-using App1.Extensions;
-using App1.Helpers;
-using App1.Models;
+using CBMTraining.DependencyServices;
+using CBMTraining.Extensions;
+using CBMTraining.Helpers;
+using CBMTraining.Models;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using App1.ViewModels;
+using CBMTraining.ViewModels;
 
 
-namespace App1.View.AdminPages
+namespace CBMTraining.View.AdminPages
 {
     
     public partial class PhotoGalleryOverView : ContentPage

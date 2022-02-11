@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace App1.Models
+namespace CBMTraining.Models
 {
     public enum Feedback
     {

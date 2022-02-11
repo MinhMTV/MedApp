@@ -8,13 +8,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using App1.DependencyServices;
+using CBMTraining.DependencyServices;
 using Android.Graphics;
 using System.IO;
-using App1.Droid;
+using CBMTraining.Droid;
 
 [assembly: Xamarin.Forms.Dependency(typeof(ImageResizer))]
-namespace App1.Droid
+namespace CBMTraining.Droid
 {
 	public class ImageResizer : IImageResizer
 	{

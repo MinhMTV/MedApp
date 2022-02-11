@@ -1,8 +1,8 @@
-﻿using App1.Helpers;
-using App1.Models;
-using App1.PopUpViews;
-using App1.View.GeneralPages;
-using App1.ViewModels;
+﻿using CBMTraining.Helpers;
+using CBMTraining.Models;
+using CBMTraining.PopUpViews;
+using CBMTraining.View.GeneralPages;
+using CBMTraining.ViewModels;
 using Rg.Plugins.Popup.Animations;
 using Rg.Plugins.Popup.Enums;
 using System;
@@ -16,7 +16,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace App1.View.AdminPages
+namespace CBMTraining.View.AdminPages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class UserCollectionPage : ContentPage

@@ -3,7 +3,7 @@ using Foundation;
 using System.Linq;
 using UIKit;
 
-namespace App1.iOS
+namespace CBMTraining.iOS
 {
     // The UIApplicationDelegate for the application. This class is responsible for launching the 
     // User Interface of the application, as well as listening (and optionally responding) to 

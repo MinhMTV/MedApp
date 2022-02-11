@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="App1.View.AdminPages.TrainingCollectionPage"
+             x:Class="CBMTraining.View.AdminPages.TrainingCollectionPage"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-             xmlns:pg="clr-namespace:App1.ViewModels" xmlns:converts="clr-namespace:App1.Methods"
+             xmlns:pg="clr-namespace:CBMTraining.ViewModels" xmlns:converts="clr-namespace:CBMTraining.Methods"
              x:Name="TrainingCollectionView">
     <ContentPage.Resources>
         <converts:NullToZeroConverter x:Key="nulltoZero"/>

@@ -4,7 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="App1.View.UserPages.EditUserInformtionPage"
+             x:Class="CBMTraining.View.UserPages.EditUserInformtionPage"
              Title="Benutzerdaten">
     <ContentPage.Content>
         <StackLayout Padding="20">

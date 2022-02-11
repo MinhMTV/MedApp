@@ -2,14 +2,14 @@
 <ContentPage NavigationPage.HasNavigationBar="false"
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:App1"
-             x:Class="App1.View.GeneralPages.WelcomePage"
+             xmlns:local="clr-namespace:CBMTraining"
+             x:Class="CBMTraining.View.GeneralPages.WelcomePage"
              Style="{StaticResource UserBackground}">
     
     
-    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
 
-        <Image Source="brain.jpg" HeightRequest="250" WidthRequest="250" Aspect="AspectFit"/>
+        <Image VerticalOptions="Center" Source="brain.jpg" HeightRequest="250" WidthRequest="250" Aspect="AspectFit"/>
 
         <StackLayout >
 

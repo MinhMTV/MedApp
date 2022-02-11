@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace App1.Extensions
+namespace CBMTraining.Extensions
 {
     public static class DateTimeExtensions
     {

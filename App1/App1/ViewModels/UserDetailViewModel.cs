@@ -1,6 +1,6 @@
-﻿using App1.Helpers;
-using App1.Models;
-using App1.View.AdminPages;
+﻿using CBMTraining.Helpers;
+using CBMTraining.Models;
+using CBMTraining.View.AdminPages;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +12,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace App1.ViewModels
+namespace CBMTraining.ViewModels
 {
     public class UserDetailViewModel : BaseViewModel
     {

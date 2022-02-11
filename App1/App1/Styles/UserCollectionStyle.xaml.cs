@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace App1.Styles
+namespace CBMTraining.Styles
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class UserCollectionStyle : ContentPage

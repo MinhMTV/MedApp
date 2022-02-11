@@ -7,7 +7,7 @@ using Xamarin.Essentials;
 
 using Xamarin.Forms;
 
-namespace App1.Methods
+namespace CBMTraining.Methods
 {
 	public class DeviceMetricHelper : ContentPage
 	{

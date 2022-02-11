@@ -1,6 +1,6 @@
 ﻿using SQLite;
 
-namespace App1.Models
+namespace CBMTraining.Models
 {
     public class Pictures
     {

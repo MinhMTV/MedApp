@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:behaviors="clr-namespace:App1.Methods"
-             x:Class="App1.View.GeneralPages.LoginPage"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:behaviors="clr-namespace:CBMTraining.Methods"
+             x:Class="CBMTraining.View.GeneralPages.LoginPage"
              NavigationPage.HasNavigationBar="false"
              Style="{StaticResource UserBackground}">
     <ContentPage.Content>

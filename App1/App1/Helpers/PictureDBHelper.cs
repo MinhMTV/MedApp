@@ -1,5 +1,5 @@
-﻿using App1.Database;
-using App1.Models;
+﻿using CBMTraining.Database;
+using CBMTraining.Models;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -7,10 +7,10 @@ using System.Linq;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
 using System.Reflection;
-using App1.DependencyServices;
-using App1.Methods;
+using CBMTraining.DependencyServices;
+using CBMTraining.Methods;
 
-namespace App1.Helpers
+namespace CBMTraining.Helpers
 {
     public class PictureDBHelper
     {

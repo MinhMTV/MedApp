@@ -1,15 +1,15 @@
 ﻿
-using App1.Helpers;
-using App1.Models;
-using App1.View;
+using CBMTraining.Helpers;
+using CBMTraining.Models;
+using CBMTraining.View;
 using System;
 using Xamarin.Forms;
 using Xamarin.Essentials;
 using Xamarin.CommunityToolkit.Extensions;
-using App1.View.UserPages;
-using App1.View.AdminPages;
+using CBMTraining.View.UserPages;
+using CBMTraining.View.AdminPages;
 
-namespace App1.View.GeneralPages
+namespace CBMTraining.View.GeneralPages
 {
     public partial class WelcomePage : ContentPage
     {

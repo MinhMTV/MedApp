@@ -1,6 +1,6 @@
 ﻿using SQLite;
 
-namespace App1.Database
+namespace CBMTraining.Database
 {
     public interface ISQLite
     {

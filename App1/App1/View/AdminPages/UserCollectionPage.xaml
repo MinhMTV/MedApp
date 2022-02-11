@@ -2,10 +2,10 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-             x:Class="App1.View.AdminPages.UserCollectionPage"
-             xmlns:pg="clr-namespace:App1.ViewModels"
+             x:Class="CBMTraining.View.AdminPages.UserCollectionPage"
+             xmlns:pg="clr-namespace:CBMTraining.ViewModels"
              x:Name="UserCollectionView"
-             xmlns:converters="clr-namespace:App1.Methods;assembly=App1"
+             xmlns:converters="clr-namespace:CBMTraining.Methods;assembly=CBMTraining"
              >
     <ContentPage.Resources>
         <ResourceDictionary>

@@ -1,6 +1,6 @@
-﻿using App1.Database;
-using App1.Models;
-using App1.Methods;
+﻿using CBMTraining.Database;
+using CBMTraining.Models;
+using CBMTraining.Methods;
 using SQLite;
 using System;
 using System.Diagnostics;
@@ -10,7 +10,7 @@ using Xamarin.Forms;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace App1.Helpers
+namespace CBMTraining.Helpers
 {
     public class AdminDBHelper
     {

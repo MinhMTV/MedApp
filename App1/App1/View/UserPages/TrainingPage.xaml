@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="App1.View.UserPages.TrainingPage"
+             x:Class="CBMTraining.View.UserPages.TrainingPage"
              xmlns:swipeCardView="clr-namespace:MLToolkit.Forms.SwipeCardView;assembly=MLToolkit.Forms.SwipeCardView" 
-             xmlns:valueconverter="clr-namespace:App1.Methods"
+             xmlns:valueconverter="clr-namespace:CBMTraining.Methods"
              NavigationPage.HasNavigationBar="false"
              Padding="20"
              Style="{StaticResource UserBackground}"
