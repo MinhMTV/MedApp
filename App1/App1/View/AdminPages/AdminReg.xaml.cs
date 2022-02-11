@@ -20,12 +20,6 @@ namespace CBMTraining.View.AdminPages
         public AdminReg()
         {
             InitializeComponent();
-            Entry_Entity.ReturnCommand = new Command(() => Entry_Entity.Focus());
-            Entry_Username.ReturnCommand = new Command(() => Entry_Firstname.Focus());
-            Entry_Firstname.ReturnCommand = new Command(() => Entry_Lastname.Focus());
-            Entry_Lastname.ReturnCommand = new Command(() => Entry_Email.Focus());
-            Entry_Email.ReturnCommand = new Command(() => Entry_Password.Focus());
-            Entry_Password.ReturnCommand = new Command(() => Entry_Repeatedpassword.Focus());
         }
 
         async private void CompleteRegistration_Clicked(object sender, EventArgs e)
