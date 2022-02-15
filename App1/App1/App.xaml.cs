@@ -16,6 +16,7 @@ namespace CBMTraining
         public static double ScreenWidth;
         private AdminDBHelper adminDBHelper = new AdminDBHelper();
         private UserDBHelper userDBHelper = new UserDBHelper();
+        private TrainingSessionDBHelper thelper = new TrainingSessionDBHelper();
 
 
 
@@ -53,6 +54,13 @@ namespace CBMTraining
                 else
                 {
                     GlobalVariables.Stopwatch.Reset();
+                    TrainingSession tsession = new TrainingSession();
+                    tsession.IsTrainingCompleted = false;
+                    var user = userDBHelper.GetLoggedUser();
+                    tsession.UserID = user.UserID;
+                    tsession.SessionDate = DateTime.Now;
+                    thelper.AddTrainingSession(tsession);
+                    var debug = thelper.GetLastTrainingSession();
                     await App.Current.MainPage.Navigation.PushAsync(new MenuPage());
                 }
             }
