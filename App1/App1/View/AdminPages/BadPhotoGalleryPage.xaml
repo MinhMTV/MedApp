@@ -22,10 +22,11 @@
             </Grid.RowDefinitions>
 
             <Label Grid.Column="0"
-               MaxLines="1"
-               Text="Bilder"
-               FontSize="Large"
+               MaxLines="2"
+               Text="Subst. abh.   Bilder"
+               FontSize="Medium"
                TextColor="White"
+                   HorizontalTextAlignment="Center"
                HorizontalOptions="StartAndExpand"
                VerticalOptions="Center"/>
             <StackLayout x:Name="SelectedLayout"  
@@ -37,7 +38,7 @@
                 <StackLayout.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnTrashTapped"/>
                 </StackLayout.GestureRecognizers>
-                <Label Text="{Binding NrofSelectedPictures, StringFormat='Selected: {0}'}" VerticalOptions="Center" FontSize="Medium" HorizontalOptions="EndAndExpand" MaxLines="1"/>
+                <Label Text="{Binding NrofSelectedPictures, StringFormat='Ausgewählt: {0}'}" VerticalOptions="Center" TextColor="White"  FontSize="Medium" HorizontalOptions="EndAndExpand" MaxLines="1"/>
                 <Image Source="trash.png"
                     HorizontalOptions="EndAndExpand">
                 </Image>

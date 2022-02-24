@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CBMTraining.Models.TrainingSession" Collapsed="true">
+    <Position X="10" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAIRAAUmIECIJUABIIkmgIgIDhAAggAVxAA0AQBAGwA=</HashCode>
+      <FileName>Models\TrainingSession.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CBMTraining.Models.Admin" Collapsed="true">
+    <Position X="10" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAEAAACAAABAAASAAAAAAAAAAAAACAAAAAAAAAAg=</HashCode>
+      <FileName>Models\Admin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CBMTraining.Models.User" Collapsed="true">
+    <Position X="10" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIBAEAAACAAAAEAAWAAAggAAAAAAAACAAAAAAAgAAg=</HashCode>
+      <FileName>Models\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CBMTraining.Models.Pictures" Collapsed="true">
+    <Position X="10" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAIAAAAAAABAgAQAAAAAAAAA=</HashCode>
+      <FileName>Models\Pictures.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CBMTraining.Models.PicTime" Collapsed="true">
+    <Position X="10" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAgIAAAQAAAAAQAAAAAAQQA=</HashCode>
+      <FileName>Models\PicTime.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Object" Collapsed="true">
+    <Position X="17.25" Y="4" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="CBMTraining.Extensions.ImageResourceExtension" Collapsed="true">
+    <Position X="15" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Extensions\ImageResourceExtension.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CBMTraining.Helpers.AdminDBHelper" Collapsed="true">
+    <Position X="12.5" Y="5.25" Width="1.5" />
+    <InheritanceLine Type="System.Object" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="18" Y="4.562" />
+        <Point X="18" Y="4.937" />
+        <Point X="14.384" Y="4.937" />
+        <Point X="14.384" Y="5.625" />
+        <Point X="14" Y="5.625" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>gAgAMQBBBAYgAAAGAAgAAEAABRCAAAAgAAAAQAAIgAA=</HashCode>
+      <FileName>Helpers\AdminDBHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CBMTraining.Helpers.PictureDBHelper" Collapsed="true">
+    <Position X="12.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>oAhABAAAQABACoAUCIAAAAAQAAUgIAAQQCBBAAAKIgA=</HashCode>
+      <FileName>Helpers\PictureDBHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CBMTraining.Helpers.TrainingSessionDBHelper" Collapsed="true">
+    <Position X="12.5" Y="6.75" Width="1.5" />
+    <InheritanceLine Type="System.Object" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="18" Y="4.562" />
+        <Point X="18" Y="4.937" />
+        <Point X="14.411" Y="4.937" />
+        <Point X="14.411" Y="6.963" />
+        <Point X="14" Y="6.963" />
+        <Point X="14" Y="7" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>IUgAEEIAgIAUAAABQgQAGIBFAAAAAAAEIAgAFAAhAAI=</HashCode>
+      <FileName>Helpers\TrainingSessionDBHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CBMTraining.Helpers.UserDBHelper" Collapsed="true">
+    <Position X="12.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAkAMQARFAYAHAAGAAwAAEAABxCAAAAgAgIAQAAIgAA=</HashCode>
+      <FileName>Helpers\UserDBHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CBMTraining.Methods.ByteArrayToImageSourceConverter" Collapsed="true">
+    <Position X="15" Y="5.25" Width="1.5" />
+    <InheritanceLine Type="System.Object" FixedToPoint="true">
+      <Path>
+        <Point X="18" Y="4.562" />
+        <Point X="18" Y="5.5" />
+        <Point X="16.5" Y="5.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Methods\ByteArrayToImageSourceConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CBMTraining.Methods.DateTimeToMsg" Collapsed="true">
+    <Position X="15" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Methods\DateTimeToMsg.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CBMTraining.Methods.IntToString" Collapsed="true">
+    <Position X="15" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Methods\IntToString.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CBMTraining.Methods.NullToZeroConverter" Collapsed="true">
+    <Position X="15" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Methods\NullToZeroConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CBMTraining.Models.GlobalVariables" Collapsed="true">
+    <Position X="18.5" Y="5.25" Width="1.5" />
+    <InheritanceLine Type="System.Object" FixedToPoint="true">
+      <Path>
+        <Point X="18" Y="4.562" />
+        <Point X="18" Y="5.5" />
+        <Point X="18.5" Y="5.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAEAgAAAAAAAgAAAAAAAAAAAgAQA=</HashCode>
+      <FileName>Models\GlobalVariables.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CBMTraining.Models.Settings" Collapsed="true">
+    <Position X="18.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAABCAAEAAAAIEAAAAA4QAAAAAAAACAAAUAAAAA=</HashCode>
+      <FileName>Models\Settings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CBMTraining.ViewModels.GoalViewModel" Collapsed="true">
+    <Position X="20.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAABAEAQAABAABAAAEAAAAABhAAAQAEAAYEAAAAgAAg=</HashCode>
+      <FileName>ViewModels\GoalViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CBMTraining.ViewModels.TrainingStatViewModel" Collapsed="true">
+    <Position X="20.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QkIxAAwkABCY5REBAMkEgJAAjhAIgBAQwAA0AQAAATA=</HashCode>
+      <FileName>ViewModels\TrainingStatViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CBMTraining.ViewModels.TrainingTotalViewModel" Collapsed="true">
+    <Position X="20.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QgIxAAwkAACYpQABAMmEgJAAjhAAgBAQwAA0gwBEAQA=</HashCode>
+      <FileName>ViewModels\TrainingTotalViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CBMTraining.ViewModels.TrainingWeekViewModel" Collapsed="true">
+    <Position X="20.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>RwJTgAQkABC4pSABAMmEgBiEjhAIwBQQyAA0AQBIATA=</HashCode>
+      <FileName>ViewModels\TrainingWeekViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CBMTraining.ViewModels.UserEditViewModel" Collapsed="true">
+    <Position X="20.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAEAAACAAABEAIEAAAIgAhAAAAAAAgYAAAAAEABg=</HashCode>
+      <FileName>ViewModels\UserEditViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CBMTraining.ViewModels.UserTrainingResultViewModel" Collapsed="true">
+    <Position X="20.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgABAAAAAAAYIBAAAEgAABAAgIAAAACAQAAAAAAAAQA=</HashCode>
+      <FileName>ViewModels\UserTrainingResultViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CBMTraining.ViewModels.UserTrainingWeekViewModel" Collapsed="true">
+    <Position X="20.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BgBBAAAEABCYoAAAAEmAABiEhAAIABQASAAQAABIAQA=</HashCode>
+      <FileName>ViewModels\UserTrainingWeekViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

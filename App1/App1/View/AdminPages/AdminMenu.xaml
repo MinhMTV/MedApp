@@ -17,7 +17,7 @@
                     <Label Text="Therapeuten Zugang" TextColor="Black" FontSize="Large" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" />
                         <BoxView HorizontalOptions="FillAndExpand" BackgroundColor="Black" HeightRequest="1" Margin="0,0,0,20"/>
                         <Button Text="Patient" Clicked="ListUserView_Clicked" TextColor="White" BackgroundColor="#004c93" CornerRadius="20"></Button>
-                    <Button Text="PhotoGallery" Clicked="PhotoGalleryClicked" TextColor="White" BackgroundColor="#004c93" CornerRadius="20"></Button>
+                    <Button Text="Fotogalerie" Clicked="PhotoGalleryClicked" TextColor="White" BackgroundColor="#004c93" CornerRadius="20"></Button>
                     <Button Text="Daten ändern"  Clicked="EditUserInformationClicked" TextColor="White"  BackgroundColor="#004c93" CornerRadius="20"></Button>
                     <Button Text="Einstellung"  Clicked="SettingClicked" TextColor="White" BackgroundColor="#004c93" CornerRadius="20"></Button>
                     <Button Text="Abmelden" Clicked="LogOutClicked" VerticalOptions="EndAndExpand" TextColor="White" BackgroundColor="#004c93" CornerRadius="20"></Button>

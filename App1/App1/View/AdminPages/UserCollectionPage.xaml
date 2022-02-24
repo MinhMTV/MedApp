@@ -43,7 +43,7 @@
                 <StackLayout.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnTrashTapped"/>
                 </StackLayout.GestureRecognizers>
-                <Label Text="{Binding NrofSelectedUser, StringFormat='Selected: {0}'}" VerticalOptions="Center" FontSize="Medium" HorizontalOptions="EndAndExpand" MaxLines="1"/>
+                <Label Text="{Binding NrofSelectedUser, StringFormat='Ausgewählt: {0}'}" VerticalOptions="Center" FontSize="Medium" TextColor="White" HorizontalOptions="EndAndExpand" MaxLines="1"/>
                 <Image Source="trash.png" HorizontalOptions="EndAndExpand" Aspect="AspectFit">
                 </Image>
             </StackLayout>
